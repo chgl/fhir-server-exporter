@@ -1,0 +1,28 @@
+{
+  "name": "fhir-server-exporter",
+  "version": "1.0.0",
+  "description": "FHIR Server resource count exporter for Prometheus.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chgl/fhir-server-exporter.git"
+  },
+  "author": "chgl",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/chgl/fhir-server-exporter/issues"
+  },
+  "homepage": "https://github.com/chgl/fhir-server-exporter#readme",
+  "devDependencies": {
+    "@commitlint/cli": "11.0.0",
+    "@semantic-release/changelog": "5.0.1",
+    "@semantic-release/commit-analyzer": "8.0.1",
+    "@semantic-release/error": "2.2.0",
+    "@semantic-release/github": "7.2.0",
+    "@semantic-release/release-notes-generator": "9.0.1",
+    "conventional-changelog-conventionalcommits": "4.5.0"
+  }
+}
