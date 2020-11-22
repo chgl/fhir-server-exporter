@@ -34,11 +34,7 @@ public class FhirExporter : BackgroundService
             });
 
     private static readonly Histogram FetchResourceCountDuration = Metrics
-        .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.",
-            new HistogramConfiguration
-            {
-                LabelNames = new[] { "type" }
-            });
+        .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.");
 
     private readonly ILogger<FhirExporter> _logger;
     private readonly IConfiguration _config;
