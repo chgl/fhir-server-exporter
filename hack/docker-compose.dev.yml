@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   prometheus:
-    image: prom/prometheus:v2.22.2
+    image: prom/prometheus:v2.23.0
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
