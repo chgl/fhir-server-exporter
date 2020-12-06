@@ -1,15 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading;
-using Hl7.Fhir.Model;
+using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Prometheus;
-using Task = System.Threading.Tasks.Task;
+using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
@@ -49,16 +51,27 @@ public class FhirExporter : BackgroundService
         var serverUrl = _config.GetValue<string>("FhirServerUrl") ??
             throw new InvalidOperationException("FhirServerUrl needs to be set.");
 
-        _fhirClient = new FhirClient(serverUrl);
+        var basicAuthUser = _config.GetValue<string>("Auth:Basic:Username", null);
+        var basicAuthPassword = _config.GetValue<string>("Auth:Basic:Password", null);
+
+        if (!string.IsNullOrWhiteSpace(basicAuthUser) && !string.IsNullOrWhiteSpace(basicAuthPassword))
+        {
+            _fhirClient = new FhirClient(serverUrl,
+                messageHandler: GetBasicAuthMessageHandler(basicAuthUser, basicAuthPassword));
+        }
+        else
+        {
+            _fhirClient = new FhirClient(serverUrl);
+        }
 
         var excludedResources = _config.GetValue("ExcludedResources", "").Split(',');
 
         _logger.LogInformation("Excluding the following resources from counting: {excludedResources}",
             _config.GetValue("ExcludedResources", ""));
 
-        _resourceTypes = Enum.GetValues(typeof(ResourceType))
-                .Cast<ResourceType>()
-                .Except(new[] { ResourceType.DomainResource, ResourceType.Resource })
+        _resourceTypes = Enum.GetValues(typeof(Fhir.ResourceType))
+                .Cast<Fhir.ResourceType>()
+                .Except(new[] { Fhir.ResourceType.DomainResource, Fhir.ResourceType.Resource })
                 .Select(s => s.ToString())
                 .Except(excludedResources);
     }
@@ -107,9 +120,15 @@ public class FhirExporter : BackgroundService
         }
     }
 
-    private async System.Threading.Tasks.Task<int> FetchResourceCountForTypeAsync(string resourceType)
+    private async Task<int> FetchResourceCountForTypeAsync(string resourceType)
     {
         var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count).ConfigureAwait(false);
         return response.Total.Value;
     }
+
+    private static HttpMessageHandler GetBasicAuthMessageHandler(string username, string password) =>
+        new HttpClientHandler
+        {
+            Credentials = new NetworkCredential(username, password),
+        };
 }
