@@ -8,14 +8,13 @@ COPY . .
 # but build time is nearly doubled
 RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
     -c Release \
-    -r linux-x64 \
+    -r linux-musl-x64 \
     --self-contained true \
     -p:PublishSingleFile=false \
     -p:PublishTrimmed=true \
     -o /build/publish
 
-# hadolint ignore=DL3006
-FROM gcr.io/distroless/cc-debian10
+FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
 WORKDIR /opt
 COPY --from=build /build/publish .
 
