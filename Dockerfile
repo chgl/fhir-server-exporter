@@ -4,15 +4,10 @@ COPY src/FhirServerExporter/FhirServerExporter.csproj .
 RUN dotnet restore
 COPY . .
 
-# if PublishTrimmed=true image size is reduced by ~30%
-# but build time is nearly doubled
-RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
+RUN dotnet publish \
     -c Release \
-    -r linux-musl-x64 \
-    --self-contained true \
-    -p:PublishSingleFile=false \
-    -p:PublishTrimmed=true \
-    -o /build/publish
+    -o /build/publish \
+    src/FhirServerExporter/FhirServerExporter.csproj
 
 FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
 WORKDIR /opt
