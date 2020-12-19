@@ -15,37 +15,11 @@ docker run --rm -it \
 Open <http://localhost:9797/metrics> to view the resource counts in Prometheus format:
 
 ```console
-# HELP process_working_set_bytes Process working set
-# TYPE process_working_set_bytes gauge
-process_working_set_bytes 115916800
-# HELP process_open_handles Number of open handles
-# TYPE process_open_handles gauge
-process_open_handles 312
 # HELP fhir_resource_count Number of resources stored within the FHIR server by type.
 # TYPE fhir_resource_count gauge
-fhir_resource_count{type="ImmunizationEvaluation"} 0
-fhir_resource_count{type="Basic"} 0
-fhir_resource_count{type="MedicinalProductUndesirableEffect"} 0
-fhir_resource_count{type="CapabilityStatement"} 0
-fhir_resource_count{type="DiagnosticReport"} 0
-fhir_resource_count{type="Goal"} 0
-fhir_resource_count{type="SubstanceNucleicAcid"} 0
-fhir_resource_count{type="Library"} 0
-fhir_resource_count{type="MedicinalProduct"} 0
-fhir_resource_count{type="VisionPrescription"} 0
-fhir_resource_count{type="GraphDefinition"} 0
-fhir_resource_count{type="ImplementationGuide"} 0
-fhir_resource_count{type="CareTeam"} 0
-fhir_resource_count{type="EffectEvidenceSynthesis"} 0
-fhir_resource_count{type="PractitionerRole"} 0
-fhir_resource_count{type="DeviceDefinition"} 0
-fhir_resource_count{type="ClinicalImpression"} 0
-fhir_resource_count{type="InsurancePlan"} 0
-fhir_resource_count{type="MedicinalProductInteraction"} 0
-fhir_resource_count{type="MedicinalProductIndication"} 0
-fhir_resource_count{type="AdverseEvent"} 0
-fhir_resource_count{type="ExampleScenario"} 0
-fhir_resource_count{type="MedicinalProductContraindication"} 0
+fhir_resource_count{type="Patient"} 124005
+fhir_resource_count{type="Condition"} 29282
+fhir_resource_count{type="DiagnosticReport"} 36429
 ...
 ```
 
