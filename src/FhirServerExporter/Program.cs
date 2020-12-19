@@ -92,13 +92,13 @@ public class FhirExporter : BackgroundService
             using (FetchResourceCountDuration.NewTimer())
             {
                 var updateTasks = _resourceTypes.Select(t => UpdateResourceCountAsync(t));
-                await Task.WhenAll(updateTasks).ConfigureAwait(false);
+                await Task.WhenAll(updateTasks);
             }
 
-            await Task.Delay(fetchInterval, stoppingToken).ConfigureAwait(false);
+            await Task.Delay(fetchInterval, stoppingToken);
         }
 
-        await server.StopAsync().ConfigureAwait(false);
+        await server.StopAsync();
     }
 
     private async Task UpdateResourceCountAsync(string resourceType)
@@ -106,7 +106,7 @@ public class FhirExporter : BackgroundService
         _logger.LogDebug("Fetching resource count for {resourceType}", resourceType);
         try
         {
-            var total = await FetchResourceCountForTypeAsync(resourceType).ConfigureAwait(false);
+            var total = await FetchResourceCountForTypeAsync(resourceType);
             _logger.LogDebug("Updating resource count for {resourceType} to {count}",
                 resourceType,
                 total);
@@ -122,7 +122,7 @@ public class FhirExporter : BackgroundService
 
     private async Task<int> FetchResourceCountForTypeAsync(string resourceType)
     {
-        var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count).ConfigureAwait(false);
+        var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
         return response.Total.Value;
     }
 
