@@ -19,4 +19,4 @@ ENV APP__VERSION=${VERSION} \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 EXPOSE 9797
 USER 65532
-ENTRYPOINT ["/opt/FhirServerExporter"]
+ENTRYPOINT ["dotnet", "/opt/FhirServerExporter.dll"]
