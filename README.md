@@ -23,6 +23,15 @@ fhir_resource_count{type="DiagnosticReport"} 36429
 ...
 ```
 
+The container image is pushed to three registries:
+
+- `quay.io/chgl/fhir-server-exporter:latest`
+- `docker.io/chgl/fhir-server-exporter:latest`
+- `ghcr.io/chgl/fhir-server-exporter:latest`
+
+You are strongly encouraged to use the `vX.Y.Z` tags corresponding to the [releases](https://github.com/chgl/fhir-server-exporter/releases)
+instead of using `latest`.
+
 ### Configuration
 
 | Environment Variable      | Description                                                                                                     | Default value |
