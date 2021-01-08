@@ -163,6 +163,9 @@ dotnet_diagnostic.IDE0044.severity = warning
 # RS0016: Only enable if API files are present
 dotnet_public_api_analyzer.require_api_files = true
 
+# RCS1090: Add call to 'ConfigureAwait' (or vice versa)
+dotnet_diagnostic.RCS1090.severity = none
+
 # CSharp code style settings:
 [*.cs]
 # Newline settings
