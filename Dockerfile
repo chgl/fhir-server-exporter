@@ -11,11 +11,11 @@ RUN dotnet publish \
     src/FhirServerExporter/FhirServerExporter.csproj
 
 FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
-WORKDIR /opt
+WORKDIR /opt/fhir-server-exporter
 COPY --from=build /build/publish .
 
 ENV DOTNET_ENVIRONMENT="Production" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 EXPOSE 9797
 USER 65532
-ENTRYPOINT ["dotnet", "/opt/FhirServerExporter.dll"]
+ENTRYPOINT ["dotnet", "/opt/fhir-server-exporter/FhirServerExporter.dll"]
