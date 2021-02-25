@@ -4,14 +4,14 @@
     ".NETCoreApp,Version=v5.0": {
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[2.0.3, )",
-        "resolved": "2.0.3",
-        "contentHash": "uPJQ+UchlIGtatFE0kktFDSvAHdLzH2UcluUilJgSV6qr3ECsnLntwuH7j7ZrDWdBM7NQq5UfQSAb44uwRrI0A==",
+        "requested": "[3.0.0, )",
+        "resolved": "3.0.0",
+        "contentHash": "xjX4sDNH5jVfe945LDo+kZWt8go0z7gRwZ7fQq9dUq1CpdxGeLmv0TRMQ4URZ42G8xZt26L92LV3RnmTl6s7Sw==",
         "dependencies": {
-          "Hl7.Fhir.Serialization": "2.0.3",
-          "Hl7.Fhir.Support": "2.0.3",
-          "Hl7.Fhir.Support.Poco": "2.0.3",
-          "Hl7.FhirPath": "2.0.3",
+          "Hl7.Fhir.Serialization": "3.0.0",
+          "Hl7.Fhir.Support": "3.0.0",
+          "Hl7.Fhir.Support.Poco": "3.0.0",
+          "Hl7.FhirPath": "3.0.0",
           "System.ComponentModel": "4.3.0",
           "System.ComponentModel.Annotations": "4.5.0",
           "System.ComponentModel.Primitives": "4.3.0",
@@ -58,28 +58,28 @@
       },
       "Hl7.Fhir.ElementModel": {
         "type": "Transitive",
-        "resolved": "2.0.3",
-        "contentHash": "KEooFecV3+kx7DkOsMKPpS4uTZZAHeygnjptk28yvKTB/pZ3qHJPYXgMxDHIaOopOjSLn9CqZvY+HZb9zciGbA==",
+        "resolved": "3.0.0",
+        "contentHash": "MFXRjv97vjp4lKwdRspIsFa4x1M4HztfkZYDHtFoIxCrH6kBmZVMz+Ctdvv1dbkikrtD3q68wJoYtGt24jvFlA==",
         "dependencies": {
-          "Hl7.Fhir.Support": "2.0.3",
+          "Hl7.Fhir.Support": "3.0.0",
           "System.ValueTuple": "4.5.0"
         }
       },
       "Hl7.Fhir.Serialization": {
         "type": "Transitive",
-        "resolved": "2.0.3",
-        "contentHash": "GJ8wXHdYZyVL+T42gxjfcce4+qAEpPoHj+zYwWqDulwZqa0ei1gtwN3gMmUfnZnn98pLyg7hhipes/hooNGg8w==",
+        "resolved": "3.0.0",
+        "contentHash": "FM3DldE23Jk8YhLB+v+QGEPibtZ09VicTzPeu+et8mvz+ndt119yPUHOP6rDYdMc9eJftFMAJyIX2BRjyCqmsA==",
         "dependencies": {
-          "Hl7.Fhir.ElementModel": "2.0.3",
-          "Hl7.Fhir.Support": "2.0.3",
+          "Hl7.Fhir.ElementModel": "3.0.0",
+          "Hl7.Fhir.Support": "3.0.0",
           "Newtonsoft.Json": "12.0.2",
           "System.ValueTuple": "4.5.0"
         }
       },
       "Hl7.Fhir.Support": {
         "type": "Transitive",
-        "resolved": "2.0.3",
-        "contentHash": "rCA8ngXNjgkgCT4L7AGbW4wXYCDAVs6vcB3j9Q+NR+tsYnqxcxntIzB/YigDfTDieqRZKwlkVGinIGyrioYI+Q==",
+        "resolved": "3.0.0",
+        "contentHash": "e1dg1jkivmEiUFSBFJS0CB1zj10ep2lBFCfvo0RplLTcKkkmNBODX/0pi7SzVQsXsJ3fBEHorsL2VIP7/pRSzg==",
         "dependencies": {
           "System.Reflection.Emit": "4.3.0",
           "System.Reflection.Emit.Lightweight": "4.3.0",
@@ -88,12 +88,13 @@
       },
       "Hl7.Fhir.Support.Poco": {
         "type": "Transitive",
-        "resolved": "2.0.3",
-        "contentHash": "1diSaARAblsSQgHQJNLo5oxDxOXYY8Aw8gL65bhwSAyFRorqn7iQx1bTkUutacg3Jbm/y6Jf1UO/JHhYQ55yIg==",
+        "resolved": "3.0.0",
+        "contentHash": "tbS2hpXzF7BEStLvquXBynVmbHIwGOmQJayWbEbZtRK2482YTITJGXnHygWdbgEYEl4OP1Qsuid67wRWgTEE8A==",
         "dependencies": {
-          "Hl7.Fhir.ElementModel": "2.0.3",
-          "Hl7.Fhir.Serialization": "2.0.3",
-          "Hl7.Fhir.Support": "2.0.3",
+          "Hl7.Fhir.ElementModel": "3.0.0",
+          "Hl7.Fhir.Serialization": "3.0.0",
+          "Hl7.Fhir.Support": "3.0.0",
+          "Hl7.FhirPath": "3.0.0",
           "System.ComponentModel": "4.3.0",
           "System.ComponentModel.Annotations": "4.5.0",
           "System.ComponentModel.Primitives": "4.3.0",
@@ -105,11 +106,11 @@
       },
       "Hl7.FhirPath": {
         "type": "Transitive",
-        "resolved": "2.0.3",
-        "contentHash": "QgVWUr3lutf+m7cM1LS7n/I3G4zb0cR9j2oSKBx1j5YxjYRayEPLZAPE+ceTvv/WSbPL148NrR44oa8gC9PfEA==",
+        "resolved": "3.0.0",
+        "contentHash": "ke7nhR9eB1iZ9ZnmhfyzZydT1XyvXENNIUfl9vOPQyniZEjLYLpA2tp2D1q2Q3EM38483pTi/zuCj3O84e1IRQ==",
         "dependencies": {
-          "Hl7.Fhir.ElementModel": "2.0.3",
-          "Hl7.Fhir.Support": "2.0.3",
+          "Hl7.Fhir.ElementModel": "3.0.0",
+          "Hl7.Fhir.Support": "3.0.0",
           "System.ValueTuple": "4.5.0"
         }
       },
