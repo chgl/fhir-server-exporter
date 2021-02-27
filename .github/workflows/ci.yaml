@@ -118,6 +118,10 @@ jobs:
       - name: Deploy to cluster
         run: |
           skaffold run
+      - name: Run integration test
+        run: |
+          kubectl apply -f hack/k8s/test-job.yaml
+          kubectl wait --for=condition=complete --timeout=300s -f hack/k8s/test-job.yaml
   release:
     needs: test
     name: Release
