@@ -15,7 +15,14 @@ using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .ConfigureServices((_, services) => services.AddHostedService<FhirExporter>());
+        .ConfigureServices((_, services) => services.AddHostedService<FhirExporter>())
+        .ConfigureLogging(builder =>
+            builder.AddSimpleConsole(options =>
+            {
+                options.UseUtcTimestamp = true;
+                options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
+                options.SingleLine = true;
+            }));
 
 CreateHostBuilder(args).Build().Run();
 
@@ -48,8 +55,11 @@ public class FhirExporter : BackgroundService
         _logger = logger;
         _config = config;
 
-        var serverUrl = _config.GetValue<string>("FhirServerUrl") ??
+        var serverUrl = _config.GetValue<string>("FhirServerUrl");
+        if (string.IsNullOrEmpty(serverUrl))
+        {
             throw new InvalidOperationException("FhirServerUrl needs to be set.");
+        }
 
         var basicAuthUser = _config.GetValue<string>("Auth:Basic:Username", null);
         var basicAuthPassword = _config.GetValue<string>("Auth:Basic:Password", null);
@@ -91,8 +101,10 @@ public class FhirExporter : BackgroundService
         {
             using (FetchResourceCountDuration.NewTimer())
             {
-                var updateTasks = _resourceTypes.Select(t => UpdateResourceCountAsync(t));
-                await Task.WhenAll(updateTasks);
+                foreach (var resourceType in _resourceTypes)
+                {
+                    await UpdateResourceCountAsync(resourceType);
+                }
             }
 
             await Task.Delay(fetchInterval, stoppingToken);
@@ -111,7 +123,7 @@ public class FhirExporter : BackgroundService
                 resourceType,
                 total);
 
-            ResourceCount.WithLabels(resourceType).Set(total);
+            ResourceCount.WithLabels(resourceType).Set(total ?? 0);
         }
         catch (Exception exc)
         {
@@ -120,10 +132,10 @@ public class FhirExporter : BackgroundService
         }
     }
 
-    private async Task<int> FetchResourceCountForTypeAsync(string resourceType)
+    private async Task<int?> FetchResourceCountForTypeAsync(string resourceType)
     {
         var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
-        return response.Total.Value;
+        return response.Total;
     }
 
     private static HttpMessageHandler GetBasicAuthMessageHandler(string username, string password) =>
