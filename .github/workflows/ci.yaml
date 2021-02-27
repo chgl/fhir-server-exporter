@@ -89,6 +89,20 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+  test:
+    runs-on: ubuntu-20.04
+    needs:
+      - build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Create k8s KinD Cluster
+        uses: helm/kind-action@v1.1.0
+      - name: Deploy to cluster
+        run: |
+          skaffold run
   release:
     needs: build
     name: Release
