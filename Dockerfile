@@ -10,6 +10,10 @@ RUN dotnet publish \
     -o /build/publish \
     src/FhirServerExporter/FhirServerExporter.csproj
 
+FROM build AS test
+WORKDIR /build/src/FhirServerExporter.Tests
+RUN dotnet test -p:CollectCoverage=true
+
 FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
 WORKDIR /opt/fhir-server-exporter
 COPY --from=build /build/publish .

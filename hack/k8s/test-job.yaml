@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test-metrics
+spec:
+  template:
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: curl
+          image: curlimages/curl:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - curl
+              --retry-connrefuse
+              --connect-timeout 10
+              --max-time 300
+              --retry 10
+              --retry-delay 10
+              http://fhir-server-exporter:9797/metrics
+      restartPolicy: Never

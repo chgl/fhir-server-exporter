@@ -1,0 +1,60 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fhir-server
+  labels:
+    app.kubernetes.io/name: fhir-server
+spec:
+  containers:
+    - name: fhir-server
+      image: ghcr.io/chgl/hapi/hapi-fhir-jpaserver-starter:5.2.0-distroless
+      resources:
+        limits:
+          memory: "2Gi"
+          cpu: "1000m"
+      ports:
+        - containerPort: 8080
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fhir-server
+spec:
+  selector:
+    app.kubernetes.io/name: fhir-server
+  ports:
+    - port: 8080
+      targetPort: http
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: fhir-server-exporter
+  labels:
+    app.kubernetes.io/name: fhir-server-exporter
+spec:
+  containers:
+    - name: fhir-server-exporter
+      image: fhir-server-exporter
+      resources:
+        limits:
+          memory: "256Mi"
+          cpu: "1000m"
+      ports:
+        - containerPort: 9797
+          name: metrics
+      env:
+        - name: FhirServerUrl
+          value: http://fhir-server:8080/fhir
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fhir-server-exporter
+spec:
+  selector:
+    app.kubernetes.io/name: fhir-server-exporter
+  ports:
+    - port: 9797
+      targetPort: metrics

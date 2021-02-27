@@ -5,6 +5,8 @@
     <UserSecretsId>dotnet-FhirServerExporter-51CE8CEB-7E96-4CF2-8F16-71D416CB7867</UserSecretsId>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,4 +14,9 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
     <PackageReference Include="prometheus-net" Version="4.1.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>
