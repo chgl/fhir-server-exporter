@@ -21,12 +21,13 @@ jobs:
       - uses: actions/setup-python@v2
       - name: Run pre-commit
         uses: pre-commit/action@v2.0.0
-      - name: Lint code base
-        uses: github/super-linter@v3
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # temp disabled until https://github.com/replicatedhq/dockerfilelint/issues/169
+      # - name: Lint code base
+      #   uses: github/super-linter@v3
+      #   env:
+      #     VALIDATE_ALL_CODEBASE: false
+      #     DEFAULT_BRANCH: master
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
     name: Build
     runs-on: ubuntu-20.04
@@ -104,7 +105,7 @@ jobs:
         run: |
           skaffold run
   release:
-    needs: build
+    needs: test
     name: Release
     runs-on: ubuntu-20.04
     if: github.event_name != 'pull_request'
