@@ -109,13 +109,12 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-      - name: Create k8s KinD Cluster
+      - name: Create k8s Kind Cluster
         uses: helm/kind-action@v1.1.0
-      - name: Run Skaffold pipeline
-        uses: hiberbee/github-action-skaffold@latest
-        with:
-          command: run
-          skaffold-version: "1.20.0"
+      - name: Install skaffold
+        run: |
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
+          sudo install skaffold /usr/local/bin/
       - name: Deploy to cluster
         run: |
           skaffold run
