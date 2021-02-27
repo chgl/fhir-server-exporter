@@ -91,7 +91,7 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
   release:
-    needs: test
+    needs: build
     name: Release
     runs-on: ubuntu-20.04
     if: github.event_name != 'pull_request'
