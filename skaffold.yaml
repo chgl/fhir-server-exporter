@@ -1,0 +1,15 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+metadata:
+  name: fhir-server-exporter
+build:
+  local:
+    useBuildkit: true
+  artifacts:
+    - image: fhir-server-exporter
+      docker:
+        dockerfile: Dockerfile
+deploy:
+  kubectl:
+    manifests:
+      - hack/k8s/pods.yaml
