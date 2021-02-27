@@ -90,39 +90,6 @@ jobs:
           labels: ${{ steps.docker_meta.outputs.labels }}
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-  test:
-    name: Test
-    runs-on: ubuntu-20.04
-    needs:
-      - build
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-      - name: Create k8s Kind Cluster
-        uses: helm/kind-action@v1.1.0
-      - name: Install skaffold
-        run: |
-          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && \
-          sudo install skaffold /usr/local/bin/
-      - name: Deploy to cluster
-        run: |
-          skaffold run
-      - name: Run integration test
-        run: |
-          kubectl apply -f hack/k8s/test-job.yaml
-          kubectl get pods -o wide -A
-          kubectl wait --for=condition=complete --timeout=300s -f hack/k8s/test-job.yaml
   release:
     needs: test
     name: Release
