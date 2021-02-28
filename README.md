@@ -43,6 +43,10 @@ instead of using `latest`.
 | AUTH\_\_BASIC\_\_USERNAME | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
 | AUTH\_\_BASIC\_\_PASSWORD | Basic auth password.                                                                                            | `""`          |
 
+## Install on Kubernetes
+
+To deploy the exporter on Kubernetes, a Helm chart is available at <https://github.com/chgl/charts/charts/fhir-server-exporter>.
+
 ## Development
 
 1. Start an empty HAPI FHIR server exposed on port 8282 and a pre-configured Prometheus instance on port 9090:
