@@ -123,7 +123,10 @@ public class FhirExporter : BackgroundService
                 resourceType,
                 total);
 
-            ResourceCount.WithLabels(resourceType).Set(total ?? 0);
+            if (total.HasValue)
+            {
+                ResourceCount.WithLabels(resourceType).Set(total.Value);
+            }
         }
         catch (Exception exc)
         {
