@@ -45,7 +45,7 @@ instead of using `latest`.
 
 ## Install on Kubernetes
 
-To deploy the exporter on Kubernetes, a Helm chart is available at <https://github.com/chgl/charts/charts/fhir-server-exporter>.
+To deploy the exporter on Kubernetes, a Helm chart is available at <https://github.com/chgl/charts/tree/master/charts/fhir-server-exporter>.
 
 ## Development
 
