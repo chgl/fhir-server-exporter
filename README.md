@@ -34,18 +34,33 @@ instead of using `latest`.
 
 ### Configuration
 
-| Environment Variable      | Description                                                                                                     | Default value |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
-| FHIRSERVERURL             | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
-| FETCHINTERVALSECONDS      | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
-| METRICSPORT               | The local port on which the metrics should be exposed at.                                                       | `9797`        |
-| EXCLUDEDRESOURCES         | A comma-seperated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
-| AUTH\_\_BASIC\_\_USERNAME | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
-| AUTH\_\_BASIC\_\_PASSWORD | Basic auth password.                                                                                            | `""`          |
+| Environment Variable          | Description                                                                                                     | Default value |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
+| FHIRSERVERURL                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
+| FETCHINTERVALSECONDS          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
+| METRICSPORT                   | The local port on which the metrics should be exposed at.                                                       | `9797`        |
+| EXCLUDEDRESOURCES             | A comma-seperated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
+| AUTH\_\_BASIC\_\_USERNAME     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
+| AUTH\_\_BASIC\_\_PASSWORD     | Basic auth password.                                                                                            | `""`          |
+| AUTH\_\_BEARERTOKEN           | Static token to set in the `Authorization: Bearer ...` header.                                                  | `""`          |
+| AUTH\_\_OAUTH\_\_TOKENURL     | OAuth token endpoint URL.                                                                                       | `""`          |
+| AUTH\_\_OAUTH\_\_CLIENTID     | OAuth client id.                                                                                                | `""`          |
+| AUTH\_\_OAUTH\_\_CLIENTSECRET | OAuth client secret                                                                                             | `""`          |
+| AUTH\_\_OAUTH\_\_SCOPE        | OAuth scope                                                                                                     | `""`          |
 
 ## Install on Kubernetes
 
 To deploy the exporter on Kubernetes, a Helm chart is available at <https://github.com/chgl/charts/tree/master/charts/fhir-server-exporter>.
+
+## Authentication
+
+If multiple authentication settings are given, the order of usage is:
+
+1. Basic Auth
+1. Bearer Token
+1. OAuth
+
+so if you've specified both a basic auth username and password and an oauth token URL, only the basic auth is used.
 
 ## Development
 
