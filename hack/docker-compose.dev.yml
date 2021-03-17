@@ -12,3 +12,11 @@ services:
     image: hapiproject/hapi:v5.2.1
     ports:
       - "127.0.0.1:8082:8080"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:11.0.3
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+    ports:
+      - 8083:8080

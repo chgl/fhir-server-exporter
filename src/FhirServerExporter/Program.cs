@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Hl7.Fhir.Rest;
@@ -15,7 +13,27 @@ using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .ConfigureServices((_, services) => services.AddHostedService<FhirExporter>())
+        .ConfigureServices((ctx, services) =>
+        {
+            services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
+            services.AddHostedService<FhirExporter>();
+
+            var config = ctx.Configuration;
+            var oAuthUri = config.GetValue<Uri>("Auth:OAuth:TokenUrl");
+            if (oAuthUri != null)
+            {
+                services.AddAccessTokenManagement(options =>
+                {
+                    options.Client.Clients.Add("default", new()
+                    {
+                        Address = oAuthUri.AbsoluteUri,
+                        ClientId = config.GetValue<string>("Auth:OAuth:ClientId"),
+                        ClientSecret = config.GetValue<string>("Auth:OAuth:ClientSecret"),
+                        Scope = config.GetValue<string>("Auth:OAuth:Scope"),
+                    });
+                });
+            }
+        })
         .ConfigureLogging(builder =>
             builder.AddSimpleConsole(options =>
             {
@@ -45,38 +63,30 @@ public class FhirExporter : BackgroundService
     private static readonly Histogram FetchResourceCountDuration = Metrics
         .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.");
 
-    private readonly ILogger<FhirExporter> _logger;
+    private readonly ILogger<FhirExporter> _log;
     private readonly IConfiguration _config;
     private readonly FhirClient _fhirClient;
     private readonly IEnumerable<string> _resourceTypes;
+    private readonly IAuthHeaderProvider _authHeaderProvider;
 
-    public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config)
+    public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config, IAuthHeaderProvider authHeaderProvider)
     {
-        _logger = logger;
+        _log = logger;
         _config = config;
 
-        var serverUrl = _config.GetValue<string>("FhirServerUrl");
-        if (string.IsNullOrEmpty(serverUrl))
+        var serverUrl = _config.GetValue<Uri>("FhirServerUrl");
+        if (serverUrl == null)
         {
             throw new InvalidOperationException("FhirServerUrl needs to be set.");
         }
 
-        var basicAuthUser = _config.GetValue<string>("Auth:Basic:Username", null);
-        var basicAuthPassword = _config.GetValue<string>("Auth:Basic:Password", null);
+        _authHeaderProvider = authHeaderProvider;
 
-        if (!string.IsNullOrWhiteSpace(basicAuthUser) && !string.IsNullOrWhiteSpace(basicAuthPassword))
-        {
-            _fhirClient = new FhirClient(serverUrl,
-                messageHandler: GetBasicAuthMessageHandler(basicAuthUser, basicAuthPassword));
-        }
-        else
-        {
-            _fhirClient = new FhirClient(serverUrl);
-        }
+        _fhirClient = new FhirClient(serverUrl);
 
         var excludedResources = _config.GetValue("ExcludedResources", "").Split(',');
 
-        _logger.LogInformation("Excluding the following resources from counting: {excludedResources}",
+        _log.LogInformation("Excluding the following resources from counting: {excludedResources}",
             _config.GetValue("ExcludedResources", ""));
 
         _resourceTypes = Enum.GetValues(typeof(Fhir.ResourceType))
@@ -94,11 +104,13 @@ public class FhirExporter : BackgroundService
         var server = new MetricServer(port: port);
         server.Start();
 
-        _logger.LogInformation("FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
+        _log.LogInformation("FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
             port, _fhirClient.Endpoint);
 
         while (!stoppingToken.IsCancellationRequested)
         {
+            _fhirClient.RequestHeaders.Authorization = await _authHeaderProvider.GetAuthHeaderAsync(stoppingToken);
+
             using (FetchResourceCountDuration.NewTimer())
             {
                 foreach (var resourceType in _resourceTypes)
@@ -115,11 +127,11 @@ public class FhirExporter : BackgroundService
 
     private async Task UpdateResourceCountAsync(string resourceType)
     {
-        _logger.LogDebug("Fetching resource count for {resourceType}", resourceType);
+        _log.LogDebug("Fetching resource count for {resourceType}", resourceType);
         try
         {
             var total = await FetchResourceCountForTypeAsync(resourceType);
-            _logger.LogDebug("Updating resource count for {resourceType} to {count}",
+            _log.LogDebug("Updating resource count for {resourceType} to {count}",
                 resourceType,
                 total);
 
@@ -130,7 +142,7 @@ public class FhirExporter : BackgroundService
         }
         catch (Exception exc)
         {
-            _logger.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
+            _log.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
             FetchResourceCountErrors.WithLabels(resourceType).Inc();
         }
     }
@@ -140,10 +152,4 @@ public class FhirExporter : BackgroundService
         var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
         return response.Total;
     }
-
-    private static HttpMessageHandler GetBasicAuthMessageHandler(string username, string password) =>
-        new HttpClientHandler
-        {
-            Credentials = new NetworkCredential(username, password),
-        };
 }

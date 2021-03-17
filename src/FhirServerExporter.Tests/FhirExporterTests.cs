@@ -11,7 +11,7 @@ public class FhirExporterTests
     [Fact]
     public void Construct_WithMissingFhirServerUrl_ShouldThrow()
     {
-        Action construct = () => _ = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), A.Fake<IConfiguration>());
+        Action construct = () => _ = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), A.Fake<IConfiguration>(), A.Fake<IAuthHeaderProvider>());
 
         construct.Should().Throw<InvalidOperationException>();
     }
@@ -28,7 +28,7 @@ public class FhirExporterTests
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
-        var sut = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), configuration);
+        var sut = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), configuration, A.Fake<IAuthHeaderProvider>());
 
         sut.Should().NotBeNull();
     }
