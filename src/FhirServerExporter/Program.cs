@@ -19,20 +19,22 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             services.AddHostedService<FhirExporter>();
 
             var config = ctx.Configuration;
-            var oAuthUri = config.GetValue<Uri>("Auth:OAuth:TokenUrl");
-            if (oAuthUri != null)
+            services.AddAccessTokenManagement(options =>
             {
-                services.AddAccessTokenManagement(options =>
+                var oauthUri = config.GetValue<Uri>("Auth:OAuth:TokenUrl")?.AbsoluteUri;
+                if (oauthUri == null)
                 {
-                    options.Client.Clients.Add("default", new()
-                    {
-                        Address = oAuthUri.AbsoluteUri,
-                        ClientId = config.GetValue<string>("Auth:OAuth:ClientId"),
-                        ClientSecret = config.GetValue<string>("Auth:OAuth:ClientSecret"),
-                        Scope = config.GetValue<string>("Auth:OAuth:Scope"),
-                    });
+                    return;
+                }
+
+                options.Client.Clients.Add("default", new()
+                {
+                    Address = oauthUri,
+                    ClientId = config.GetValue<string>("Auth:OAuth:ClientId"),
+                    ClientSecret = config.GetValue<string>("Auth:OAuth:ClientSecret"),
+                    Scope = config.GetValue<string>("Auth:OAuth:Scope"),
                 });
-            }
+            });
         })
         .ConfigureLogging(builder =>
             builder.AddSimpleConsole(options =>
