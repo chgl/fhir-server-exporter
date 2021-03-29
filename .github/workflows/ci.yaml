@@ -116,6 +116,7 @@ jobs:
         with:
           version: v0.10.0
       - name: Load image into KinD
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           kind load docker-image ${{ steps.list_images.outputs.image_name }}
       - uses: imranismail/setup-kustomize@v1
