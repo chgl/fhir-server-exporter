@@ -103,7 +103,7 @@ public class FhirExporter : BackgroundService
         var port = _config.GetValue<int>("MetricsPort");
         var fetchInterval = TimeSpan.FromSeconds(_config.GetValue<int>("FetchIntervalSeconds"));
 
-        var server = new MetricServer(port: port);
+        using var server = new MetricServer(port: port);
         server.Start();
 
         _log.LogInformation("FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",

@@ -1,14 +1,14 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: test-metrics
+  name: test-fhir-server-exporter
 spec:
   template:
     spec:
       automountServiceAccountToken: false
       containers:
         - name: curl
-          image: curlimages/curl:latest
+          image: curlimages/curl:7.75.0
           command: ["/bin/sh", "-c"]
           args:
             - curl
