@@ -35,17 +35,29 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Run Trivy vulnerability scanner in repo mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          ignore-unfixed: true
+          format: "template"
+          template: "@/contrib/sarif.tpl"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL"
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: "trivy-results.sarif"
       - name: Docker meta
         id: docker_meta
-        uses: crazy-max/ghaction-docker-meta@v1
+        uses: crazy-max/ghaction-docker-meta@v2
         with:
+          tags: |
+            type=sha
           images: |
             docker.io/chgl/fhir-server-exporter
             quay.io/chgl/fhir-server-exporter
             ghcr.io/chgl/fhir-server-exporter
-          tag-sha: true
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to DockerHub
@@ -79,6 +91,8 @@ jobs:
         id: docker_build_unit_test
         uses: docker/build-push-action@v2
         with:
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
           push: false
           target: test
       - name: Build and push
@@ -90,21 +104,37 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@master
+          load: true
+      - name: List images
+        id: list_images
+        run: |
+          docker image ls
+          IMAGES=(${{ steps.docker_meta.outputs.tags }})
+          echo "##[set-output name=image_name;]${IMAGES[0]}"
+      - name: Create k8s KinD Cluster
+        uses: engineerd/setup-kind@v0.5.0
         with:
-          scan-type: "fs"
-          ignore-unfixed: true
-          format: "template"
-          template: "@/contrib/sarif.tpl"
-          output: "trivy-results.sarif"
-          severity: "CRITICAL"
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v1
+          version: v0.10.0
+      - name: Load image into KinD
+        run: |
+          kind load docker-image ${{ steps.list_images.outputs.image_name }}
+      - uses: imranismail/setup-kustomize@v1
         with:
-          sarif_file: "trivy-results.sarif"
+          kustomize-version: "4.0.5"
+      - name: Deploy image
+        run: |
+          kustomize edit set image fhir-server-exporter="${{ steps.list_images.outputs.image_name }}"
+          kustomize build
+          kustomize build | kubectl apply -f -
+          kubectl get pods -A -o wide
+          kubectl describe pod/fhir-server-exporter
+      - name: Run fhir-server-exporter test job
+        run: |
+          kubectl apply -f hack/k8s/test-job.yaml
+          kubectl get pods -A -o wide
+          kubectl wait --for=condition=Ready --timeout=5m pod/fhir-server-exporter
+          kubectl wait --for=condition=Complete --timeout=5m job/test-fhir-server-exporter
+
   release:
     needs: build
     name: Release
