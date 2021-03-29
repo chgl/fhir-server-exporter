@@ -104,7 +104,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
-          load: true
+          load: ${{ github.event_name == 'pull_request' }}
       - name: List images
         id: list_images
         run: |
