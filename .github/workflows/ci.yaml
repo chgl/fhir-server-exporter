@@ -52,8 +52,6 @@ jobs:
         id: docker_meta
         uses: crazy-max/ghaction-docker-meta@v2
         with:
-          tags: |
-            type=sha
           images: |
             docker.io/chgl/fhir-server-exporter
             quay.io/chgl/fhir-server-exporter
