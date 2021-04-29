@@ -1,5 +1,10 @@
 # FHIR Server Exporter
 
+![Last Version](https://img.shields.io/github/v/release/chgl/fhir-server-exporter)
+![License](https://img.shields.io/github/license/chgl/fhir-server-exporter)
+![Docker Pull](https://img.shields.io/docker/pulls/chgl/fhir-server-exporter)
+[![CI](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml/badge.svg)](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml)
+
 FHIR server resource count exporter for Prometheus.
 
 ## Usage
