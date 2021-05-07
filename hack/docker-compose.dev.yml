@@ -9,7 +9,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: hapiproject/hapi:v5.2.1
+    image: hapiproject/hapi:v5.4.0
     ports:
       - "127.0.0.1:8082:8080"
 
