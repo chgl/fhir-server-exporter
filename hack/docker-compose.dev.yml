@@ -9,7 +9,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: hapiproject/hapi:v5.4.0
+    image: ghcr.io/chgl/hapifhir/hapi-fhir-jpaserver-starter:5.5.0-pre1-snapshot
     ports:
       - "127.0.0.1:8082:8080"
 
@@ -19,4 +19,4 @@ services:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
     ports:
-      - 8083:8080
+      - "127.0.0.1:8083:8080"
