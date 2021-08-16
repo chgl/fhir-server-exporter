@@ -1,8 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /build
 COPY src/FhirServerExporter/FhirServerExporter.csproj .
-COPY src/FhirServerExporter/packages.lock.json .
-RUN dotnet restore --locked-mode
+RUN dotnet restore
 COPY . .
 
 RUN dotnet publish \
