@@ -114,7 +114,7 @@ jobs:
       - name: Load image into KinD
         if: ${{ github.event_name == 'pull_request' }}
         run: |
-          kind load docker-image ${{ steps.list_images.outputs.image_name }}
+          kind load docker-image ${{ steps.list_images.outputs.image_name }} --name=chart-testing
       - uses: imranismail/setup-kustomize@v1
         with:
           kustomize-version: "4.0.5"
