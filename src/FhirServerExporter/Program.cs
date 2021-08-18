@@ -63,13 +63,18 @@ public class FhirExporter : BackgroundService
             });
 
     private static readonly Histogram FetchResourceCountDuration = Metrics
-        .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.");
+        .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.",
+         new HistogramConfiguration
+         {
+             LabelNames = new[] { "server_name" }
+         });
 
     private readonly ILogger<FhirExporter> _log;
     private readonly IConfiguration _config;
     private readonly FhirClient _fhirClient;
     private readonly IEnumerable<string> _resourceTypes;
     private readonly IAuthHeaderProvider _authHeaderProvider;
+    private readonly string _fhirServerName;
 
     public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config, IAuthHeaderProvider authHeaderProvider)
     {
@@ -97,6 +102,7 @@ public class FhirExporter : BackgroundService
                 .Select(s => s.ToString())
                 .Except(excludedResources);
 
+        _fhirServerName = _config.GetValue<string>("FhirServerName");
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -114,7 +120,7 @@ public class FhirExporter : BackgroundService
         {
             _fhirClient.RequestHeaders.Authorization = await _authHeaderProvider.GetAuthHeaderAsync(stoppingToken);
 
-            using (FetchResourceCountDuration.NewTimer())
+            using (FetchResourceCountDuration.WithLabels(_fhirServerName).NewTimer())
             {
                 foreach (var resourceType in _resourceTypes)
                 {
@@ -140,13 +146,13 @@ public class FhirExporter : BackgroundService
 
             if (total.HasValue)
             {
-                ResourceCount.WithLabels(resourceType, _config.GetValue<string>("FhirServerName")).Set(total.Value);
+                ResourceCount.WithLabels(resourceType, _fhirServerName).Set(total.Value);
             }
         }
         catch (Exception exc)
         {
             _log.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
-            FetchResourceCountErrors.WithLabels(resourceType).Inc();
+            FetchResourceCountErrors.WithLabels(resourceType, _fhirServerName).Inc();
         }
     }
 
