@@ -52,14 +52,14 @@ public class FhirExporter : BackgroundService
         .CreateGauge("fhir_resource_count", "Number of resources stored within the FHIR server by type.",
             new GaugeConfiguration
             {
-                LabelNames = new[] { "type" }
+                LabelNames = new[] { "type", "server_name" }
             });
 
     private static readonly Counter FetchResourceCountErrors = Metrics
         .CreateCounter("fhir_fetch_resource_count_failed_total", "Number of resource count fetch operations that failed.",
             new CounterConfiguration
             {
-                LabelNames = new[] { "type" }
+                LabelNames = new[] { "type", "server_name" }
             });
 
     private static readonly Histogram FetchResourceCountDuration = Metrics
@@ -96,6 +96,7 @@ public class FhirExporter : BackgroundService
                 .Except(new[] { Fhir.ResourceType.DomainResource, Fhir.ResourceType.Resource })
                 .Select(s => s.ToString())
                 .Except(excludedResources);
+
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -139,7 +140,7 @@ public class FhirExporter : BackgroundService
 
             if (total.HasValue)
             {
-                ResourceCount.WithLabels(resourceType).Set(total.Value);
+                ResourceCount.WithLabels(resourceType, _config.GetValue<string>("FhirServerName")).Set(total.Value);
             }
         }
         catch (Exception exc)

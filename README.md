@@ -42,6 +42,7 @@ instead of using `latest`.
 | Environment Variable          | Description                                                                                                     | Default value |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
 | FHIRSERVERURL                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
+| FHIRSERVERNAME                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.          | `""`          |
 | FETCHINTERVALSECONDS          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
 | METRICSPORT                   | The local port on which the metrics should be exposed at.                                                       | `9797`        |
 | EXCLUDEDRESOURCES             | A comma-seperated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
