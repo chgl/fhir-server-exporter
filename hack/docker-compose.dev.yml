@@ -9,7 +9,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: ghcr.io/chgl/hapifhir/hapi-fhir-jpaserver-starter:5.5.0-pre1-snapshot
+    image: ghcr.io/chgl/hapi/hapi-fhir-jpaserver-starter:5.4.2-distroless
     ports:
       - "127.0.0.1:8082:8080"
 

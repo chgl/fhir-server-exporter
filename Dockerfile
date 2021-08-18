@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim-amd64 AS build
 WORKDIR /build
 COPY src/FhirServerExporter/FhirServerExporter.csproj .
 RUN dotnet restore
@@ -7,6 +7,7 @@ COPY . .
 RUN dotnet publish \
     -c Release \
     -o /build/publish \
+    /p:UseAppHost=false \
     src/FhirServerExporter/FhirServerExporter.csproj
 
 FROM build AS test
