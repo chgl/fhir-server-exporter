@@ -160,6 +160,7 @@ jobs:
           while read -r image; do
             if [[ $image = quay.io/* ]]; then
               echo "Skipping '$image' hosted on quay.io"
+              continue
             fi
             echo "Signing $image"
             cosign sign -key /tmp/cosign.key "$image"
