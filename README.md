@@ -30,9 +30,9 @@ fhir_resource_count{type="DiagnosticReport"} 36429
 
 The container image is pushed to three registries:
 
-- `quay.io/chgl/fhir-server-exporter:latest`
 - `docker.io/chgl/fhir-server-exporter:latest`
 - `ghcr.io/chgl/fhir-server-exporter:latest`
+- `quay.io/chgl/fhir-server-exporter:latest`
 
 You are strongly encouraged to use the `vX.Y.Z` tags corresponding to the [releases](https://github.com/chgl/fhir-server-exporter/releases)
 instead of using `latest`.
@@ -85,9 +85,18 @@ so if you've specified both a basic auth username and password and an oauth toke
 
 1. Access the exposed metrics at <http://localhost:9797/metrics>
 
-## Build and run container image locally
+### Build and run container image locally
 
 ```sh
 docker build -t fhir-server-exporter .
 docker run -e FHIRSERVERURL="http://host.docker.internal:8082/fhir" -p 9797:9797 fhir-server-exporter
+```
+
+## Verify image integrity
+
+All released container images are signed using [cosign](https://github.com/sigstore/cosign).
+The public key hosted at <https://chgl.github.io/cosign.pub> (see [here](https://github.com/chgl/chgl.github.io) for the repository source) may be used to verify them:
+
+```sh
+cosign verify -key https://chgl.github.io/cosign.pub ghcr.io/chgl/fhir-server-exporter:latest
 ```
