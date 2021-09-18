@@ -54,6 +54,36 @@ instead of using `latest`.
 | AUTH\_\_OAUTH\_\_CLIENTSECRET | OAuth client secret                                                                                             | `""`          |
 | AUTH\_\_OAUTH\_\_SCOPE        | OAuth scope                                                                                                     | `""`          |
 
+### Custom Queries
+
+You can also specify a list of custom queries to run against the FHIR server.
+Create a file called `queries.yaml` and place it in the application's main directory:
+
+```sh
+docker run --rm -it \
+   -e FHIRSERVERURL="https://hapi.fhir.org/baseR4" \
+   -p 9797:9797 \
+   -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
+   ghcr.io/chgl/fhir-server-exporter:latest
+```
+
+Here's an example `queries.yaml` file. It exports three gauge metrics as `fhir_male_patient_count`,
+`fhir_female_patient_count`, and `fhir_older_female_patient_count`.
+
+```yaml
+queries:
+  - name: fhir_male_patient_count
+    query: Patient?gender=male
+    description: Male patients
+  - name: fhir_female_patient_count
+    query: Patient?gender=female
+  - name: fhir_older_female_patient_count
+    query: Patient?gender=female&birthdate=le1900
+    description: Female patients born on or before 1900
+```
+
+Note that `&_summary=count` is automatically appended to the query.
+
 ## Install on Kubernetes
 
 To deploy the exporter on Kubernetes, a Helm chart is available at <https://github.com/chgl/charts/tree/master/charts/fhir-server-exporter>.

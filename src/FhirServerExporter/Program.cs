@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Hl7.Fhir.Rest;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,12 @@ using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
+        .ConfigureAppConfiguration((config) =>
+        {
+            config.AddYamlFile("queries.yaml",
+                optional: true,
+                reloadOnChange: true);
+        })
         .ConfigureServices((ctx, services) =>
         {
             services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
@@ -41,10 +48,17 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             {
                 options.UseUtcTimestamp = true;
                 options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
-                options.SingleLine = true;
+                options.SingleLine = false;
             }));
 
 CreateHostBuilder(args).Build().Run();
+
+public record CustomMetric
+{
+    public string Name { get; init; }
+    public string Query { get; init; }
+    public string Description { get; init; }
+}
 
 public class FhirExporter : BackgroundService
 {
@@ -75,6 +89,8 @@ public class FhirExporter : BackgroundService
     private readonly IEnumerable<string> _resourceTypes;
     private readonly IAuthHeaderProvider _authHeaderProvider;
     private readonly string _fhirServerName;
+    private readonly IEnumerable<CustomMetric> _customMetrics;
+    private readonly IDictionary<string, Gauge> _customGauges;
 
     public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config, IAuthHeaderProvider authHeaderProvider)
     {
@@ -103,6 +119,16 @@ public class FhirExporter : BackgroundService
                 .Except(excludedResources);
 
         _fhirServerName = _config.GetValue<string>("FhirServerName");
+
+        _customMetrics = config.GetSection("Queries").Get<List<CustomMetric>>() ?? new();
+
+        _customGauges = _customMetrics.Select(metric => Metrics
+            .CreateGauge(metric.Name, metric.Description,
+                new GaugeConfiguration
+                {
+                    LabelNames = new[] { "type", "server_name" }
+                })
+        ).ToDictionary(gauge => gauge.Name);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -122,6 +148,38 @@ public class FhirExporter : BackgroundService
 
             using (FetchResourceCountDuration.WithLabels(_fhirServerName).NewTimer())
             {
+                foreach (var customMetric in _customMetrics)
+                {
+                    _log.LogInformation("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
+                    var resourceTypeAndFilters = customMetric.Query.Split("?");
+
+                    if (resourceTypeAndFilters.Length < 2)
+                    {
+                        _log.LogWarning("Parsing custom metric query string failed. " +
+                            "Should look like: <resourceType>?<name>=<value>&...");
+                        continue;
+                    }
+
+                    var resourceType = resourceTypeAndFilters[0];
+                    var kv = HttpUtility.ParseQueryString(resourceTypeAndFilters[1]);
+                    var paramList = kv.AllKeys.Select(key => Tuple.Create(key, kv[key]));
+                    var sp = SearchParams.FromUriParamList(paramList);
+                    sp.Summary = SummaryType.Count;
+
+                    var result = await _fhirClient.SearchAsync(sp, resourceType);
+
+                    if (result.Total.HasValue)
+                    {
+                        _customGauges[customMetric.Name]
+                            .WithLabels(resourceType, _fhirServerName)
+                            .Set(result.Total.Value);
+                    }
+                    else
+                    {
+                        _log.LogWarning("No 'total' returned for {query}", customMetric.Query);
+                    }
+                }
+
                 foreach (var resourceType in _resourceTypes)
                 {
                     await UpdateResourceCountAsync(resourceType);
