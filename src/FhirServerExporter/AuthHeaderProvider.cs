@@ -1,11 +1,11 @@
+using System;
 using System.Net.Http.Headers;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using System;
-using Microsoft.Extensions.Logging;
-using IdentityModel.AspNetCore.AccessTokenManagement;
 using System.Threading;
 using System.Threading.Tasks;
+using IdentityModel.AspNetCore.AccessTokenManagement;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 public interface IAuthHeaderProvider
 {

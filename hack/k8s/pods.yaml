@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: fhir-server
-      image: ghcr.io/chgl/hapifhir/hapi-fhir-jpaserver-starter:5.5.0-pre1-snapshot
+      image: ghcr.io/chgl/hapi/hapi-fhir-jpaserver-starter:5.4.2-distroless
       resources:
         limits:
           memory: "2Gi"

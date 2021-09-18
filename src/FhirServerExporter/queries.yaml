@@ -1,0 +1,9 @@
+queries:
+  - name: fhir_male_patient_count
+    query: Patient?gender=male
+    description: Male patients
+  - name: fhir_female_patient_count
+    query: Patient?gender=female
+  - name: fhir_older_female_patient_count
+    query: Patient?gender=female&birthdate=le1900
+    description: Female patients born on or before 1900
