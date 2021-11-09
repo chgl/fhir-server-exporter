@@ -2,14 +2,14 @@ version: "3.7"
 
 services:
   prometheus:
-    image: prom/prometheus:v2.30.3
+    image: quay.io/prometheus/prometheus:v2.31.1
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: ghcr.io/chgl/hapi/hapi-fhir-jpaserver-starter:5.4.2-distroless
+    image: docker.io/hapiproject/hapi:v5.5.1-distroless
     ports:
       - "127.0.0.1:8082:8080"
 
