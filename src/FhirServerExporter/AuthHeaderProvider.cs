@@ -14,21 +14,22 @@ public interface IAuthHeaderProvider
 
 public class AuthHeaderProvider : IAuthHeaderProvider
 {
-    private readonly IClientAccessTokenManagementService _tokenService;
-    private readonly IConfiguration _config;
-    private readonly ILogger<AuthHeaderProvider> _log;
+    private readonly IClientAccessTokenManagementService tokenService;
+    private readonly IConfiguration config;
+    private readonly ILogger<AuthHeaderProvider> log;
 
     public AuthHeaderProvider(IConfiguration config, IClientAccessTokenManagementService tokenService, ILogger<AuthHeaderProvider> logger)
     {
-        _config = config;
-        _log = logger;
-        _tokenService = tokenService;
+        this.config = config;
+        log = logger;
+        this.tokenService = tokenService;
 
         BasicAuthHeader = GetBasicAuthHeader();
         BearerTokenAuthHeader = GetBearerTokenHeader();
     }
 
     public AuthenticationHeaderValue BasicAuthHeader { get; }
+
     public AuthenticationHeaderValue BearerTokenAuthHeader { get; }
 
     public async Task<AuthenticationHeaderValue> GetAuthHeaderAsync(CancellationToken cancelToken = default)
@@ -48,18 +49,18 @@ public class AuthHeaderProvider : IAuthHeaderProvider
 
     private async Task<AuthenticationHeaderValue> GetOAuthHeader(CancellationToken cancelToken = default)
     {
-        var oAuthUri = _config.GetValue<Uri>("Auth:OAuth:TokenUrl");
+        var oAuthUri = config.GetValue<Uri>("Auth:OAuth:TokenUrl");
         if (oAuthUri != null)
         {
-            var token = await _tokenService.GetClientAccessTokenAsync(cancellationToken: cancelToken);
+            var token = await tokenService.GetClientAccessTokenAsync(cancellationToken: cancelToken);
 
             if (token == null)
             {
-                _log.LogError("Failed to get oauth token.");
+                log.LogError("Failed to get oauth token.");
                 return null;
             }
 
-            _log.LogDebug("Using oauth token");
+            log.LogDebug("Using oauth token");
 
             return new AuthenticationHeaderValue("Bearer", token);
         }
@@ -69,13 +70,13 @@ public class AuthHeaderProvider : IAuthHeaderProvider
 
     private AuthenticationHeaderValue GetBasicAuthHeader()
     {
-        var username = _config.GetValue<string>("Auth:Basic:Username", null);
-        var password = _config.GetValue<string>("Auth:Basic:Password", null);
+        var username = config.GetValue<string>("Auth:Basic:Username", null);
+        var password = config.GetValue<string>("Auth:Basic:Password", null);
 
         if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(username))
         {
             var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
-            _log.LogDebug("Using basic auth");
+            log.LogDebug("Using basic auth");
             return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
 
@@ -84,11 +85,11 @@ public class AuthHeaderProvider : IAuthHeaderProvider
 
     private AuthenticationHeaderValue GetBearerTokenHeader()
     {
-        var bearerTokenFromConfig = _config.GetValue<string>("Auth:BearerToken");
+        var bearerTokenFromConfig = config.GetValue<string>("Auth:BearerToken");
 
         if (!string.IsNullOrWhiteSpace(bearerTokenFromConfig))
         {
-            _log.LogDebug("Using static bearer token");
+            log.LogDebug("Using static bearer token");
             return new AuthenticationHeaderValue("Bearer", bearerTokenFromConfig);
         }
 

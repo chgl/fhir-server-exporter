@@ -261,6 +261,17 @@ dotnet_diagnostic.IDE0060.severity = warning
 
 dotnet_diagnostic.IDE0073.severity = none
 
+# Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = None
+
+# File name should match first type name
+dotnet_diagnostic.SA1649.severity = None
+
+# The file header is missing or not located at the top of the file
+dotnet_diagnostic.SA1633.severity = None
+
+# XML comment analysis is disabled due to project configuration
+dotnet_diagnostic.SA0001.severity = None
 
 # CA1822: Make member static
 dotnet_diagnostic.CA1822.severity = warning

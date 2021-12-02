@@ -16,7 +16,8 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration((config) =>
         {
-            config.AddYamlFile("queries.yaml",
+            config.AddYamlFile(
+                "queries.yaml",
                 optional: true,
                 reloadOnChange: true);
         })
@@ -56,106 +57,119 @@ CreateHostBuilder(args).Build().Run();
 public record CustomMetric
 {
     public string Name { get; init; }
+
     public string Query { get; init; }
+
     public string Description { get; init; }
 }
 
 public class FhirExporter : BackgroundService
 {
     private static readonly Gauge ResourceCount = Metrics
-        .CreateGauge("fhir_resource_count", "Number of resources stored within the FHIR server by type.",
+        .CreateGauge(
+            "fhir_resource_count",
+            "Number of resources stored within the FHIR server by type.",
             new GaugeConfiguration
             {
-                LabelNames = new[] { "type", "server_name" }
+                LabelNames = new[] { "type", "server_name" },
             });
 
     private static readonly Counter FetchResourceCountErrors = Metrics
-        .CreateCounter("fhir_fetch_resource_count_failed_total", "Number of resource count fetch operations that failed.",
+        .CreateCounter(
+            "fhir_fetch_resource_count_failed_total",
+            "Number of resource count fetch operations that failed.",
             new CounterConfiguration
             {
-                LabelNames = new[] { "type", "server_name" }
+                LabelNames = new[] { "type", "server_name" },
             });
 
     private static readonly Histogram FetchResourceCountDuration = Metrics
-        .CreateHistogram("fhir_fetch_resource_count_duration_seconds", "Histogram of resource count fetching durations.",
-         new HistogramConfiguration
-         {
-             LabelNames = new[] { "server_name" }
-         });
+        .CreateHistogram(
+            "fhir_fetch_resource_count_duration_seconds",
+            "Histogram of resource count fetching durations.",
+            new HistogramConfiguration
+            {
+                LabelNames = new[] { "server_name" },
+            });
 
-    private readonly ILogger<FhirExporter> _log;
-    private readonly IConfiguration _config;
-    private readonly FhirClient _fhirClient;
-    private readonly IEnumerable<string> _resourceTypes;
-    private readonly IAuthHeaderProvider _authHeaderProvider;
-    private readonly string _fhirServerName;
-    private readonly IEnumerable<CustomMetric> _customMetrics;
-    private readonly IDictionary<string, Gauge> _customGauges;
+    private readonly ILogger<FhirExporter> log;
+    private readonly IConfiguration config;
+    private readonly FhirClient fhirClient;
+    private readonly IEnumerable<string> resourceTypes;
+    private readonly IAuthHeaderProvider authHeaderProvider;
+    private readonly string fhirServerName;
+    private readonly IEnumerable<CustomMetric> customMetrics;
+    private readonly IDictionary<string, Gauge> customGauges;
 
     public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config, IAuthHeaderProvider authHeaderProvider)
     {
-        _log = logger;
-        _config = config;
+        log = logger;
+        this.config = config;
 
-        var serverUrl = _config.GetValue<Uri>("FhirServerUrl");
+        var serverUrl = this.config.GetValue<Uri>("FhirServerUrl");
         if (serverUrl == null)
         {
             throw new InvalidOperationException("FhirServerUrl needs to be set.");
         }
 
-        _authHeaderProvider = authHeaderProvider;
+        this.authHeaderProvider = authHeaderProvider;
 
-        _fhirClient = new FhirClient(serverUrl);
+        fhirClient = new FhirClient(serverUrl);
 
-        var excludedResources = _config.GetValue("ExcludedResources", "").Split(',');
+        var excludedResources = this.config.GetValue("ExcludedResources", string.Empty).Split(',');
 
-        _log.LogInformation("Excluding the following resources from counting: {excludedResources}",
-            _config.GetValue("ExcludedResources", ""));
+        log.LogInformation(
+            "Excluding the following resources from counting: {excludedResources}",
+            this.config.GetValue("ExcludedResources", string.Empty));
 
-        _resourceTypes = Enum.GetValues(typeof(Fhir.ResourceType))
+        resourceTypes = Enum.GetValues(typeof(Fhir.ResourceType))
                 .Cast<Fhir.ResourceType>()
                 .Except(new[] { Fhir.ResourceType.DomainResource, Fhir.ResourceType.Resource })
                 .Select(s => s.ToString())
                 .Except(excludedResources);
 
-        _fhirServerName = _config.GetValue<string>("FhirServerName");
+        fhirServerName = this.config.GetValue<string>("FhirServerName");
 
-        _customMetrics = config.GetSection("Queries").Get<List<CustomMetric>>() ?? new();
+        customMetrics = config.GetSection("Queries").Get<List<CustomMetric>>() ?? new();
 
-        _customGauges = _customMetrics.Select(metric => Metrics
-            .CreateGauge(metric.Name, metric.Description,
+        customGauges = customMetrics.Select(metric => Metrics
+            .CreateGauge(
+                metric.Name,
+                metric.Description,
                 new GaugeConfiguration
                 {
-                    LabelNames = new[] { "type", "server_name" }
-                })
-        ).ToDictionary(gauge => gauge.Name);
+                    LabelNames = new[] { "type", "server_name" },
+                }))
+            .ToDictionary(gauge => gauge.Name);
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var port = _config.GetValue<int>("MetricsPort");
-        var fetchInterval = TimeSpan.FromSeconds(_config.GetValue<int>("FetchIntervalSeconds"));
+        var port = config.GetValue<int>("MetricsPort");
+        var fetchInterval = TimeSpan.FromSeconds(config.GetValue<int>("FetchIntervalSeconds"));
 
         using var server = new MetricServer(port: port);
         server.Start();
 
-        _log.LogInformation("FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
-            port, _fhirClient.Endpoint);
+        log.LogInformation(
+            "FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
+            port,
+            fhirClient.Endpoint);
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            _fhirClient.RequestHeaders.Authorization = await _authHeaderProvider.GetAuthHeaderAsync(stoppingToken);
+            fhirClient.RequestHeaders.Authorization = await authHeaderProvider.GetAuthHeaderAsync(stoppingToken);
 
-            using (FetchResourceCountDuration.WithLabels(_fhirServerName).NewTimer())
+            using (FetchResourceCountDuration.WithLabels(fhirServerName).NewTimer())
             {
-                foreach (var customMetric in _customMetrics)
+                foreach (var customMetric in customMetrics)
                 {
-                    _log.LogInformation("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
+                    log.LogInformation("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
                     var resourceTypeAndFilters = customMetric.Query.Split("?");
 
                     if (resourceTypeAndFilters.Length < 2)
                     {
-                        _log.LogWarning("Parsing custom metric query string failed. " +
+                        log.LogWarning("Parsing custom metric query string failed. " +
                             "Should look like: <resourceType>?<name>=<value>&...");
                         continue;
                     }
@@ -166,21 +180,21 @@ public class FhirExporter : BackgroundService
                     var sp = SearchParams.FromUriParamList(paramList);
                     sp.Summary = SummaryType.Count;
 
-                    var result = await _fhirClient.SearchAsync(sp, resourceType);
+                    var result = await fhirClient.SearchAsync(sp, resourceType);
 
                     if (result.Total.HasValue)
                     {
-                        _customGauges[customMetric.Name]
-                            .WithLabels(resourceType, _fhirServerName)
+                        customGauges[customMetric.Name]
+                            .WithLabels(resourceType, fhirServerName)
                             .Set(result.Total.Value);
                     }
                     else
                     {
-                        _log.LogWarning("No 'total' returned for {query}", customMetric.Query);
+                        log.LogWarning("No 'total' returned for {query}", customMetric.Query);
                     }
                 }
 
-                foreach (var resourceType in _resourceTypes)
+                foreach (var resourceType in resourceTypes)
                 {
                     await UpdateResourceCountAsync(resourceType);
                 }
@@ -194,29 +208,30 @@ public class FhirExporter : BackgroundService
 
     private async Task UpdateResourceCountAsync(string resourceType)
     {
-        _log.LogDebug("Fetching resource count for {resourceType}", resourceType);
+        log.LogDebug("Fetching resource count for {resourceType}", resourceType);
         try
         {
             var total = await FetchResourceCountForTypeAsync(resourceType);
-            _log.LogDebug("Updating resource count for {resourceType} to {count}",
+            log.LogDebug(
+                "Updating resource count for {resourceType} to {count}",
                 resourceType,
                 total);
 
             if (total.HasValue)
             {
-                ResourceCount.WithLabels(resourceType, _fhirServerName).Set(total.Value);
+                ResourceCount.WithLabels(resourceType, fhirServerName).Set(total.Value);
             }
         }
         catch (Exception exc)
         {
-            _log.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
-            FetchResourceCountErrors.WithLabels(resourceType, _fhirServerName).Inc();
+            log.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
+            FetchResourceCountErrors.WithLabels(resourceType, fhirServerName).Inc();
         }
     }
 
     private async Task<int?> FetchResourceCountForTypeAsync(string resourceType)
     {
-        var response = await _fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
+        var response = await fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
         return response.Total;
     }
 }

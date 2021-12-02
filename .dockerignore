@@ -1,4 +1,5 @@
 *
 !src
+!.editorconfig
 src/*/bin
 src/*/obj
