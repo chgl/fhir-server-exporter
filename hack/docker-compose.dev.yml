@@ -9,12 +9,12 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: docker.io/hapiproject/hapi:v5.5.1-distroless
+    image: docker.io/hapiproject/hapi:v5.6.0-distroless
     ports:
       - "127.0.0.1:8082:8080"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:15.0.2
+    image: quay.io/keycloak/keycloak:15.1.0
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
