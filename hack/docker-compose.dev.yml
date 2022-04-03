@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v2.33.5
+    image: quay.io/prometheus/prometheus:v2.34.0
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
@@ -14,7 +14,7 @@ services:
       - "127.0.0.1:8082:8080"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:17.0.0
+    image: quay.io/keycloak/keycloak:17.0.1
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
