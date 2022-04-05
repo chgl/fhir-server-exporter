@@ -50,7 +50,7 @@ instead of using `latest`.
 | AUTH\_\_BASIC\_\_PASSWORD     | Basic auth password.                                                                                            | `""`          |
 | AUTH\_\_BEARERTOKEN           | Static token to set in the `Authorization: Bearer ...` header.                                                  | `""`          |
 | AUTH\_\_OAUTH\_\_TOKENURL     | OAuth token endpoint URL.                                                                                       | `""`          |
-| AUTH\_\_OAUTH\_\_CLIENTID     | OAuth client id.                                                                                                | `""`          |
+| AUTH\_\_OAUTH\_\_CLIENTID     | OAuth client ID.                                                                                                | `""`          |
 | AUTH\_\_OAUTH\_\_CLIENTSECRET | OAuth client secret                                                                                             | `""`          |
 | AUTH\_\_OAUTH\_\_SCOPE        | OAuth scope                                                                                                     | `""`          |
 
