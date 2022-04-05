@@ -21,17 +21,18 @@ jobs:
       - uses: actions/setup-python@v3
       - name: Run pre-commit
         uses: pre-commit/action@v2.0.3
-      # temp disabled until https://github.com/replicatedhq/dockerfilelint/issues/169
-      # - name: Lint code base
-      #   uses: github/super-linter@v3
-      #   env:
-      #     VALIDATE_ALL_CODEBASE: false
-      #     DEFAULT_BRANCH: master
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Lint code base
+        uses: github/super-linter@v4
+        env:
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          KUBERNETES_KUBEVAL_OPTIONS: "--ignore-missing-schemas"
   build:
     name: Build
     runs-on: ubuntu-20.04
     needs: lint
+    permissions:
+      id-token: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -148,22 +149,20 @@ jobs:
           kubectl wait --for=condition=Complete --timeout=5m job/test-fhir-server-exporter
       - name: Install Cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@main
+        uses: sigstore/cosign-installer@v2.1.0
       - name: Sign images
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          COSIGN_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          COSIGN_EXPERIMENTAL: "true"
           IMAGES: ${{ steps.docker_meta.outputs.tags }}
         run: |
-          echo "$COSIGN_KEY" > /tmp/cosign.key
           while read -r image; do
             if [[ $image = quay.io/* ]]; then
               echo "Skipping '$image' hosted on quay.io"
               continue
             fi
-            echo "Signing $image"
-            cosign sign -key /tmp/cosign.key "$image"
+            echo "Signing '$image' using keyless approach"
+            cosign sign "$image"
           done <<< "$IMAGES"
   release:
     needs: build

@@ -1,4 +1,5 @@
-apiVersion: skaffold/v2beta22
+# yaml-language-server: $schema=https://raw.githubusercontent.com/GoogleContainerTools/skaffold/main/docs/content/en/schemas/v2beta28.json
+apiVersion: skaffold/v2beta28
 kind: Config
 metadata:
   name: fhir-server-exporter
