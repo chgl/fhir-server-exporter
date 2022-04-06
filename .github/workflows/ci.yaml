@@ -3,8 +3,8 @@ name: ci
 on:
   push:
     branches: [master]
-    tags:
-      - "v*"
+  release:
+    types: [created]
   pull_request:
     branches: [master]
 

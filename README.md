@@ -14,7 +14,7 @@ docker run --rm -it \
     -p 9797:9797 \
     -e FHIRSERVERURL="https://hapi.fhir.org/baseR4" \
     -e FETCHINTERVALSECONDS=60 \
-    quay.io/chgl/fhir-server-exporter:latest
+    ghcr.io/chgl/fhir-server-exporter:latest
 ```
 
 Open <http://localhost:9797/metrics> to view the resource counts in Prometheus format:
@@ -124,9 +124,8 @@ docker run -e FHIRSERVERURL="http://host.docker.internal:8082/fhir" -p 9797:9797
 
 ## Verify image integrity
 
-All released container images are signed using [cosign](https://github.com/sigstore/cosign).
-The public key hosted at <https://chgl.github.io/cosign.pub> (see [here](https://github.com/chgl/chgl.github.io) for the repository source) may be used to verify them:
+All released container images are signed using [cosign](https://github.com/sigstore/cosign) following the [keyless approach](https://github.com/sigstore/cosign/blob/main/KEYLESS.md). To verify the signature:
 
 ```sh
-cosign verify -key https://chgl.github.io/cosign.pub ghcr.io/chgl/fhir-server-exporter:latest
+COSIGN_EXPERIMENTAL=1 cosign verify ghcr.io/chgl/fhir-server-exporter:latest
 ```
