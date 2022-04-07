@@ -1,6 +1,6 @@
 name: "Dependency Review"
 
-on: 
+on:
   pull_request: {}
 
 permissions:
