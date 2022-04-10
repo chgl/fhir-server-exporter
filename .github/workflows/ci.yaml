@@ -151,7 +151,7 @@ jobs:
           kubectl wait --for=condition=Complete --timeout=5m job/test-fhir-server-exporter
       - name: Install Cosign
         if: ${{ github.event_name != 'pull_request' }}
-        uses: sigstore/cosign-installer@v2.1.0
+        uses: sigstore/cosign-installer@v2.2.0
       - name: Sign images
         if: ${{ github.event_name != 'pull_request' }}
         env:
