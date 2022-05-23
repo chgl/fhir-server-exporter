@@ -14,7 +14,7 @@ FROM build AS test
 WORKDIR /build/src/FhirServerExporter.Tests
 RUN dotnet test -p:CollectCoverage=true
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim
+FROM mcr.microsoft.com/dotnet/aspnet:7.0-bullseye-slim
 WORKDIR /opt/fhir-server-exporter
 COPY --from=build /build/publish .
 
