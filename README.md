@@ -12,7 +12,7 @@ FHIR server resource count exporter for Prometheus.
 ```sh
 docker run --rm -it \
     -p 9797:9797 \
-    -e FHIRSERVERURL="https://hapi.fhir.org/baseR4" \
+    -e FHIRSERVERURL="http://hapi.fhir.org/baseR4" \
     -e FETCHINTERVALSECONDS=60 \
     ghcr.io/chgl/fhir-server-exporter:latest
 ```
@@ -61,7 +61,7 @@ Create a file called `queries.yaml` and place it in the application's main direc
 
 ```sh
 docker run --rm -it \
-   -e FHIRSERVERURL="https://hapi.fhir.org/baseR4" \
+   -e FHIRSERVERURL="http://hapi.fhir.org/baseR4" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
    ghcr.io/chgl/fhir-server-exporter:latest
@@ -100,6 +100,8 @@ so if you've specified both a basic auth username and password and an oauth toke
 
 ## Development
 
+### Using Docker Compose
+
 1. Start an empty HAPI FHIR server exposed on port 8282 and a pre-configured Prometheus instance on port 9090:
 
    ```sh
@@ -114,6 +116,20 @@ so if you've specified both a basic auth username and password and an oauth toke
    ```
 
 1. Access the exposed metrics at <http://localhost:9797/metrics>
+
+### On Kubernetes using Skaffold+Kustomize
+
+1. create a local testing cluster
+
+   ```sh
+   kind create cluster
+   ```
+
+1. build and deploy container in development mode
+
+   ```sh
+   skaffold dev
+   ```
 
 ### Build and run container image locally
 
