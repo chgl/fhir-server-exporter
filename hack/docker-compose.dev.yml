@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   prometheus:
     image: quay.io/prometheus/prometheus:v2.35.0
@@ -9,7 +7,9 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: docker.io/hapiproject/hapi:v5.6.0-distroless
+    image: docker.io/hapiproject/hapi:v5.7.0
+    environment:
+      HAPI_FHIR_MDM_ENABLED: "false"
     ports:
       - "127.0.0.1:8082:8080"
 
