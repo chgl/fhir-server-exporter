@@ -7,7 +7,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: docker.io/hapiproject/hapi:v5.7.0
+    image: docker.io/hapiproject/hapi:v6.0.1
     environment:
       HAPI_FHIR_MDM_ENABLED: "false"
     ports:
