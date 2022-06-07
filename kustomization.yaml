@@ -4,3 +4,8 @@ metadata:
   name: fhir-server-exporter
 resources:
   - hack/k8s/pods.yaml
+  - hack/k8s/load-sample-data.yaml
+configMapGenerator:
+  - name: synthea-fhir-sample-data
+    files:
+      - hack/synthea-fhir-sample-data/chester.json

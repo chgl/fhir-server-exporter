@@ -125,10 +125,10 @@ so if you've specified both a basic auth username and password and an oauth toke
    kind create cluster
    ```
 
-1. build and deploy container in development mode
+1. build and deploy container in development mode. This also bootstraps a HAPI FHIR server and loads some sample resources into it.
 
    ```sh
-   skaffold dev
+   skaffold dev --port-forward
    ```
 
 ### Build and run container image locally
