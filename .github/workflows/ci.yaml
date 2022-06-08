@@ -9,28 +9,9 @@ on:
     branches: [master]
 
 jobs:
-  lint:
-    name: Lint Code Base
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-        with:
-          # Full git history is needed to get a proper list of changed files within `super-linter`
-          fetch-depth: 0
-      - uses: actions/setup-python@v3
-      - name: Run pre-commit
-        uses: pre-commit/action@v2.0.3
-      - name: Lint code base
-        uses: github/super-linter@v4
-        env:
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          KUBERNETES_KUBEVAL_OPTIONS: "--ignore-missing-schemas"
   build:
     name: Build
     runs-on: ubuntu-20.04
-    needs: lint
     permissions:
       id-token: write
       security-events: write
@@ -38,19 +19,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Run Trivy vulnerability scanner in repo mode
-        uses: aquasecurity/trivy-action@master
-        with:
-          scan-type: "fs"
-          ignore-unfixed: true
-          format: "template"
-          template: "@/contrib/sarif.tpl"
-          output: "trivy-results.sarif"
-          severity: "CRITICAL"
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: "trivy-results.sarif"
       - name: Docker meta
         id: docker_meta
         uses: docker/metadata-action@v4
@@ -120,28 +88,6 @@ jobs:
         run: |
           dotnet restore src/FhirServerExporter.Tests.E2E/
           dotnet test src/FhirServerExporter.Tests.E2E/
-      - name: Create k8s KinD Cluster
-        uses: helm/kind-action@v1.2.0
-      - name: Load image into KinD
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          kind load docker-image ${{ steps.list_images.outputs.image_name }} --name=chart-testing
-      - uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "4.0.5"
-      - name: Deploy image
-        run: |
-          kustomize edit set image fhir-server-exporter="${{ steps.list_images.outputs.image_name }}"
-          kustomize build
-          kustomize build | kubectl apply -f -
-          kubectl get pods -A -o wide
-          kubectl describe pod/fhir-server-exporter
-      - name: Run fhir-server-exporter test job
-        run: |
-          kubectl apply -f hack/k8s/test-job.yaml
-          kubectl get pods -A -o wide
-          kubectl wait --for=condition=Ready --timeout=5m pod/fhir-server-exporter
-          kubectl wait --for=condition=Complete --timeout=5m job/test-fhir-server-exporter
       - name: Install Cosign
         if: ${{ github.event_name != 'pull_request' }}
         uses: sigstore/cosign-installer@v2.3.0

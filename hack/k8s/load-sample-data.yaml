@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-fhir-sample-data
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      initContainers:
+        - name: wait-for-fhir-server
+          image: docker.io/curlimages/curl:7.78.0
+          env:
+            - name: FHIR_URL
+              value: http://fhir-server:8080/fhir
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              until [ "$(curl -s -o /dev/null -L -w '%{http_code}' "$FHIR_URL/metadata")" == "200" ]; do
+                echo "$(date): Waiting for FHIR server to be up";
+                sleep 15;
+              done;
+      containers:
+        - name: curl
+          image: curlimages/curl:7.78.0
+          command: ["/bin/sh", "-c"]
+          env:
+            - name: FHIR_URL
+              value: http://fhir-server:8080/fhir
+          args:
+            - curl -X POST -H 'Content-Type:application/fhir+json' -d @/opt/data/chester.json $FHIR_URL
+          volumeMounts:
+            - name: fhir-sample-data-volume
+              mountPath: /opt/data
+      volumes:
+        - name: fhir-sample-data-volume
+          configMap:
+            name: synthea-fhir-sample-data
