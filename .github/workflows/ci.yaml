@@ -88,28 +88,6 @@ jobs:
         run: |
           dotnet restore src/FhirServerExporter.Tests.E2E/
           dotnet test src/FhirServerExporter.Tests.E2E/
-      - name: Create k8s KinD Cluster
-        uses: helm/kind-action@v1.2.0
-      - name: Load image into KinD
-        if: ${{ github.event_name == 'pull_request' }}
-        run: |
-          kind load docker-image ${{ steps.list_images.outputs.image_name }} --name=chart-testing
-      - uses: imranismail/setup-kustomize@v1
-        with:
-          kustomize-version: "4.0.5"
-      - name: Deploy image
-        run: |
-          kustomize edit set image fhir-server-exporter="${{ steps.list_images.outputs.image_name }}"
-          kustomize build
-          kustomize build | kubectl apply -f -
-          kubectl get pods -A -o wide
-          kubectl describe pod/fhir-server-exporter
-      - name: Run fhir-server-exporter test job
-        run: |
-          kubectl apply -f hack/k8s/test-job.yaml
-          kubectl get pods -A -o wide
-          kubectl wait --for=condition=Ready --timeout=5m pod/fhir-server-exporter
-          kubectl wait --for=condition=Complete --timeout=5m job/test-fhir-server-exporter
       - name: Install Cosign
         if: ${{ github.event_name != 'pull_request' }}
         uses: sigstore/cosign-installer@v2.3.0
