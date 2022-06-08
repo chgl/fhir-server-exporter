@@ -12,8 +12,8 @@ FHIR server resource count exporter for Prometheus.
 ```sh
 docker run --rm -it \
     -p 9797:9797 \
-    -e FHIRSERVERURL="http://hapi.fhir.org/baseR4" \
-    -e FETCHINTERVALSECONDS=60 \
+    -e FhirServerUrl="http://hapi.fhir.org/baseR4" \
+    -e FetchIntervalSeconds=60 \
     ghcr.io/chgl/fhir-server-exporter:latest
 ```
 
@@ -41,18 +41,18 @@ instead of using `latest`.
 
 | Environment Variable          | Description                                                                                                     | Default value |
 | ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
-| FHIRSERVERURL                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
-| FHIRSERVERNAME                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.          | `""`          |
-| FETCHINTERVALSECONDS          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
-| METRICSPORT                   | The local port on which the metrics should be exposed at.                                                       | `9797`        |
-| EXCLUDEDRESOURCES             | A comma-seperated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
-| AUTH\_\_BASIC\_\_USERNAME     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
-| AUTH\_\_BASIC\_\_PASSWORD     | Basic auth password.                                                                                            | `""`          |
-| AUTH\_\_BEARERTOKEN           | Static token to set in the `Authorization: Bearer ...` header.                                                  | `""`          |
-| AUTH\_\_OAUTH\_\_TOKENURL     | OAuth token endpoint URL.                                                                                       | `""`          |
-| AUTH\_\_OAUTH\_\_CLIENTID     | OAuth client ID.                                                                                                | `""`          |
-| AUTH\_\_OAUTH\_\_CLIENTSECRET | OAuth client secret                                                                                             | `""`          |
-| AUTH\_\_OAUTH\_\_SCOPE        | OAuth scope                                                                                                     | `""`          |
+| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
+| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.          | `""`          |
+| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
+| MetricsPort                   | The local port on which the metrics should be exposed at.                                                       | `9797`        |
+| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
+| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
+| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                            | `""`          |
+| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer ...` header.                                                  | `""`          |
+| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                       | `""`          |
+| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                | `""`          |
+| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                             | `""`          |
+| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                     | `""`          |
 
 ### Custom Queries
 
@@ -61,7 +61,7 @@ Create a file called `queries.yaml` and place it in the application's main direc
 
 ```sh
 docker run --rm -it \
-   -e FHIRSERVERURL="http://hapi.fhir.org/baseR4" \
+   -e FhirServerUrl="http://hapi.fhir.org/baseR4" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
    ghcr.io/chgl/fhir-server-exporter:latest
@@ -135,7 +135,7 @@ so if you've specified both a basic auth username and password and an oauth toke
 
 ```sh
 docker build -t fhir-server-exporter .
-docker run -e FHIRSERVERURL="http://host.docker.internal:8082/fhir" -p 9797:9797 fhir-server-exporter
+docker run -e FhirServerUrl="http://host.docker.internal:8082/fhir" -p 9797:9797 fhir-server-exporter
 ```
 
 ## Verify image integrity
