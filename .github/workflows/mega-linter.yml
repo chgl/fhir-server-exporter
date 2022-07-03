@@ -31,11 +31,6 @@ jobs:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
-      # Pre-Commit
-      - uses: actions/setup-python@v3
-      - name: Run pre-commit
-        uses: pre-commit/action@v2.0.3
-
       # MegaLinter
       - name: MegaLinter
         id: ml
