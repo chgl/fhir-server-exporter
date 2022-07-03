@@ -24,7 +24,8 @@
     "chgl",
     "Kubernetes",
     "Skaffold",
-    "Kustomize"
+    "Kustomize",
+    "Testcontainers"
   ],
   "version": "0.2"
 }
