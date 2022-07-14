@@ -1,6 +1,6 @@
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v2.36.2
+    image: quay.io/prometheus/prometheus:v2.37.0
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
