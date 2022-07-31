@@ -4,6 +4,17 @@
     "config:base",
     ":disableDependencyDashboard",
     "helpers:pinGitHubActionDigests",
-    "group:allNonMajor"
-  ]
+    "group:allNonMajor",
+    "docker:pinDigests",
+    "schedule:weekly"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "extends": ["schedule:monthly"]
+    }
+  ],
+  "kubernetes": {
+    "fileMatch": ["hack/k8s/.+\\.yaml$"]
+  }
 }

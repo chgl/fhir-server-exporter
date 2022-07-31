@@ -9,6 +9,15 @@ spec:
       containers:
         - name: curl
           image: curlimages/curl:7.78.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - "ALL"
+            privileged: false
+            runAsGroup: 65532
+            runAsUser: 65532
           command: ["/bin/sh", "-c"]
           args:
             - curl

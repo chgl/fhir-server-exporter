@@ -9,6 +9,15 @@ spec:
       initContainers:
         - name: wait-for-fhir-server
           image: docker.io/curlimages/curl:7.78.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - "ALL"
+            privileged: false
+            runAsGroup: 65532
+            runAsUser: 65532
           env:
             - name: FHIR_URL
               value: http://fhir-server:8080/fhir
@@ -22,6 +31,15 @@ spec:
       containers:
         - name: curl
           image: curlimages/curl:7.78.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - "ALL"
+            privileged: false
+            runAsGroup: 65532
+            runAsUser: 65532
           command: ["/bin/sh", "-c"]
           env:
             - name: FHIR_URL

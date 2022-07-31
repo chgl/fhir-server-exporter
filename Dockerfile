@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.3
+# syntax=docker/dockerfile:1.4
 FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-amd64 as build
 WORKDIR "/build"
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
@@ -44,7 +44,7 @@ WORKDIR /opt/fhir-server-exporter
 ENV DOTNET_ENVIRONMENT="Production" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 EXPOSE 9797/tcp
-USER 65532
+USER 65532:65532
 
 COPY --from=build /lib/x86_64-linux-gnu/libz.so.1.2.11 /lib/x86_64-linux-gnu/libz.so.1
 COPY --from=build /build/publish .

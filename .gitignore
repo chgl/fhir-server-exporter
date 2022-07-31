@@ -13,3 +13,5 @@ obj/
 # End of https://www.toptal.com/developers/gitignore/api/dotnetcore
 
 coverage.json
+
+megalinter-reports/
