@@ -8,6 +8,15 @@ spec:
   containers:
     - name: fhir-server
       image: docker.io/hapiproject/hapi:v6.0.1
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        capabilities:
+          drop:
+            - "ALL"
+        privileged: false
+        runAsGroup: 65532
+        runAsUser: 65532
       readinessProbe:
         failureThreshold: 5
         initialDelaySeconds: 45
@@ -46,6 +55,15 @@ spec:
   initContainers:
     - name: wait-for-fhir-server
       image: docker.io/curlimages/curl:7.78.0
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        capabilities:
+          drop:
+            - "ALL"
+        privileged: false
+        runAsGroup: 65532
+        runAsUser: 65532
       env:
         - name: FHIR_URL
           value: http://fhir-server:8080/fhir
@@ -59,6 +77,15 @@ spec:
   containers:
     - name: fhir-server-exporter
       image: fhir-server-exporter
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        capabilities:
+          drop:
+            - "ALL"
+        privileged: false
+        runAsGroup: 65532
+        runAsUser: 65532
       resources:
         limits:
           memory: "256Mi"

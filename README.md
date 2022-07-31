@@ -48,7 +48,7 @@ instead of using `latest`.
 | ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
 | Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
 | Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                            | `""`          |
-| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer ...` header.                                                  | `""`          |
+| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                  | `""`          |
 | Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                       | `""`          |
 | Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                | `""`          |
 | Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                             | `""`          |
@@ -105,7 +105,7 @@ so if you've specified both a basic auth username and password and an oauth toke
 1. Start an empty HAPI FHIR server exposed on port 8282 and a pre-configured Prometheus instance on port 9090:
 
    ```sh
-   docker-compose -f hack/docker-compose.dev.yml up
+   docker compose -f hack/docker-compose.dev.yml up
    ```
 
 1. Run the server exporter
