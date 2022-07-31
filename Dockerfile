@@ -9,7 +9,7 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     --runtime linux-x64
 
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj\
+    dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
     --runtime linux-x64
 
 COPY . .
@@ -33,9 +33,8 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     -o /build/publish
 
 FROM build AS test
-WORKDIR /build/src/FhirServerExporter.Tests
 RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet test FhirServerExporter.Tests.csproj \
+    dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
     --no-restore \
     -p:CollectCoverage=true
 
