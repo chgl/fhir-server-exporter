@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-amd64 as build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-bullseye-slim-amd64@sha256:8c2cdbcff5e1b2f3a215d6ebfe05e7bf1c8440b01bd7635c365b246210ac6586 as build
 WORKDIR "/build"
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
