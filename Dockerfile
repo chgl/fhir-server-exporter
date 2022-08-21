@@ -5,29 +5,24 @@ WORKDIR "/build"
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore src/FhirServerExporter/FhirServerExporter.csproj
+RUN dotnet restore src/FhirServerExporter/FhirServerExporter.csproj
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
+RUN dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
 
 COPY . .
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet build src/FhirServerExporter/FhirServerExporter.csproj \
+RUN dotnet build src/FhirServerExporter/FhirServerExporter.csproj \
     --no-restore \
     --configuration Release
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
+RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
     --no-restore \
     --no-build \
     --configuration Release \
     -o /build/publish
 
 FROM build AS test
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
+RUN dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
     --no-restore \
     -p:CollectCoverage=true
 
