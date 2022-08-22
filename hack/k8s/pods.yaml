@@ -5,9 +5,13 @@ metadata:
   labels:
     app.kubernetes.io/name: fhir-server
 spec:
+  automountServiceAccountToken: false
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
   containers:
     - name: fhir-server
-      image: docker.io/hapiproject/hapi:v6.0.1
+      image: docker.io/hapiproject/hapi:v6.0.1@sha256:63c98d8be3dadc77b47dca3115490f22bf99512f363f779f7bbcb42f569aeac3
       securityContext:
         allowPrivilegeEscalation: false
         runAsNonRoot: true
@@ -17,22 +21,53 @@ spec:
         privileged: false
         runAsGroup: 65532
         runAsUser: 65532
-      readinessProbe:
+        readOnlyRootFilesystem: true
+        seccompProfile:
+          type: RuntimeDefault
+      livenessProbe:
+        initialDelaySeconds: 30
         failureThreshold: 5
-        initialDelaySeconds: 45
-        periodSeconds: 10
         successThreshold: 1
-        timeoutSeconds: 5
+        periodSeconds: 15
+        timeoutSeconds: 10
+        httpGet:
+          path: /actuator/health/liveness
+          port: http
+      readinessProbe:
+        initialDelaySeconds: 30
+        failureThreshold: 5
+        successThreshold: 1
+        periodSeconds: 10
+        timeoutSeconds: 10
+        httpGet:
+          path: /actuator/health/readiness
+          port: http
+      startupProbe:
+        initialDelaySeconds: 30
+        failureThreshold: 10
+        successThreshold: 1
+        periodSeconds: 15
+        timeoutSeconds: 30
         httpGet:
           path: /actuator/health/readiness
           port: http
       resources:
         limits:
           memory: "2Gi"
-          cpu: "250m"
+          cpu: "2000m"
       ports:
         - containerPort: 8080
           name: http
+      volumeMounts:
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /app/target
+          name: app-target
+  volumes:
+    - name: tmp
+      emptyDir: {}
+    - name: app-target
+      emptyDir: {}
 ---
 apiVersion: v1
 kind: Service
@@ -51,7 +86,14 @@ metadata:
   name: fhir-server-exporter
   labels:
     app.kubernetes.io/name: fhir-server-exporter
+  annotations:
+    checkov.io/skip1: CKV_K8S_43=set by kustomize
+    checkov.io/skip2: CKV_K8S_14=set by kustomize
 spec:
+  automountServiceAccountToken: false
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
   initContainers:
     - name: wait-for-fhir-server
       image: docker.io/curlimages/curl:7.84.0@sha256:5a2a25d96aa941ea2fc47acc50122f7c3d007399a075df61a82d6d2c3a567a2b
@@ -64,6 +106,9 @@ spec:
         privileged: false
         runAsGroup: 65532
         runAsUser: 65532
+        readOnlyRootFilesystem: true
+        seccompProfile:
+          type: RuntimeDefault
       env:
         - name: FHIR_URL
           value: http://fhir-server:8080/fhir
@@ -86,16 +131,29 @@ spec:
         privileged: false
         runAsGroup: 65532
         runAsUser: 65532
+        readOnlyRootFilesystem: true
+        seccompProfile:
+          type: RuntimeDefault
       resources:
         limits:
           memory: "256Mi"
           cpu: "100m"
+      readinessProbe:
+        httpGet:
+          path: /metrics
+          port: metrics
+      livenessProbe:
+        httpGet:
+          path: /metrics
+          port: metrics
       ports:
         - containerPort: 9797
           name: metrics
       env:
         - name: FhirServerUrl
           value: http://fhir-server:8080/fhir
+        - name: COMPlus_EnableDiagnostics
+          value: "0"
 ---
 apiVersion: v1
 kind: Service

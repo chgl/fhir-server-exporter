@@ -5,7 +5,11 @@ metadata:
 spec:
   template:
     spec:
+      automountServiceAccountToken: false
       restartPolicy: Never
+      securityContext:
+        seccompProfile:
+          type: RuntimeDefault
       initContainers:
         - name: wait-for-fhir-server
           image: docker.io/curlimages/curl:7.84.0@sha256:5a2a25d96aa941ea2fc47acc50122f7c3d007399a075df61a82d6d2c3a567a2b
@@ -18,6 +22,9 @@ spec:
             privileged: false
             runAsGroup: 65532
             runAsUser: 65532
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
           env:
             - name: FHIR_URL
               value: http://fhir-server:8080/fhir
@@ -40,6 +47,9 @@ spec:
             privileged: false
             runAsGroup: 65532
             runAsUser: 65532
+            readOnlyRootFilesystem: true
+            seccompProfile:
+              type: RuntimeDefault
           command: ["/bin/sh", "-c"]
           env:
             - name: FHIR_URL

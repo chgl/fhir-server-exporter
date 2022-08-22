@@ -1,51 +1,38 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/sdk:6.0-bullseye-slim-amd64 as build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.400-jammy@sha256:7910472f0e7202c6a18ff5671182bbbe261abcab532fc30389b980fadff58091 AS build
 WORKDIR "/build"
+
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore src/FhirServerExporter/FhirServerExporter.csproj \
-    --runtime linux-x64
+RUN dotnet restore src/FhirServerExporter/FhirServerExporter.csproj
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
-    --runtime linux-x64
+RUN dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
 
 COPY . .
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet build src/FhirServerExporter/FhirServerExporter.csproj \
+RUN dotnet build src/FhirServerExporter/FhirServerExporter.csproj \
     --no-restore \
-    --configuration Release \
-    --runtime linux-x64 \
-    --self-contained true \
-    --framework net6.0
+    --configuration Release
 
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
+RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
     --no-restore \
     --no-build \
     --configuration Release \
-    --runtime linux-x64 \
-    --self-contained true \
-    --framework net6.0 \
     -o /build/publish
 
 FROM build AS test
-RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
-    dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
+RUN dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
     --no-restore \
     -p:CollectCoverage=true
 
-FROM gcr.io/distroless/cc-debian11:nonroot@sha256:0c0bb3a4c1ffba8f9ba80b79de40b1be1ad1ef0327762c3b5cce1f0bc85aac40
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0.8-jammy-chiseled@sha256:5258a1139db036d151e49934406c50fc41604b9519441294e017d75347f932e6
 WORKDIR /opt/fhir-server-exporter
 ENV DOTNET_ENVIRONMENT="Production" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 EXPOSE 9797/tcp
 USER 65532:65532
 
-COPY --from=build /lib/x86_64-linux-gnu/libz.so.1.2.11 /lib/x86_64-linux-gnu/libz.so.1
 COPY --from=build /build/publish .
 
-ENTRYPOINT ["/opt/fhir-server-exporter/FhirServerExporter"]
+ENTRYPOINT ["dotnet", "FhirServerExporter.dll"]
