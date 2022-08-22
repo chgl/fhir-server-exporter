@@ -38,7 +38,7 @@ RUN --mount=type=cache,id=nuget,target=/root/.nuget/packages \
     --no-restore \
     -p:CollectCoverage=true
 
-FROM gcr.io/distroless/cc-debian11:nonroot@sha256:0c0bb3a4c1ffba8f9ba80b79de40b1be1ad1ef0327762c3b5cce1f0bc85aac40
+FROM gcr.io/distroless/cc-debian11:nonroot@sha256:0d3983099453f43952258c40c211008db6c02212877c66d2a7f245a44b6e1cb8
 WORKDIR /opt/fhir-server-exporter
 ENV DOTNET_ENVIRONMENT="Production" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
