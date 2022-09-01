@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.400-jammy@sha256:7910472f0e7202c6a18ff5671182bbbe261abcab532fc30389b980fadff58091 AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.400-jammy@sha256:01fc2d5af703fb0c38261ef67e395ac07d783bc476fc98c7d78d4c896994bbd2 AS build
 WORKDIR "/build"
 
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
