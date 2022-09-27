@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.400-jammy@sha256:7910472f0e7202c6a18ff5671182bbbe261abcab532fc30389b980fadff58091 AS build
+FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.401-jammy@sha256:f68325aecf05364c1c8ca7582d9b9bc7c39cfc2b341b1b67d0e9e911f93ab445 AS build
 WORKDIR "/build"
 
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
@@ -26,7 +26,7 @@ RUN dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
     --no-restore \
     -p:CollectCoverage=true
 
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0.8-jammy-chiseled@sha256:5258a1139db036d151e49934406c50fc41604b9519441294e017d75347f932e6
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0.9-jammy-chiseled@sha256:064f335b86b3e8cafbafafcb35d20f566a823b139a4261624f7f1f8b93dfb7f7
 WORKDIR /opt/fhir-server-exporter
 ENV DOTNET_ENVIRONMENT="Production" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
