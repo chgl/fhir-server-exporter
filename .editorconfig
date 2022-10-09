@@ -278,6 +278,9 @@ dotnet_diagnostic.CA1822.severity = warning
 
 dotnet_diagnostic.CA1050.severity = none
 
+# error SA1200: Using directive should appear within a namespace declaration
+dotnet_diagnostic.SA1200.severity = none
+
 # Prefer "var" everywhere
 dotnet_diagnostic.IDE0007.severity = warning
 csharp_style_var_for_built_in_types = true:warning

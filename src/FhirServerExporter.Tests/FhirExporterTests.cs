@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using FakeItEasy;
 using FluentAssertions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Xunit;
 
 public class FhirExporterTests
@@ -11,7 +10,12 @@ public class FhirExporterTests
     [Fact]
     public void Construct_WithMissingFhirServerUrl_ShouldThrow()
     {
-        Action construct = () => _ = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), A.Fake<IConfiguration>(), A.Fake<IAuthHeaderProvider>());
+        var appConfig = new AppConfig
+        {
+            FhirServerUrl = null,
+        };
+
+        Action construct = () => _ = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), Options.Create(appConfig), A.Fake<IAuthHeaderProvider>());
 
         construct.Should().Throw<InvalidOperationException>();
     }
@@ -19,16 +23,12 @@ public class FhirExporterTests
     [Fact]
     public void Construct_WithCorrectConfig_ShouldSucceed()
     {
-        var inMemorySettings = new Dictionary<string, string>
+        var appConfig = new AppConfig
         {
-            {"FhirServerUrl", "http://localhost/fhir"},
+            FhirServerUrl = new Uri("http://localhost:8082/fhir"),
         };
 
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(inMemorySettings)
-            .Build();
-
-        var sut = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), configuration, A.Fake<IAuthHeaderProvider>());
+        var sut = new FhirExporter(A.Fake<ILogger<FhirExporter>>(), Options.Create(appConfig), A.Fake<IAuthHeaderProvider>());
 
         sut.Should().NotBeNull();
     }

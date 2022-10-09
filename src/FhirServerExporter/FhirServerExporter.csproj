@@ -1,13 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
     <UserSecretsId>dotnet-FhirServerExporter-51CE8CEB-7E96-4CF2-8F16-71D416CB7867</UserSecretsId>
     <ServerGarbageCollection>false</ServerGarbageCollection>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <!-- Doesn't yet work due to  error IL2026: Using member 'Microsoft.Extensions.Configuration.ConfigurationBinder.GetValue<string> -->
     <PublishTrimmed>false</PublishTrimmed>
     <WarningsAsErrors />
+    <!-- <PublishAot>true</PublishAot> -->
   </PropertyGroup>
 
   <ItemGroup>

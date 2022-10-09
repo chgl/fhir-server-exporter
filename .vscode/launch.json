@@ -6,7 +6,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/FhirServerExporter/bin/Debug/net5.0/FhirServerExporter.dll",
+      "program": "${workspaceFolder}/src/FhirServerExporter/bin/Debug/net7.0/FhirServerExporter.dll",
       "args": [],
       "cwd": "${workspaceFolder}/src/FhirServerExporter",
       "console": "internalConsole",
