@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Prometheus;
 using Fhir = Hl7.Fhir.Model;
 
@@ -23,25 +24,26 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         })
         .ConfigureServices((ctx, services) =>
         {
+            services.Configure<AuthConfig>(ctx.Configuration.GetSection("Auth"));
+            services.Configure<AppConfig>(ctx.Configuration);
+
             services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
             services.AddHostedService<FhirExporter>();
 
-            var config = ctx.Configuration;
-            services.AddAccessTokenManagement(options =>
+            services.AddAccessTokenManagement((isp, options) =>
             {
-                var oauthUri = config.GetValue<Uri>("Auth:OAuth:TokenUrl")?.AbsoluteUri;
-                if (oauthUri == null)
-                {
-                    return;
-                }
+                var authConfig = isp.GetRequiredService<IOptions<AuthConfig>>().Value;
 
-                options.Client.Clients.Add("default", new()
+                if (authConfig.OAuth.TokenUrl is not null)
                 {
-                    Address = oauthUri,
-                    ClientId = config.GetValue<string>("Auth:OAuth:ClientId"),
-                    ClientSecret = config.GetValue<string>("Auth:OAuth:ClientSecret"),
-                    Scope = config.GetValue<string>("Auth:OAuth:Scope"),
-                });
+                    options.Client.Clients.Add("default", new()
+                    {
+                        Address = authConfig.OAuth.TokenUrl.AbsoluteUri,
+                        ClientId = authConfig.OAuth.ClientId,
+                        ClientSecret = authConfig.OAuth.ClientSecret,
+                        Scope = authConfig.OAuth.Scope,
+                    });
+                }
             });
         })
         .ConfigureLogging(builder =>
@@ -53,15 +55,6 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
             }));
 
 CreateHostBuilder(args).Build().Run();
-
-public record CustomMetric
-{
-    public string Name { get; init; }
-
-    public string Query { get; init; }
-
-    public string Description { get; init; }
-}
 
 public class FhirExporter : BackgroundService
 {
@@ -93,7 +86,7 @@ public class FhirExporter : BackgroundService
             });
 
     private readonly ILogger<FhirExporter> log;
-    private readonly IConfiguration config;
+    private readonly AppConfig config;
     private readonly FhirClient fhirClient;
     private readonly IEnumerable<string> resourceTypes;
     private readonly IAuthHeaderProvider authHeaderProvider;
@@ -101,12 +94,12 @@ public class FhirExporter : BackgroundService
     private readonly IEnumerable<CustomMetric> customMetrics;
     private readonly IDictionary<string, Gauge> customGauges;
 
-    public FhirExporter(ILogger<FhirExporter> logger, IConfiguration config, IAuthHeaderProvider authHeaderProvider)
+    public FhirExporter(ILogger<FhirExporter> logger, IOptions<AppConfig> config, IAuthHeaderProvider authHeaderProvider)
     {
         log = logger;
-        this.config = config;
+        this.config = config.Value;
 
-        var serverUrl = this.config.GetValue<Uri>("FhirServerUrl");
+        var serverUrl = this.config.FhirServerUrl;
         if (serverUrl == null)
         {
             throw new InvalidOperationException("FhirServerUrl needs to be set.");
@@ -116,21 +109,17 @@ public class FhirExporter : BackgroundService
 
         fhirClient = new FhirClient(serverUrl);
 
-        var excludedResources = this.config.GetValue("ExcludedResources", string.Empty).Split(',');
+        var excludedResources = this.config.ExcludedResources.Split(',');
 
         log.LogInformation(
             "Excluding the following resources from counting: {excludedResources}",
-            this.config.GetValue("ExcludedResources", string.Empty));
+            this.config.ExcludedResources);
 
-        resourceTypes = Enum.GetValues(typeof(Fhir.ResourceType))
-                .Cast<Fhir.ResourceType>()
-                .Except(new[] { Fhir.ResourceType.DomainResource, Fhir.ResourceType.Resource })
-                .Select(s => s.ToString())
-                .Except(excludedResources);
+        resourceTypes = Fhir.ModelInfo.SupportedResources.Except(excludedResources);
 
-        fhirServerName = this.config.GetValue<string>("FhirServerName");
+        fhirServerName = this.config.FhirServerName;
 
-        customMetrics = config.GetSection("Queries").Get<List<CustomMetric>>() ?? new();
+        customMetrics = this.config.Queries ?? new();
 
         customGauges = customMetrics.Select(metric => Metrics
             .CreateGauge(
@@ -145,8 +134,8 @@ public class FhirExporter : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var port = config.GetValue<int>("MetricsPort");
-        var fetchInterval = TimeSpan.FromSeconds(config.GetValue<int>("FetchIntervalSeconds"));
+        var port = config.MetricsPort;
+        var fetchInterval = TimeSpan.FromSeconds(config.FetchIntervalSeconds);
 
         using var server = new MetricServer(port: port);
         server.Start();

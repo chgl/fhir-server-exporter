@@ -1,6 +1,17 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/nightly/sdk:6.0.401-jammy@sha256:f68325aecf05364c1c8ca7582d9b9bc7c39cfc2b341b1b67d0e9e911f93ab445 AS build
+
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0.0-rc.1-jammy-chiseled@sha256:4011e4c1b5781ac8d48a322ee0b80f1742b8b5d1b50b8287e6c38ecaecd5575b AS runtime
+WORKDIR /opt/fhir-server-exporter
+EXPOSE 9797/tcp
+USER 65532:65532
+ENV ASPNETCORE_ENVIRONMENT="Production" \
+    DOTNET_CLI_TELEMETRY_OPTOUT=1 \
+    ASPNETCORE_URLS="http://*:9797" \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+
+FROM mcr.microsoft.com/dotnet/nightly/sdk:7.0.100-rc.1-jammy@sha256:bf708fe1f6f0d8932efe66b99f5bcc656b67773e84ea7222fda23849c391bf02 AS build
 WORKDIR "/build"
+ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
@@ -22,17 +33,13 @@ RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
     -o /build/publish
 
 FROM build AS test
-RUN dotnet test src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj \
-    --no-restore \
-    -p:CollectCoverage=true
+WORKDIR /build/src/FhirServerExporter.Tests
+RUN dotnet test \
+    --configuration=Release \
+    --collect:"XPlat Code Coverage" \
+    --results-directory=./coverage \
+    -l "console;verbosity=detailed"
 
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:6.0.9-jammy-chiseled@sha256:064f335b86b3e8cafbafafcb35d20f566a823b139a4261624f7f1f8b93dfb7f7
-WORKDIR /opt/fhir-server-exporter
-ENV DOTNET_ENVIRONMENT="Production" \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
-EXPOSE 9797/tcp
-USER 65532:65532
-
+FROM runtime
 COPY --from=build /build/publish .
-
 ENTRYPOINT ["dotnet", "FhirServerExporter.dll"]
