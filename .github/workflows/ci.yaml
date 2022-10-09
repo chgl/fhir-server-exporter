@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: build
     runs-on: ubuntu-22.04
     outputs:
       image-tags: ${{ steps.container_meta.outputs.tags }}
