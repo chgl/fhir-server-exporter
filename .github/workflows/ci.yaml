@@ -101,7 +101,7 @@ jobs:
     if: ${{ github.event_name != 'pull_request' }}
     permissions:
       pull-requests: write
-      contents: read
+      contents: write
       issues: write
     steps:
       - name: Checkout
