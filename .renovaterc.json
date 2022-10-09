@@ -6,13 +6,7 @@
     "helpers:pinGitHubActionDigests",
     "group:allNonMajor",
     "docker:pinDigests",
-    "schedule:weekly"
-  ],
-  "packageRules": [
-    {
-      "matchManagers": ["github-actions"],
-      "extends": ["schedule:monthly"]
-    }
+    "schedule:monthly"
   ],
   "kubernetes": {
     "fileMatch": ["hack/k8s/.+\\.yaml$"]
