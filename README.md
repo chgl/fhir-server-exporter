@@ -34,10 +34,13 @@ The container image is pushed to three registries:
 
 - `docker.io/chgl/fhir-server-exporter:latest`
 - `ghcr.io/chgl/fhir-server-exporter:latest`
-- `quay.io/chgl/fhir-server-exporter:latest`
 
 You are strongly encouraged to use the `vX.Y.Z` tags corresponding to the [releases](https://github.com/chgl/fhir-server-exporter/releases)
 instead of using `latest`.
+
+> **Warning**
+> Previous versions of the FHIR server exporter were pushed to quay.io/chgl/fhir-server-exporter.
+> This registry has been dropped and the image is now only available on docker.io and ghcr.io.
 
 ### Configuration
 

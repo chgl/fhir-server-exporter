@@ -35,7 +35,6 @@ jobs:
         with:
           images: |
             docker.io/${{ github.repository }}
-            quay.io/${{ github.repository }}
             ghcr.io/${{ github.repository }}
 
       - name: Login to DockerHub
@@ -45,14 +44,6 @@ jobs:
           registry: docker.io
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Login to Quay.io Container Registry
-        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
-        if: github.event_name != 'pull_request'
-        with:
-          registry: quay.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.QUAY_IO_TOKEN }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
@@ -151,10 +142,6 @@ jobs:
           IMAGES: ${{ needs.build.outputs.image-tags }}
         run: |
           while read -r image; do
-            if [[ $image = quay.io/* ]]; then
-              echo "Skipping '$image' hosted on quay.io"
-              continue
-            fi
             echo "Signing '$image' using keyless approach"
             cosign sign "$image"
           done <<< "$IMAGES"
