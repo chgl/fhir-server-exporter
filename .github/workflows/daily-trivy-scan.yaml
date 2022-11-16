@@ -2,15 +2,21 @@ name: scan
 on:
   schedule:
     - cron: "0 8 * * *"
+
+# Declare default permissions as read only.
+permissions: read-all
+
 jobs:
   scan:
     name: Scan
     runs-on: ubuntu-22.04
+    permissions:
+      security-events: write
     steps:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@d63413b0a4a4482237085319f7f4a1ce99a8f2ac # tag=0.7.1
         with:
-          image-ref: "ghcr.io/chgl/fhir-server-exporter:latest"
+          image-ref: "ghcr.io/${{ github.repository }}:latest"
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH"

@@ -1,6 +1,5 @@
 # syntax=docker/dockerfile:1.4
-
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0.0-rc.1-jammy-chiseled@sha256:4011e4c1b5781ac8d48a322ee0b80f1742b8b5d1b50b8287e6c38ecaecd5575b AS runtime
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0-jammy-chiseled@sha256:c1350bc839492415f55f4dc6549533e4bad68ecdaf9976497a235eee18f89993 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 USER 65532:65532
@@ -9,7 +8,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM mcr.microsoft.com/dotnet/nightly/sdk:7.0.100-rc.1-jammy@sha256:bf708fe1f6f0d8932efe66b99f5bcc656b67773e84ea7222fda23849c391bf02 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy@sha256:4099e5d6966436aa7cc37e9d2d5d0ab4b1e09abe9982d138a6a37f4ca696ce27 AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 

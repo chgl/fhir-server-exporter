@@ -1,13 +1,15 @@
-apiVersion: skaffold/v2beta28
+apiVersion: skaffold/v3
 kind: Config
 metadata:
   name: fhir-server-exporter
 build:
   artifacts:
-    - image: fhir-server-exporter
+    - image: ghcr.io/chgl/fhir-server-exporter
       docker:
         dockerfile: Dockerfile
   local:
     useBuildkit: true
-deploy:
-  kustomize: {}
+manifests:
+  kustomize:
+    paths:
+      - .
