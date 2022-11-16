@@ -153,7 +153,7 @@ public class FhirExporter : BackgroundService
             {
                 foreach (var customMetric in customMetrics)
                 {
-                    log.LogInformation("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
+                    log.LogDebug("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
                     var resourceTypeAndFilters = customMetric.Query.Split("?");
 
                     if (resourceTypeAndFilters.Length < 2)

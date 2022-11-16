@@ -30,17 +30,18 @@ jobs:
 
       - name: Docker meta
         id: container_meta
-        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a # tag=v4
+        uses: docker/metadata-action@57396166ad8aefe6098280995947635806a0e6ea # tag=v4
         with:
           images: |
-            docker.io/chgl/fhir-server-exporter
-            quay.io/chgl/fhir-server-exporter
-            ghcr.io/chgl/fhir-server-exporter
+            docker.io/${{ github.repository }}
+            quay.io/${{ github.repository }}
+            ghcr.io/${{ github.repository }}
 
       - name: Login to DockerHub
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b # tag=v2
         if: github.event_name != 'pull_request'
         with:
+          registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -61,8 +62,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run unit tests
-        id: docker_build_unit_test
-        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3
+        uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5 # tag=v3
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max
@@ -70,8 +70,7 @@ jobs:
           target: test
 
       - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94 # tag=v3
+        uses: docker/build-push-action@c56af957549030174b10d6867f20e78cfd7debc5 # tag=v3
         with:
           cache-from: type=gha
           cache-to: type=gha,mode=max

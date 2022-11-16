@@ -4,6 +4,7 @@
 ![License](https://img.shields.io/github/license/chgl/fhir-server-exporter)
 ![Docker Pull](https://img.shields.io/docker/pulls/chgl/fhir-server-exporter)
 [![CI](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml/badge.svg)](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/chgl/fhir-server-exporter/badge)](https://api.securityscorecards.dev/projects/github.com/chgl/fhir-server-exporter)
 
 FHIR server resource count exporter for Prometheus.
 
@@ -12,8 +13,9 @@ FHIR server resource count exporter for Prometheus.
 ```sh
 docker run --rm -it \
     -p 9797:9797 \
-    -e FhirServerUrl="http://hapi.fhir.org/baseR4" \
+    -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
     -e FetchIntervalSeconds=60 \
+    -e FhirServerName="HAPI FHIR Demo Server" \
     ghcr.io/chgl/fhir-server-exporter:latest
 ```
 
@@ -48,7 +50,7 @@ instead of using `latest`.
 | ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
 | Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
 | Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                            | `""`          |
-| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                  | `""`          |
+| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                    | `""`          |
 | Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                       | `""`          |
 | Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                | `""`          |
 | Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                             | `""`          |
@@ -61,7 +63,8 @@ Create a file called `queries.yaml` and place it in the application's main direc
 
 ```sh
 docker run --rm -it \
-   -e FhirServerUrl="http://hapi.fhir.org/baseR4" \
+   -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
+   -e FhirServerName="HAPI FHIR Demo Server" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
    ghcr.io/chgl/fhir-server-exporter:latest
