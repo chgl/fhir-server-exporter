@@ -22,7 +22,7 @@
       "pinDigests": false
     },
     {
-      "matchManagers": ["docker"],
+      "matchManagers": ["kubernetes"],
       "matchPackageNames": ["ghcr.io/chgl/fhir-server-exporter"],
       "pinDigests": false
     }
