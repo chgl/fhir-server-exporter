@@ -10,5 +10,21 @@
   ],
   "kubernetes": {
     "fileMatch": ["hack/k8s/.+\\.yaml$"]
-  }
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github-actions"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "matchPackageNames": ["slsa-framework/slsa-github-generator"],
+      "pinDigests": false
+    },
+    {
+      "matchManagers": ["docker"],
+      "matchPackageNames": ["ghcr.io/chgl/fhir-server-exporter"],
+      "pinDigests": false
+    }
+  ]
 }
