@@ -25,7 +25,17 @@
     "Kubernetes",
     "Skaffold",
     "Kustomize",
-    "Testcontainers"
+    "Testcontainers",
+    "allstar",
+    "codeql",
+    "trivy",
+    "hadolint",
+    "releaserc",
+    "renovaterc",
+    "synthea",
+    "kustomization",
+    "appsettings",
+    "SLSA"
   ],
   "version": "0.2"
 }
