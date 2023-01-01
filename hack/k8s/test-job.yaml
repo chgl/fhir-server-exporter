@@ -11,7 +11,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: curl
-          image: curlimages/curl:7.85.0@sha256:9fab1b73f45e06df9506d947616062d7e8319009257d3a05d970b0de80a41ec5
+          image: curlimages/curl:7.87.0@sha256:f7f265d5c64eb4463a43a99b6bf773f9e61a50aaa7cefaf564f43e42549a01dd
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
