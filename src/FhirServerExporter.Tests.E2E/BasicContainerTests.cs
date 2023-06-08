@@ -19,16 +19,19 @@ public class ContainerE2ETests : IAsyncLifetime
     private readonly IOutputConsumer fhirServerExporterOutputConsumer;
     private readonly IDockerNetwork containerNetwork;
 
-    public ContainerE2ETests(ITestOutputHelper output)
+    public ContainerE2ETests()
     {
         containerNetwork = new TestcontainersNetworkBuilder()
             .WithName("fhir-server-exporter-e2e")
             .Build();
 
-        fhirServerOutputConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
+        fhirServerOutputConsumer = Consume.RedirectStdoutAndStderrToStream(
+            new MemoryStream(),
+            new MemoryStream()
+        );
 
         fhirServerContainer = new TestcontainersBuilder<TestcontainersContainer>()
-            .WithImage("index.docker.io/hapiproject/hapi:v6.0.1")
+            .WithImage("docker.io/hapiproject/hapi:v6.6.0")
             .WithName("fhir-server")
             .WithNetwork(containerNetwork)
             .WithExposedPort(8080)
@@ -36,12 +39,22 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithCleanUp(true)
             .WithOutputConsumer(fhirServerOutputConsumer)
             .WithWaitStrategy(
-                Wait.ForUnixContainer().UntilMessageIsLogged(fhirServerOutputConsumer.Stdout, @".*(Started Application).*"))
+                Wait.ForUnixContainer()
+                    .UntilMessageIsLogged(
+                        fhirServerOutputConsumer.Stdout,
+                        ".*(Started Application).*"
+                    )
+            )
             .Build();
 
-        var exporterImage = Environment.GetEnvironmentVariable("FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE") ?? "ghcr.io/chgl/fhir-server-exporter:latest";
+        var exporterImage =
+            Environment.GetEnvironmentVariable("FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE")
+            ?? "ghcr.io/chgl/fhir-server-exporter:latest";
 
-        fhirServerExporterOutputConsumer = Consume.RedirectStdoutAndStderrToStream(new MemoryStream(), new MemoryStream());
+        fhirServerExporterOutputConsumer = Consume.RedirectStdoutAndStderrToStream(
+            new MemoryStream(),
+            new MemoryStream()
+        );
 
         fhirServerExporterContainer = new TestcontainersBuilder<TestcontainersContainer>()
             .WithImage(exporterImage)
@@ -53,7 +66,12 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithEnvironment("FhirServerUrl", "http://fhir-server:8080/fhir")
             .WithOutputConsumer(fhirServerExporterOutputConsumer)
             .WithWaitStrategy(
-                Wait.ForUnixContainer().UntilMessageIsLogged(fhirServerExporterOutputConsumer.Stdout, @".*(FHIR Server Prometheus Exporter running on port 9797).*"))
+                Wait.ForUnixContainer()
+                    .UntilMessageIsLogged(
+                        fhirServerExporterOutputConsumer.Stdout,
+                        ".*(FHIR Server Prometheus Exporter running on port 9797).*"
+                    )
+            )
             .Build();
     }
 

@@ -150,5 +150,8 @@ docker run -e FhirServerUrl="http://host.docker.internal:8082/fhir" -p 9797:9797
 All released container images are signed using [cosign](https://github.com/sigstore/cosign) following the [keyless approach](https://github.com/sigstore/cosign/blob/main/KEYLESS.md). To verify the signature:
 
 ```sh
-COSIGN_EXPERIMENTAL=1 cosign verify ghcr.io/chgl/fhir-server-exporter:latest
+cosign verify \
+   --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
+   --certificate-identity-regexp='https://github.com/chgl/fhir-server-exporter/.github/workflows/ci.yaml@refs/tags/*' \
+   ghcr.io/chgl/fhir-server-exporter:latest
 ```

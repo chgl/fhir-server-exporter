@@ -12,12 +12,12 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0-jammy@sha256:d2a0f255365a16fab863424a74ebb
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
+COPY src/Directory.Build.props ./src/
+
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
+COPY src/FhirServerExporter/packages.lock.json ./src/FhirServerExporter/
 
-RUN dotnet restore src/FhirServerExporter/FhirServerExporter.csproj
-
-RUN dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
+RUN dotnet restore /p:ContinuousIntegrationBuild=true src/FhirServerExporter/FhirServerExporter.csproj
 
 COPY . .
 
@@ -32,6 +32,15 @@ RUN dotnet publish src/FhirServerExporter/FhirServerExporter.csproj \
     -o /build/publish
 
 FROM build AS test
+WORKDIR /build
+
+COPY src/Directory.Build.props ./src/
+
+COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
+COPY src/FhirServerExporter.Tests/packages.lock.json ./src/FhirServerExporter.Tests/
+
+RUN dotnet restore /p:ContinuousIntegrationBuild=true src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
+
 WORKDIR /build/src/FhirServerExporter.Tests
 RUN dotnet test \
     --configuration=Release \
