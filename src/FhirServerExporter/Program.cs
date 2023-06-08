@@ -15,75 +15,74 @@ using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration((config) =>
-        {
-            config.AddYamlFile(
-                "queries.yaml",
-                optional: true,
-                reloadOnChange: true);
-        })
-        .ConfigureServices((ctx, services) =>
-        {
-            services.Configure<AuthConfig>(ctx.Configuration.GetSection("Auth"));
-            services.Configure<AppConfig>(ctx.Configuration);
-
-            services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
-            services.AddHostedService<FhirExporter>();
-
-            services.AddAccessTokenManagement((isp, options) =>
+        .ConfigureAppConfiguration(
+            (config) =>
             {
-                var authConfig = isp.GetRequiredService<IOptions<AuthConfig>>().Value;
+                config.AddYamlFile("queries.yaml", optional: true, reloadOnChange: true);
+            }
+        )
+        .ConfigureServices(
+            (ctx, services) =>
+            {
+                services.Configure<AuthConfig>(ctx.Configuration.GetSection("Auth"));
+                services.Configure<AppConfig>(ctx.Configuration);
 
-                if (authConfig.OAuth.TokenUrl is not null)
-                {
-                    options.Client.Clients.Add("default", new()
+                services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
+                services.AddHostedService<FhirExporter>();
+
+                services.AddAccessTokenManagement(
+                    (isp, options) =>
                     {
-                        Address = authConfig.OAuth.TokenUrl.AbsoluteUri,
-                        ClientId = authConfig.OAuth.ClientId,
-                        ClientSecret = authConfig.OAuth.ClientSecret,
-                        Scope = authConfig.OAuth.Scope,
-                    });
-                }
-            });
-        })
-        .ConfigureLogging(builder =>
-            builder.AddSimpleConsole(options =>
-            {
-                options.UseUtcTimestamp = true;
-                options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
-                options.SingleLine = false;
-            }));
+                        var authConfig = isp.GetRequiredService<IOptions<AuthConfig>>().Value;
+
+                        if (authConfig.OAuth.TokenUrl is not null)
+                        {
+                            options.Client.Clients.Add(
+                                "default",
+                                new()
+                                {
+                                    Address = authConfig.OAuth.TokenUrl.AbsoluteUri,
+                                    ClientId = authConfig.OAuth.ClientId,
+                                    ClientSecret = authConfig.OAuth.ClientSecret,
+                                    Scope = authConfig.OAuth.Scope,
+                                }
+                            );
+                        }
+                    }
+                );
+            }
+        )
+        .ConfigureLogging(
+            builder =>
+                builder.AddSimpleConsole(options =>
+                {
+                    options.UseUtcTimestamp = true;
+                    options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
+                    options.SingleLine = false;
+                })
+        );
 
 CreateHostBuilder(args).Build().Run();
 
 public class FhirExporter : BackgroundService
 {
-    private static readonly Gauge ResourceCount = Metrics
-        .CreateGauge(
-            "fhir_resource_count",
-            "Number of resources stored within the FHIR server by type.",
-            new GaugeConfiguration
-            {
-                LabelNames = new[] { "type", "server_name" },
-            });
+    private static readonly Gauge ResourceCount = Metrics.CreateGauge(
+        "fhir_resource_count",
+        "Number of resources stored within the FHIR server by type.",
+        new GaugeConfiguration { LabelNames = new[] { "type", "server_name" }, }
+    );
 
-    private static readonly Counter FetchResourceCountErrors = Metrics
-        .CreateCounter(
-            "fhir_fetch_resource_count_failed_total",
-            "Number of resource count fetch operations that failed.",
-            new CounterConfiguration
-            {
-                LabelNames = new[] { "type", "server_name" },
-            });
+    private static readonly Counter FetchResourceCountErrors = Metrics.CreateCounter(
+        "fhir_fetch_resource_count_failed_total",
+        "Number of resource count fetch operations that failed.",
+        new CounterConfiguration { LabelNames = new[] { "type", "server_name" }, }
+    );
 
-    private static readonly Histogram FetchResourceCountDuration = Metrics
-        .CreateHistogram(
-            "fhir_fetch_resource_count_duration_seconds",
-            "Histogram of resource count fetching durations.",
-            new HistogramConfiguration
-            {
-                LabelNames = new[] { "server_name" },
-            });
+    private static readonly Histogram FetchResourceCountDuration = Metrics.CreateHistogram(
+        "fhir_fetch_resource_count_duration_seconds",
+        "Histogram of resource count fetching durations.",
+        new HistogramConfiguration { LabelNames = new[] { "server_name" }, }
+    );
 
     private readonly ILogger<FhirExporter> log;
     private readonly AppConfig config;
@@ -94,17 +93,20 @@ public class FhirExporter : BackgroundService
     private readonly IEnumerable<CustomMetric> customMetrics;
     private readonly IDictionary<string, Gauge> customGauges;
 
-    public FhirExporter(ILogger<FhirExporter> logger, IOptions<AppConfig> config, IAuthHeaderProvider authHeaderProvider)
+    public FhirExporter(
+        ILogger<FhirExporter> logger,
+        IOptions<AppConfig> config,
+        IAuthHeaderProvider authHeaderProvider
+    )
     {
         log = logger;
         this.config = config.Value;
 
-        var serverUrl = this.config.FhirServerUrl;
-        if (serverUrl == null)
-        {
-            throw new InvalidOperationException("FhirServerUrl needs to be set.");
-        }
-
+        var serverUrl =
+            this.config.FhirServerUrl
+            ?? throw new InvalidOperationException(
+                $"{nameof(this.config.FhirServerUrl)} needs to be set."
+            );
         this.authHeaderProvider = authHeaderProvider;
 
         fhirClient = new FhirClient(serverUrl);
@@ -113,22 +115,25 @@ public class FhirExporter : BackgroundService
 
         log.LogInformation(
             "Excluding the following resources from counting: {excludedResources}",
-            this.config.ExcludedResources);
+            this.config.ExcludedResources
+        );
 
         resourceTypes = Fhir.ModelInfo.SupportedResources.Except(excludedResources);
 
         fhirServerName = this.config.FhirServerName;
 
-        customMetrics = this.config.Queries ?? new();
+        customMetrics = this.config.Queries;
 
-        customGauges = customMetrics.Select(metric => Metrics
-            .CreateGauge(
-                metric.Name,
-                metric.Description,
-                new GaugeConfiguration
-                {
-                    LabelNames = new[] { "type", "server_name" },
-                }))
+        customGauges = customMetrics
+            .Where(metric => metric.Name is not null && metric.Query is not null)
+            .Select(
+                metric =>
+                    Metrics.CreateGauge(
+                        metric.Name ?? string.Empty,
+                        metric.Description ?? string.Empty,
+                        new GaugeConfiguration { LabelNames = new[] { "type", "server_name" }, }
+                    )
+            )
             .ToDictionary(gauge => gauge.Name);
     }
 
@@ -143,23 +148,39 @@ public class FhirExporter : BackgroundService
         log.LogInformation(
             "FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
             port,
-            fhirClient.Endpoint);
+            fhirClient.Endpoint
+        );
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            fhirClient.RequestHeaders.Authorization = await authHeaderProvider.GetAuthHeaderAsync(stoppingToken);
+            fhirClient.RequestHeaders.Authorization = await authHeaderProvider.GetAuthHeaderAsync(
+                stoppingToken
+            );
 
             using (FetchResourceCountDuration.WithLabels(fhirServerName).NewTimer())
             {
-                foreach (var customMetric in customMetrics)
+                foreach (var customMetric in customMetrics.Where(metrics => metrics.Query is not null))
                 {
-                    log.LogDebug("Querying custom metric {name} using {query}", customMetric.Name, customMetric.Query);
+                    log.LogDebug(
+                        "Querying custom metric {name} using {query}",
+                        customMetric.Name,
+                        customMetric.Query
+                    );
+
+                    if (customMetric.Query is null || customMetric.Name is null)
+                    {
+                        log.LogWarning("Query or name for custom metric is unset");
+                        continue;
+                    }
+
                     var resourceTypeAndFilters = customMetric.Query.Split("?");
 
                     if (resourceTypeAndFilters.Length < 2)
                     {
-                        log.LogWarning("Parsing custom metric query string failed. " +
-                            "Should look like: <resourceType>?<name>=<value>&...");
+                        log.LogWarning(
+                            "Parsing custom metric query string failed. "
+                                + "Should look like: <resourceType>?<name>=<value>&..."
+                        );
                         continue;
                     }
 
@@ -204,7 +225,8 @@ public class FhirExporter : BackgroundService
             log.LogDebug(
                 "Updating resource count for {resourceType} to {count}",
                 resourceType,
-                total);
+                total
+            );
 
             if (total.HasValue)
             {

@@ -1,15 +1,11 @@
-using System;
 using System.Net.Http.Headers;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using IdentityModel.AspNetCore.AccessTokenManagement;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 public interface IAuthHeaderProvider
 {
-    Task<AuthenticationHeaderValue> GetAuthHeaderAsync(CancellationToken cancelToken = default);
+    Task<AuthenticationHeaderValue?> GetAuthHeaderAsync(CancellationToken cancelToken = default);
 }
 
 public class AuthHeaderProvider : IAuthHeaderProvider
@@ -18,7 +14,11 @@ public class AuthHeaderProvider : IAuthHeaderProvider
     private readonly AuthConfig config;
     private readonly ILogger<AuthHeaderProvider> log;
 
-    public AuthHeaderProvider(IOptions<AuthConfig> config, IClientAccessTokenManagementService tokenService, ILogger<AuthHeaderProvider> logger)
+    public AuthHeaderProvider(
+        IOptions<AuthConfig> config,
+        IClientAccessTokenManagementService tokenService,
+        ILogger<AuthHeaderProvider> logger
+    )
     {
         this.config = config.Value;
         log = logger;
@@ -28,11 +28,13 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         BearerTokenAuthHeader = GetBearerTokenHeader();
     }
 
-    private AuthenticationHeaderValue BasicAuthHeader { get; }
+    private AuthenticationHeaderValue? BasicAuthHeader { get; }
 
-    private AuthenticationHeaderValue BearerTokenAuthHeader { get; }
+    private AuthenticationHeaderValue? BearerTokenAuthHeader { get; }
 
-    public async Task<AuthenticationHeaderValue> GetAuthHeaderAsync(CancellationToken cancelToken = default)
+    public async Task<AuthenticationHeaderValue?> GetAuthHeaderAsync(
+        CancellationToken cancelToken = default
+    )
     {
         if (BasicAuthHeader is not null)
         {
@@ -47,7 +49,9 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         return await GetOAuthHeader(cancelToken);
     }
 
-    private async Task<AuthenticationHeaderValue> GetOAuthHeader(CancellationToken cancelToken = default)
+    private async Task<AuthenticationHeaderValue?> GetOAuthHeader(
+        CancellationToken cancelToken = default
+    )
     {
         var oAuthUri = config.OAuth.TokenUrl;
         if (oAuthUri is null)
@@ -65,7 +69,7 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         return new AuthenticationHeaderValue("Bearer", token);
     }
 
-    private AuthenticationHeaderValue GetBasicAuthHeader()
+    private AuthenticationHeaderValue? GetBasicAuthHeader()
     {
         var username = config.Basic.Username;
         var password = config.Basic.Password;
@@ -80,7 +84,7 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         return null;
     }
 
-    private AuthenticationHeaderValue GetBearerTokenHeader()
+    private AuthenticationHeaderValue? GetBearerTokenHeader()
     {
         var bearerTokenFromConfig = config.BearerToken;
 
