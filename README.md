@@ -17,7 +17,7 @@ docker run --rm -it \
     -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
     -e FetchIntervalSeconds=60 \
     -e FhirServerName="HAPI FHIR Demo Server" \
-    ghcr.io/chgl/fhir-server-exporter:latest
+    ghcr.io/chgl/fhir-server-exporter:v2.1.9
 ```
 
 Open <http://localhost:9797/metrics> to view the resource counts in Prometheus format:
@@ -31,17 +31,10 @@ fhir_resource_count{type="DiagnosticReport"} 36429
 ...
 ```
 
-The container image is pushed to three registries:
+The container image is pushed to these registries:
 
-- `docker.io/chgl/fhir-server-exporter:latest`
-- `ghcr.io/chgl/fhir-server-exporter:latest`
-
-You are strongly encouraged to use the `vX.Y.Z` tags corresponding to the [releases](https://github.com/chgl/fhir-server-exporter/releases)
-instead of using `latest`.
-
-> **Warning**
-> Previous versions of the FHIR server exporter were pushed to quay.io/chgl/fhir-server-exporter.
-> This registry has been dropped and the image is now only available on docker.io and ghcr.io.
+- docker.io/chgl/fhir-server-exporter:v2.1.9
+- ghcr.io/chgl/fhir-server-exporter:v2.1.9
 
 ### Configuration
 
@@ -71,7 +64,7 @@ docker run --rm -it \
    -e FhirServerName="HAPI FHIR Demo Server" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
-   ghcr.io/chgl/fhir-server-exporter:latest
+   ghcr.io/chgl/fhir-server-exporter:v2.1.9
 ```
 
 Here's an example `queries.yaml` file. It exports three gauge metrics as `fhir_male_patient_count`,
@@ -141,17 +134,34 @@ so if you've specified both a basic auth username and password and an oauth toke
 ### Build and run container image locally
 
 ```sh
-docker build -t fhir-server-exporter .
-docker run -e FhirServerUrl="http://host.docker.internal:8082/fhir" -p 9797:9797 fhir-server-exporter
+docker build -t fhir-server-exporter:local .
+docker run -e FhirServerUrl="http://host.docker.internal:8082/fhir" -p 9797:9797 fhir-server-exporter:local
 ```
 
-## Verify image integrity
+## Image signature and provenance verification
 
-All released container images are signed using [cosign](https://github.com/sigstore/cosign) following the [keyless approach](https://github.com/sigstore/cosign/blob/main/KEYLESS.md). To verify the signature:
+Prerequisites:
+
+- [cosign](https://github.com/sigstore/cosign/releases)
+- [slsa-verifier](https://github.com/slsa-framework/slsa-verifier/releases)
+- [crane](https://github.com/google/go-containerregistry/releases)
+
+All released container images are signed using [cosign](https://github.com/sigstore/cosign) and SLSA Level 3 provenance is available for verification.
 
 ```sh
+IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.1.9
+DIGEST=$(crane digest "${IMAGE}")
+IMAGE_DIGEST_PINNED="ghcr.io/chgl/fhir-server-exporter@${DIGEST}"
+IMAGE_TAG="${IMAGE#*:}"
+
 cosign verify \
    --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
-   --certificate-identity-regexp='https://github.com/chgl/fhir-server-exporter/.github/workflows/ci.yaml@refs/tags/*' \
-   ghcr.io/chgl/fhir-server-exporter:latest
+   --certificate-identity="https://github.com/chgl/fhir-server-exporter/.github/workflows/ci.yaml@refs/tags/${IMAGE_TAG}" \
+   "${IMAGE_DIGEST_PINNED}"
+
+slsa-verifier verify-image \
+    --source-uri github.com/chgl/fhir-server-exporter \
+    --source-tag ${IMAGE_TAG} \
+    --source-branch master \
+    "${IMAGE_DIGEST_PINNED}"
 ```
