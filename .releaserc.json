@@ -38,6 +38,30 @@
         }
       }
     ],
-    "@semantic-release/github"
+    "@semantic-release/github",
+    [
+      "semantic-release-replace-plugin",
+      {
+        "replacements": [
+          {
+            "files": ["README.md"],
+            "from": "ghcr.io/chgl/fhir-server-exporter:v.*",
+            "to": "ghcr.io/chgl/fhir-server-exporter:v${nextRelease.version}",
+            "results": [
+              {
+                "file": "README.md",
+                "hasChanged": true
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": ["README.md"]
+      }
+    ]
   ]
 }
