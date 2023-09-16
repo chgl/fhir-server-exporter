@@ -53,6 +53,17 @@
                 "hasChanged": true
               }
             ]
+          },
+          {
+            "files": ["README.md"],
+            "from": "docker.io/chgl/fhir-server-exporter:v.*",
+            "to": "docker.io/chgl/fhir-server-exporter:v${nextRelease.version}",
+            "results": [
+              {
+                "file": "README.md",
+                "hasChanged": true
+              }
+            ]
           }
         ]
       }
