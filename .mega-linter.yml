@@ -14,9 +14,13 @@ DISABLE_LINTERS:
   - SPELL_PROSELINT
   - REPOSITORY_GITLEAKS
   - SPELL_CSPELL
+  - SPELL_LYCHEE
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 REPOSITORY_TRIVY_ARGUMENTS:
-  - "--severity='HIGH,CRITICAL'"
+  - "--severity=MEDIUM,HIGH,CRITICAL"
+  - "--ignore-unfixed"
 IGNORE_GITIGNORED_FILES: true
+REPOSITORY_KICS_ARGUMENTS:
+  - --fail-on=HIGH

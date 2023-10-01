@@ -159,7 +159,9 @@ public class FhirExporter : BackgroundService
 
             using (FetchResourceCountDuration.WithLabels(fhirServerName).NewTimer())
             {
-                foreach (var customMetric in customMetrics.Where(metrics => metrics.Query is not null))
+                foreach (
+                    var customMetric in customMetrics.Where(metrics => metrics.Query is not null)
+                )
                 {
                     log.LogDebug(
                         "Querying custom metric {name} using {query}",
