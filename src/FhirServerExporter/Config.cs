@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 public record AppConfig
 {
     public Uri? FhirServerUrl { get; set; }
