@@ -1,13 +1,9 @@
-using System;
-using System.IO;
-using System.Net.Http;
-using System.Threading.Tasks;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
+using Hl7.Fhir.Rest;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace FhirServerExporter.Tests.E2E;
 

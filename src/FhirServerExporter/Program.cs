@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Prometheus;
-using Fhir = Hl7.Fhir.Model;
 
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
@@ -118,7 +109,7 @@ public class FhirExporter : BackgroundService
             this.config.ExcludedResources
         );
 
-        resourceTypes = Fhir.ModelInfo.SupportedResources.Except(excludedResources);
+        resourceTypes = ModelInfo.SupportedResources.Except(excludedResources);
 
         fhirServerName = this.config.FhirServerName;
 
@@ -137,7 +128,9 @@ public class FhirExporter : BackgroundService
             .ToDictionary(gauge => gauge.Name);
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+    protected override async System.Threading.Tasks.Task ExecuteAsync(
+        CancellationToken stoppingToken
+    )
     {
         var port = config.MetricsPort;
         var fetchInterval = TimeSpan.FromSeconds(config.FetchIntervalSeconds);
@@ -153,7 +146,7 @@ public class FhirExporter : BackgroundService
 
         while (!stoppingToken.IsCancellationRequested)
         {
-            fhirClient.RequestHeaders.Authorization = await authHeaderProvider.GetAuthHeaderAsync(
+            fhirClient.RequestHeaders!.Authorization = await authHeaderProvider.GetAuthHeaderAsync(
                 stoppingToken
             );
 
@@ -194,6 +187,15 @@ public class FhirExporter : BackgroundService
 
                     var result = await fhirClient.SearchAsync(sp, resourceType);
 
+                    if (result is null)
+                    {
+                        log.LogError(
+                            "Response for search request using custom query {query} is null",
+                            customMetric.Query
+                        );
+                        continue;
+                    }
+
                     if (result.Total.HasValue)
                     {
                         customGauges[customMetric.Name]
@@ -212,13 +214,13 @@ public class FhirExporter : BackgroundService
                 }
             }
 
-            await Task.Delay(fetchInterval, stoppingToken);
+            await System.Threading.Tasks.Task.Delay(fetchInterval, stoppingToken);
         }
 
         await server.StopAsync();
     }
 
-    private async Task UpdateResourceCountAsync(string resourceType)
+    private async System.Threading.Tasks.Task UpdateResourceCountAsync(string resourceType)
     {
         log.LogDebug("Fetching resource count for {resourceType}", resourceType);
         try
@@ -245,6 +247,12 @@ public class FhirExporter : BackgroundService
     private async Task<int?> FetchResourceCountForTypeAsync(string resourceType)
     {
         var response = await fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
+        if (response is null)
+        {
+            log.LogError("Response for count request for {resourceType}", resourceType);
+            return null;
+        }
+
         return response.Total;
     }
 }
