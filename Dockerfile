@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0-jammy-chiseled@sha256:8b0546dca6b23e438af6454a3242ffc4a3344a872e791e738f0a1be5fa4343b3 AS runtime
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0-jammy-chiseled@sha256:8b2a9b9a8d3c424a368aa347f333d4653e9ed6eb78c9af70e450b5cc514bf3b8 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 USER 65532:65532
