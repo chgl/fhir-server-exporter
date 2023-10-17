@@ -8,182 +8,81 @@ on:
   pull_request:
     branches: [master]
 
-# Declare default permissions as read only.
 permissions: read-all
 
 jobs:
   build:
-    name: build
-    runs-on: ubuntu-22.04
-    outputs:
-      image-tags: ${{ steps.container_meta.outputs.tags }}
-      image-digest: ${{ steps.build.outputs.digest }}
-      image-name: ${{ env.IMAGE_NAME }}
+    uses: chgl/.github/.github/workflows/standard-build.yaml@9ecb33b4f2ee22ac69359a9d3df94ab02164e216 # v1.3.0
     permissions:
+      contents: read
+      id-token: write
       packages: write
+      pull-requests: write
+      actions: read
+    with:
+      enable-build-test-layer: true
+      enable-upload-test-image: false
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  lint:
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@9ecb33b4f2ee22ac69359a9d3df94ab02164e216 # v1.3.0
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      security-events: write
+      actions: read
+    with:
+      codeql-languages: '["csharp"]'
+      enable-codeql: true
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  test:
+    name: test
+    needs:
+      - build
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
+      - name: Checkout
+        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@2b82ce82d56a2a04d2637cd93a637ae1b359c0a7 # v2
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@885d1462b80bc1c1c7f0b00334ad271f09369c55 # v2
-
-      - name: Image meta
-        id: container_meta
-        uses: docker/metadata-action@818d4b7b91585d195f67373fd9cb0332e31a7175 # v4
+      - name: Download image
+        uses: actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a # v3.0.2
+        if: ${{ github.event_name == 'pull_request' }}
         with:
-          images: |
-            docker.io/${{ github.repository }}
-            ghcr.io/${{ github.repository }}
+          name: container-image
+          path: /tmp
 
-      - name: Login to DockerHub
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
-        if: github.event_name != 'pull_request'
-        with:
-          registry: docker.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
-        if: github.event_name != 'pull_request'
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Run unit tests
-        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
-        with:
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: false
-          target: test
-
-      - name: Build and push
-        id: build
-        uses: docker/build-push-action@1104d471370f9806843c095c1db02b5a90c5f8b6 # v3
-        with:
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.container_meta.outputs.tags }}
-          labels: ${{ steps.container_meta.outputs.labels }}
-          load: ${{ github.event_name == 'pull_request' }}
-          # platforms: linux/amd64,linux/arm64,linux/arm/v8
+      - name: load image
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          docker load --input /tmp/image.tar
 
       - name: Install .NET
-        uses: actions/setup-dotnet@a351d9ea84bc76ec7508debf02a39d88f8b6c0c0 # tag=v2
+        uses: actions/setup-dotnet@a351d9ea84bc76ec7508debf02a39d88f8b6c0c0 # v2
         with:
           dotnet-version: "7.0.x"
           include-prerelease: true
 
       - name: Run E2E tests with newly built container image
         env:
-          FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE: "${{ fromJson(steps.container_meta.outputs.json).tags[0] }}"
+          FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE: ${{ fromJson(needs.build.outputs.image-meta-json).tags[0] }}
         run: |
           dotnet restore src/FhirServerExporter.Tests.E2E/
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    if: ${{ github.event_name != 'pull_request' }}
-    name: release
-    runs-on: ubuntu-22.04
+    uses: chgl/.github/.github/workflows/standard-release.yaml@9ecb33b4f2ee22ac69359a9d3df94ab02164e216 # v1.3.0
     needs:
       - build
+      - test
     permissions:
       contents: write
       pull-requests: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
-        with:
-          # via <https://stackoverflow.com/questions/74744498/github-pushing-to-protected-branches-with-fine-grained-token/76550826#76550826>
-          persist-credentials: false
-
-      # Only required temporary: https://github.com/cycjimmy/semantic-release-action/issues/159
-      - uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d # v3.8.1
-        with:
-          node-version: 14
-
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@61680d0e9b02ff86f5648ade99e01be17f0260a4 # v4.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
-        with:
-          extra_plugins: |
-            conventional-changelog-conventionalcommits@6.1.0
-            semantic-release-replace-plugin@1.2.0
-            @semantic-release/git@10.0.1
-
-  sign-images:
-    name: sign images
-    runs-on: ubuntu-22.04
-    if: ${{ github.event_name != 'pull_request' }}
-    needs:
-      - build
-    permissions:
-      id-token: write
-      packages: write
-    steps:
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Login to DockerHub
-        uses: docker/login-action@465a07811f14bebb1938fbed4728c6a1ff8901fc # v2
-        if: github.event_name != 'pull_request'
-        with:
-          registry: docker.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Install Cosign
-        uses: sigstore/cosign-installer@11086d25041f77fe8fe7b9ea4e48e3b9192b8f19 # tag=v3.1.2
-
-      # via <https://github.com/actions/starter-workflows/blob/main/ci/docker-publish.yml>
-      - name: Sign image
-        env:
-          # <https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-an-intermediate-environment-variable>
-          TAGS: ${{ needs.build.outputs.image-tags }}
-          DIGEST: ${{ needs.build.outputs.image-digest }}
-        run: |
-          echo "${TAGS}" | xargs -I {} cosign sign --yes {}@"${DIGEST}"
-
-  ghcr-io-provenance:
-    if: ${{ startsWith(github.ref, 'refs/tags/') }}
-    needs:
-      - build
-    permissions:
-      actions: read # for detecting the Github Actions environment.
-      id-token: write
-      packages: write # for uploading attestations.
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.9.0
-    with:
-      image: "ghcr.io/${{ github.repository }}"
-      digest: ${{ needs.build.outputs.image-digest }}
-      registry-username: ${{ github.actor }}
+      issues: write
     secrets:
-      registry-password: "${{ secrets.GITHUB_TOKEN }}"
-
-  docker-io-provenance:
-    if: ${{ startsWith(github.ref, 'refs/tags/') }}
-    needs:
-      - build
-    permissions:
-      actions: read # for detecting the Github Actions environment.
-      id-token: write
-      packages: write # for uploading attestations.
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v1.9.0
-    with:
-      image: "docker.io/${{ github.repository }}"
-      digest: ${{ needs.build.outputs.image-digest }}
-      registry-username: ${{ github.actor }}
-    secrets:
-      registry-password: "${{ secrets.DOCKERHUB_TOKEN }}"
+      semantic-release-token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
