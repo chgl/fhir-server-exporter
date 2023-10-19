@@ -155,8 +155,9 @@ IMAGE_DIGEST_PINNED="ghcr.io/chgl/fhir-server-exporter@${DIGEST}"
 IMAGE_TAG="${IMAGE#*:}"
 
 cosign verify \
-   --certificate-oidc-issuer=https://token.actions.githubusercontent.com \
-   --certificate-identity="https://github.com/chgl/fhir-server-exporter/.github/workflows/ci.yaml@refs/tags/${IMAGE_TAG}" \
+   --certificate-oidc-issuer="https://token.actions.githubusercontent.com" \
+   --certificate-identity-regexp="^https://github.com/chgl/.github/.github/workflows/standard-build.yaml@[0-9a-f]{40}$" \
+   --certificate-github-workflow-repository="chgl/fhir-server-exporter" \
    "${IMAGE_DIGEST_PINNED}"
 
 slsa-verifier verify-image \
