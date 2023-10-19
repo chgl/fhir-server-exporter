@@ -86,3 +86,22 @@ jobs:
       issues: write
     secrets:
       semantic-release-token: ${{ secrets.SEMANTIC_RELEASE_TOKEN }}
+
+  copy-image-to-dockerhub:
+    name: copy ghcr.io image to DockerHub
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-22.04
+    needs:
+      - build
+    steps:
+      - uses: imjasonh/setup-crane@00c9e93efa4e1138c9a7a5c594acd6c75a2fbf0c # v0.3
+      - name: Login to DockerHub
+        env:
+          DOCKERHUB_TOKEN: "${{ secrets.DOCKERHUB_TOKEN }}"
+        run: |
+          echo "${DOCKERHUB_TOKEN}" | crane auth login docker.io --username chgl --password-stdin
+      - name: Copy all tags
+        env:
+          TAGS: ${{ needs.build.outputs.image-tags }}
+        run: |
+          echo "${TAGS}" | while read tag; do crane copy "$tag" "${tag/ghcr.io/docker.io}"; done
