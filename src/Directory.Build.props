@@ -17,6 +17,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hl7.Fhir.R4" Version="5.3.0" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="5.4.0" />
   </ItemGroup>
 </Project>
