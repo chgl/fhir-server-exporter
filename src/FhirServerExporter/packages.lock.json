@@ -4,11 +4,11 @@
     "net7.0": {
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.3.0, )",
-        "resolved": "5.3.0",
-        "contentHash": "ymmAyvWnduk8JnZt/l2toHB8NT1EM4AAktVI7G9cuB3E/IUuZmhW5uP8gEpi8MwzKzilO7iN+PRF0fkfnDnTJw==",
+        "requested": "[5.4.0, )",
+        "resolved": "5.4.0",
+        "contentHash": "ABkKzv6IBTJF9evQUHilwhulXi2T0+OHYAnd4jrnQsenDF8HSYCF5shUL6XR1uCOCfdmC0li0E73dsiNCwgQbw==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.3.0"
+          "Hl7.Fhir.Conformance": "5.4.0"
         }
       },
       "IdentityModel.AspNetCore": {
@@ -64,9 +64,9 @@
       },
       "prometheus-net": {
         "type": "Direct",
-        "requested": "[8.0.1, )",
-        "resolved": "8.0.1",
-        "contentHash": "A9sOtQB2gEhujBxPKw+KcGScBiPvBmy4lYVM5OlETMj4xjVD5r/ixIg52HHg2P0lcImJTpfeWnD0/9tpQsRQTA==",
+        "requested": "[8.1.0, )",
+        "resolved": "8.1.0",
+        "contentHash": "4prJfXFYmCPtuedjSjvtsI9BGjsH6hXrqz/yAOx07osiVwzRVyLP7Os+5rFJ5g2PLOoO3149RbEyp2/b223/CQ==",
         "dependencies": {
           "Microsoft.Extensions.Http": "3.1.0",
           "Microsoft.Extensions.ObjectPool": "7.0.0"
@@ -88,8 +88,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.3.0",
-        "contentHash": "qwkDPyNK1KGu+f55ZKYVaXJf3U91+2WuHlg4iN01anZxWzbhfg0f7/1e+QpcWBhTon68dQn17mqUm6UPOjSdjw==",
+        "resolved": "5.4.0",
+        "contentHash": "eDqSjlNsuuwhmmSo2skT97Y5VYmR5SKTLD+jbfSaRFWXzN8v6nntfN8wi3WdjBeuaY0ycyw1XMExqlmRYmWdkQ==",
         "dependencies": {
           "Fhir.Metrics": "1.2.2",
           "Newtonsoft.Json": "13.0.3",
@@ -99,10 +99,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.3.0",
-        "contentHash": "Svy12wO79Ciy/0sQkbnhluePXoOVCX2webk0ms2zqbyTD29p0BqBSbodWsyrTUzUuQZziThl3gapjxy83Kwn2Q==",
+        "resolved": "5.4.0",
+        "contentHash": "F6AvLULi5GO1x+8MNheyoLvMSzgSqUs4CXj0Pxv1orLGRAi99Dxst7PlF3juZUjii4MxiwDv1rEVhWmZ3+eejQ==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.3.0"
+          "Hl7.Fhir.Base": "5.4.0"
         }
       },
       "IdentityModel": {
