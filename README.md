@@ -25,9 +25,9 @@ Open <http://localhost:9797/metrics> to view the resource counts in Prometheus f
 ```console
 # HELP fhir_resource_count Number of resources stored within the FHIR server by type.
 # TYPE fhir_resource_count gauge
-fhir_resource_count{type="Patient"} 124005
-fhir_resource_count{type="Condition"} 29282
-fhir_resource_count{type="DiagnosticReport"} 36429
+fhir_resource_count{type="Patient", server_name="HAPI FHIR Demo Server"} 124005
+fhir_resource_count{type="Condition", server_name="HAPI FHIR Demo Server"} 29282
+fhir_resource_count{type="DiagnosticReport", server_name="HAPI FHIR Demo Server"} 36429
 ...
 ```
 
@@ -38,20 +38,21 @@ The container image is pushed to these registries:
 
 ### Configuration
 
-| Environment Variable          | Description                                                                                                     | Default value |
-| ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------- |
-| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`             | `""`          |
-| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.          | `""`          |
-| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.        | `30`          |
-| MetricsPort                   | The local port on which the metrics should be exposed at.                                                       | `9797`        |
-| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription` | `""`          |
-| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                       | `""`          |
-| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                            | `""`          |
-| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                    | `""`          |
-| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                       | `""`          |
-| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                | `""`          |
-| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                             | `""`          |
-| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                     | `""`          |
+| Environment Variable          | Description                                                                                                          | Default value |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------- |
+| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`                  | `""`          |
+| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.               | `""`          |
+| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.             | `30`          |
+| MetricsPort                   | The local port on which the metrics should be exposed at.                                                            | `9797`        |
+| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription`      | `""`          |
+| IncludedResources             | A comma-separated list of FHIR resource types that should be included for counting. if unset, defaults to all types. | `""`          |
+| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                            | `""`          |
+| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                                 | `""`          |
+| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                         | `""`          |
+| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                            | `""`          |
+| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                     | `""`          |
+| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                                  | `""`          |
+| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                          | `""`          |
 
 ### Custom Queries
 
@@ -105,7 +106,7 @@ so if you've specified both a basic auth username and password and an oauth toke
 1. Start an empty HAPI FHIR server exposed on port 8282 and a pre-configured Prometheus instance on port 9090:
 
    ```sh
-   docker compose -f hack/docker-compose.dev.yml up
+   docker compose -f hack/compose.yaml up
    ```
 
 1. Run the server exporter

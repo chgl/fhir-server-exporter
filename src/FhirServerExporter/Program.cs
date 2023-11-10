@@ -102,14 +102,25 @@ public class FhirExporter : BackgroundService
 
         fhirClient = new FhirClient(serverUrl);
 
+        var includedResources = ModelInfo.SupportedResources;
+
+        if (!string.IsNullOrEmpty(this.config.IncludedResources))
+        {
+            log.LogInformation(
+                "Including only the following resources for counting: {IncludedResources}",
+                this.config.IncludedResources
+            );
+            includedResources = this.config.IncludedResources.Split(',').ToList();
+        }
+
         var excludedResources = this.config.ExcludedResources.Split(',');
 
         log.LogInformation(
-            "Excluding the following resources from counting: {excludedResources}",
+            "Excluding the following resources from counting: {ExcludedResources}",
             this.config.ExcludedResources
         );
 
-        resourceTypes = ModelInfo.SupportedResources.Except(excludedResources);
+        resourceTypes = includedResources.Except(excludedResources);
 
         fhirServerName = this.config.FhirServerName;
 
