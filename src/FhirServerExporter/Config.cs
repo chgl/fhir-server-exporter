@@ -10,6 +10,8 @@ public record AppConfig
 
     public string ExcludedResources { get; set; } = string.Empty;
 
+    public string IncludedResources { get; set; } = string.Empty;
+
     public List<CustomMetric> Queries { get; set; } = new();
 }
 
