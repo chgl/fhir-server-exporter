@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1.4
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:7.0.13-jammy-chiseled@sha256:69939a0d38045392ed57c79715c1ed63f1b3d5a0a552a153e5c538a5188b9547 AS runtime
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0.0-jammy-chiseled@sha256:00a0b503ca7061bf9e349a352ab9672b3607c21ad157937c6f4fa3ee39108272 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 USER 65532:65532
