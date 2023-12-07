@@ -64,9 +64,9 @@
       },
       "prometheus-net": {
         "type": "Direct",
-        "requested": "[8.1.0, )",
-        "resolved": "8.1.0",
-        "contentHash": "4prJfXFYmCPtuedjSjvtsI9BGjsH6hXrqz/yAOx07osiVwzRVyLP7Os+5rFJ5g2PLOoO3149RbEyp2/b223/CQ==",
+        "requested": "[8.2.0, )",
+        "resolved": "8.2.0",
+        "contentHash": "pLsOu9HbJKJWeyg6IAb57K/JeJa+Ti1uD47c2+SANjga6UuDyeZN/if+9Q2H+s96x8/8DDT8AJ/9UU4+GsK/NA==",
         "dependencies": {
           "Microsoft.Extensions.Http": "3.1.0",
           "Microsoft.Extensions.ObjectPool": "7.0.0"
