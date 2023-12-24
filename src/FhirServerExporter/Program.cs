@@ -15,32 +15,37 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
         .ConfigureServices(
             (ctx, services) =>
             {
+                var appConfig = new AppConfig();
+                ctx.Configuration.Bind(appConfig);
+
                 services.Configure<AuthConfig>(ctx.Configuration.GetSection("Auth"));
                 services.Configure<AppConfig>(ctx.Configuration);
 
                 services.AddSingleton<IAuthHeaderProvider, AuthHeaderProvider>();
                 services.AddHostedService<FhirExporter>();
 
-                services.AddAccessTokenManagement(
-                    (isp, options) =>
-                    {
-                        var authConfig = isp.GetRequiredService<IOptions<AuthConfig>>().Value;
+                // used by the oauth token provider
+                services.AddDistributedMemoryCache();
 
-                        if (authConfig.OAuth.TokenUrl is not null)
+                services
+                    .AddClientCredentialsTokenManagement()
+                    .AddClient(
+                        AuthHeaderProvider.HttpClientName,
+                        client =>
                         {
-                            options.Client.Clients.Add(
-                                "default",
-                                new()
-                                {
-                                    Address = authConfig.OAuth.TokenUrl.AbsoluteUri,
-                                    ClientId = authConfig.OAuth.ClientId,
-                                    ClientSecret = authConfig.OAuth.ClientSecret,
-                                    Scope = authConfig.OAuth.Scope,
-                                }
-                            );
+                            var authConfig = appConfig.Auth;
+
+                            if (authConfig.OAuth.TokenUrl is null)
+                            {
+                                return;
+                            }
+
+                            client.TokenEndpoint = authConfig.OAuth.TokenUrl.ToString();
+                            client.ClientId = authConfig.OAuth.ClientId;
+                            client.ClientSecret = authConfig.OAuth.ClientSecret;
+                            client.Scope = authConfig.OAuth.Scope;
                         }
-                    }
-                );
+                    );
             }
         )
         .ConfigureLogging(
@@ -60,19 +65,19 @@ public class FhirExporter : BackgroundService
     private static readonly Gauge ResourceCount = Metrics.CreateGauge(
         "fhir_resource_count",
         "Number of resources stored within the FHIR server by type.",
-        new GaugeConfiguration { LabelNames = new[] { "type", "server_name" }, }
+        new GaugeConfiguration { LabelNames = ["type", "server_name"], }
     );
 
     private static readonly Counter FetchResourceCountErrors = Metrics.CreateCounter(
         "fhir_fetch_resource_count_failed_total",
         "Number of resource count fetch operations that failed.",
-        new CounterConfiguration { LabelNames = new[] { "type", "server_name" }, }
+        new CounterConfiguration { LabelNames = ["type", "server_name"], }
     );
 
     private static readonly Histogram FetchResourceCountDuration = Metrics.CreateHistogram(
         "fhir_fetch_resource_count_duration_seconds",
         "Histogram of resource count fetching durations.",
-        new HistogramConfiguration { LabelNames = new[] { "server_name" }, }
+        new HistogramConfiguration { LabelNames = ["server_name"], }
     );
 
     private readonly ILogger<FhirExporter> log;
@@ -133,7 +138,7 @@ public class FhirExporter : BackgroundService
                     Metrics.CreateGauge(
                         metric.Name ?? string.Empty,
                         metric.Description ?? string.Empty,
-                        new GaugeConfiguration { LabelNames = new[] { "type", "server_name" }, }
+                        new GaugeConfiguration { LabelNames = ["type", "server_name"], }
                     )
             )
             .ToDictionary(gauge => gauge.Name);

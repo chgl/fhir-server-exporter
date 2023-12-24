@@ -12,7 +12,9 @@ public record AppConfig
 
     public string IncludedResources { get; set; } = string.Empty;
 
-    public List<CustomMetric> Queries { get; set; } = new();
+    public List<CustomMetric> Queries { get; set; } = [];
+
+    public AuthConfig Auth { get; set; } = new AuthConfig();
 }
 
 public record AuthConfig
