@@ -2,6 +2,7 @@ using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
+using FluentAssertions;
 using Hl7.Fhir.Rest;
 using Xunit;
 
@@ -9,16 +10,15 @@ namespace FhirServerExporter.Tests.E2E;
 
 public class ContainerE2ETests : IAsyncLifetime
 {
-    private readonly TestcontainersContainer fhirServerContainer;
+    private readonly IContainer fhirServerContainer;
     private readonly IOutputConsumer fhirServerOutputConsumer;
-    private readonly TestcontainersContainer fhirServerExporterContainer;
-    private readonly IOutputConsumer fhirServerExporterOutputConsumer;
-    private readonly IDockerNetwork containerNetwork;
+    private readonly IContainer fhirServerExporterContainer;
+    private readonly INetwork containerNetwork;
 
     public ContainerE2ETests()
     {
-        containerNetwork = new TestcontainersNetworkBuilder()
-            .WithName("fhir-server-exporter-e2e")
+        containerNetwork = new NetworkBuilder()
+            .WithName($"fhir-server-exporter-e2e-{Guid.NewGuid()}")
             .Build();
 
         fhirServerOutputConsumer = Consume.RedirectStdoutAndStderrToStream(
@@ -26,8 +26,8 @@ public class ContainerE2ETests : IAsyncLifetime
             new MemoryStream()
         );
 
-        fhirServerContainer = new TestcontainersBuilder<TestcontainersContainer>()
-            .WithImage("docker.io/hapiproject/hapi:v6.6.0")
+        fhirServerContainer = new ContainerBuilder()
+            .WithImage("docker.io/hapiproject/hapi:v6.10.1")
             .WithName("fhir-server")
             .WithNetwork(containerNetwork)
             .WithExposedPort(8080)
@@ -36,10 +36,7 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithOutputConsumer(fhirServerOutputConsumer)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilMessageIsLogged(
-                        fhirServerOutputConsumer.Stdout,
-                        ".*(Started Application).*"
-                    )
+                    .UntilHttpRequestIsSucceeded(r => r.ForPort(8080).ForPath("/fhir/metadata"))
             )
             .Build();
 
@@ -47,12 +44,7 @@ public class ContainerE2ETests : IAsyncLifetime
             Environment.GetEnvironmentVariable("FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE")
             ?? "ghcr.io/chgl/fhir-server-exporter:latest";
 
-        fhirServerExporterOutputConsumer = Consume.RedirectStdoutAndStderrToStream(
-            new MemoryStream(),
-            new MemoryStream()
-        );
-
-        fhirServerExporterContainer = new TestcontainersBuilder<TestcontainersContainer>()
+        fhirServerExporterContainer = new ContainerBuilder()
             .WithImage(exporterImage)
             .WithName("fhir-server-exporter")
             .WithNetwork(containerNetwork)
@@ -60,13 +52,9 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithPortBinding(9797, 9797)
             .WithCleanUp(true)
             .WithEnvironment("FhirServerUrl", "http://fhir-server:8080/fhir")
-            .WithOutputConsumer(fhirServerExporterOutputConsumer)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilMessageIsLogged(
-                        fhirServerExporterOutputConsumer.Stdout,
-                        ".*(FHIR Server Prometheus Exporter running on port 9797).*"
-                    )
+                    .UntilHttpRequestIsSucceeded(r => r.ForPort(9797).ForPath("/metrics"))
             )
             .Build();
     }
@@ -74,9 +62,11 @@ public class ContainerE2ETests : IAsyncLifetime
     [Fact]
     public async Task GetFhirServerCapabilityStatement_ShouldSucceed()
     {
-        var fhirClient = new Hl7.Fhir.Rest.FhirClient("http://localhost:8080/fhir");
+        var fhirClient = new FhirClient("http://localhost:8080/fhir");
 
-        _ = await fhirClient.CapabilityStatementAsync();
+        var statement = await fhirClient.CapabilityStatementAsync();
+
+        statement.Should().NotBeNull();
     }
 
     [Fact]
@@ -86,13 +76,17 @@ public class ContainerE2ETests : IAsyncLifetime
         var response = await client.GetAsync("http://localhost:9797/metrics");
 
         response.EnsureSuccessStatusCode();
+
+        response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
     }
 
     public async Task InitializeAsync()
     {
-        await this.containerNetwork.CreateAsync();
-        await this.fhirServerContainer.StartAsync();
-        await this.fhirServerExporterContainer.StartAsync();
+        await containerNetwork.CreateAsync();
+        await Task.WhenAll(
+            fhirServerContainer.StartAsync(),
+            fhirServerExporterContainer.StartAsync()
+        );
     }
 
     public async Task DisposeAsync()
@@ -100,7 +94,6 @@ public class ContainerE2ETests : IAsyncLifetime
         await this.fhirServerExporterContainer.DisposeAsync().AsTask();
         await this.fhirServerContainer.DisposeAsync().AsTask();
         this.fhirServerOutputConsumer.Dispose();
-        this.fhirServerExporterOutputConsumer.Dispose();
         await this.containerNetwork.DeleteAsync();
     }
 }
