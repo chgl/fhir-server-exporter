@@ -62,7 +62,7 @@ public class ContainerE2ETests : IAsyncLifetime
     [Fact]
     public async Task GetFhirServerCapabilityStatement_ShouldSucceed()
     {
-        var fhirClient = new FhirClient("http://localhost:8080/fhir");
+        using var fhirClient = new FhirClient("http://localhost:8080/fhir");
 
         var statement = await fhirClient.CapabilityStatementAsync();
 
