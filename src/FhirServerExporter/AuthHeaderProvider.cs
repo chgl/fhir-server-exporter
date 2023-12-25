@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
 using System.Text;
-using IdentityModel.AspNetCore.AccessTokenManagement;
+using Duende.AccessTokenManagement;
 using Microsoft.Extensions.Options;
 
 public interface IAuthHeaderProvider
@@ -10,13 +10,15 @@ public interface IAuthHeaderProvider
 
 public class AuthHeaderProvider : IAuthHeaderProvider
 {
-    private readonly IClientAccessTokenManagementService tokenService;
+    public const string HttpClientName = "fhir.client";
+
+    private readonly IClientCredentialsTokenManagementService tokenService;
     private readonly AuthConfig config;
     private readonly ILogger<AuthHeaderProvider> log;
 
     public AuthHeaderProvider(
         IOptions<AuthConfig> config,
-        IClientAccessTokenManagementService tokenService,
+        IClientCredentialsTokenManagementService tokenService,
         ILogger<AuthHeaderProvider> logger
     )
     {
@@ -59,14 +61,17 @@ public class AuthHeaderProvider : IAuthHeaderProvider
             return null;
         }
 
-        var token = await tokenService.GetClientAccessTokenAsync(cancellationToken: cancelToken);
+        var token = await tokenService.GetAccessTokenAsync(
+            HttpClientName,
+            cancellationToken: cancelToken
+        );
         if (token is null)
         {
             log.LogError("Failed to get oauth token.");
             return null;
         }
 
-        return new AuthenticationHeaderValue("Bearer", token);
+        return new AuthenticationHeaderValue("Bearer", token.AccessToken);
     }
 
     private AuthenticationHeaderValue? GetBasicAuthHeader()

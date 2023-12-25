@@ -211,6 +211,12 @@ dotnet_diagnostic.SA1200.severity = none
 # Closing parenthesis should not be preceded by a space
 dotnet_diagnostic.SA1009.severity = none
 
+# Opening square brackets should not be preceded by a space
+dotnet_diagnostic.SA1010.severity = none
+
+# Elements should be documented
+dotnet_diagnostic.SA1600.severity = none
+
 # Closing parenthesis should be on line of last parameter
 dotnet_diagnostic.SA1111.severity = none
 
