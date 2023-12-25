@@ -11,7 +11,6 @@ namespace FhirServerExporter.Tests.E2E;
 public class ContainerE2ETests : IAsyncLifetime
 {
     private readonly IContainer fhirServerContainer;
-    private readonly IOutputConsumer fhirServerOutputConsumer;
     private readonly IContainer fhirServerExporterContainer;
     private readonly INetwork containerNetwork;
 
@@ -21,11 +20,6 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithName($"fhir-server-exporter-e2e-{Guid.NewGuid()}")
             .Build();
 
-        fhirServerOutputConsumer = Consume.RedirectStdoutAndStderrToStream(
-            new MemoryStream(),
-            new MemoryStream()
-        );
-
         fhirServerContainer = new ContainerBuilder()
             .WithImage("docker.io/hapiproject/hapi:v6.10.1")
             .WithName("fhir-server")
@@ -33,7 +27,6 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithExposedPort(8080)
             .WithPortBinding(8080, 8080)
             .WithCleanUp(true)
-            .WithOutputConsumer(fhirServerOutputConsumer)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
                     .UntilHttpRequestIsSucceeded(r => r.ForPort(8080).ForPath("/fhir/metadata"))
@@ -82,8 +75,8 @@ public class ContainerE2ETests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
-        await containerNetwork.CreateAsync();
         await Task.WhenAll(
+            containerNetwork.CreateAsync(),
             fhirServerContainer.StartAsync(),
             fhirServerExporterContainer.StartAsync()
         );
@@ -91,9 +84,10 @@ public class ContainerE2ETests : IAsyncLifetime
 
     public async Task DisposeAsync()
     {
-        await this.fhirServerExporterContainer.DisposeAsync().AsTask();
-        await this.fhirServerContainer.DisposeAsync().AsTask();
-        this.fhirServerOutputConsumer.Dispose();
-        await this.containerNetwork.DeleteAsync();
+        await Task.WhenAll(
+            fhirServerExporterContainer.DisposeAsync().AsTask(),
+            fhirServerContainer.DisposeAsync().AsTask(),
+            containerNetwork.DeleteAsync()
+        );
     }
 }
