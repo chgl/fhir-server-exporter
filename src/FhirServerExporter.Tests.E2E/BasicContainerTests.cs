@@ -75,8 +75,8 @@ public class ContainerE2ETests : IAsyncLifetime
 
     public async Task InitializeAsync()
     {
+        await containerNetwork.CreateAsync();
         await Task.WhenAll(
-            containerNetwork.CreateAsync(),
             fhirServerContainer.StartAsync(),
             fhirServerExporterContainer.StartAsync()
         );
@@ -86,8 +86,8 @@ public class ContainerE2ETests : IAsyncLifetime
     {
         await Task.WhenAll(
             fhirServerExporterContainer.DisposeAsync().AsTask(),
-            fhirServerContainer.DisposeAsync().AsTask(),
-            containerNetwork.DeleteAsync()
+            fhirServerContainer.DisposeAsync().AsTask()
         );
+        await containerNetwork.DeleteAsync();
     }
 }
