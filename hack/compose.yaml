@@ -14,7 +14,7 @@ services:
       - "127.0.0.1:8082:8080"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:23.0.1@sha256:3a4f433c989cf4cc68d0de943d81f1e2068b4d9c674131101ab22e8e61a73698
+    image: quay.io/keycloak/keycloak:23.0.3@sha256:4f72a5b0c076755e806457d96404dd28dc1394013933d7170c154c26db9b6a16
     environment:
       KEYCLOAK_ADMIN: admin
       # kics-scan ignore-line
