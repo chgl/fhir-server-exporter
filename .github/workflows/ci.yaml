@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@888b17087ecf83c5c06305540fe43bf99e2e37fe # v1.4.12
+    uses: chgl/.github/.github/workflows/standard-build.yaml@c1515ccbf0988cdf3a61d549661c3329c6e97217 # v1.4.13
     permissions:
       contents: read
       id-token: write
@@ -27,7 +27,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@888b17087ecf83c5c06305540fe43bf99e2e37fe # v1.4.12
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@c1515ccbf0988cdf3a61d549661c3329c6e97217 # v1.4.13
     permissions:
       contents: read
       pull-requests: write
@@ -76,7 +76,7 @@ jobs:
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    uses: chgl/.github/.github/workflows/standard-release.yaml@888b17087ecf83c5c06305540fe43bf99e2e37fe # v1.4.12
+    uses: chgl/.github/.github/workflows/standard-release.yaml@c1515ccbf0988cdf3a61d549661c3329c6e97217 # v1.4.13
     needs:
       - build
       - test
