@@ -3,6 +3,8 @@ using System.Text;
 using Duende.AccessTokenManagement;
 using Microsoft.Extensions.Options;
 
+namespace FhirServerExporter;
+
 public interface IAuthHeaderProvider
 {
     Task<AuthenticationHeaderValue?> GetAuthHeaderAsync(CancellationToken cancelToken = default);

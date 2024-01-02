@@ -1,3 +1,5 @@
+namespace FhirServerExporter;
+
 public record AppConfig
 {
     public Uri? FhirServerUrl { get; set; }
@@ -12,7 +14,7 @@ public record AppConfig
 
     public string IncludedResources { get; set; } = string.Empty;
 
-    public List<CustomMetric> Queries { get; set; } = [];
+    public ICollection<CustomMetric> Queries { get; set; } = [];
 
     public AuthConfig Auth { get; set; } = new AuthConfig();
 }

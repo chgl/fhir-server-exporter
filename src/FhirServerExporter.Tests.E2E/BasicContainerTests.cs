@@ -1,5 +1,4 @@
 using DotNet.Testcontainers.Builders;
-using DotNet.Testcontainers.Configurations;
 using DotNet.Testcontainers.Containers;
 using DotNet.Testcontainers.Networks;
 using FluentAssertions;
@@ -26,7 +25,7 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithNetwork(containerNetwork)
             .WithExposedPort(8080)
             .WithPortBinding(8080, 8080)
-            .WithCleanUp(true)
+            .WithCleanUp(cleanUp: true)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
                     .UntilHttpRequestIsSucceeded(r => r.ForPort(8080).ForPath("/fhir/metadata"))
@@ -43,7 +42,7 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithNetwork(containerNetwork)
             .WithExposedPort(9797)
             .WithPortBinding(9797, 9797)
-            .WithCleanUp(true)
+            .WithCleanUp(cleanUp: true)
             .WithEnvironment("FhirServerUrl", "http://fhir-server:8080/fhir")
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
