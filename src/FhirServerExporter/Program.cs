@@ -1,4 +1,5 @@
 using System.Web;
+using FhirServerExporter;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.Extensions.Options;
@@ -58,7 +59,7 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                 })
         );
 
-CreateHostBuilder(args).Build().Run();
+await CreateHostBuilder(args).Build().RunAsync();
 
 public class FhirExporter : BackgroundService
 {
@@ -125,7 +126,10 @@ public class FhirExporter : BackgroundService
             this.config.ExcludedResources
         );
 
-        resourceTypes = includedResources.Except(excludedResources);
+        resourceTypes = includedResources.Except(
+            excludedResources,
+            StringComparer.InvariantCultureIgnoreCase
+        );
 
         fhirServerName = this.config.FhirServerName;
 
@@ -141,7 +145,7 @@ public class FhirExporter : BackgroundService
                         new GaugeConfiguration { LabelNames = ["type", "server_name"], }
                     )
             )
-            .ToDictionary(gauge => gauge.Name);
+            .ToDictionary(gauge => gauge.Name, StringComparer.InvariantCulture);
     }
 
     protected override async System.Threading.Tasks.Task ExecuteAsync(
@@ -178,50 +182,7 @@ public class FhirExporter : BackgroundService
                         customMetric.Query
                     );
 
-                    if (customMetric.Query is null || customMetric.Name is null)
-                    {
-                        log.LogWarning("Query or name for custom metric is unset");
-                        continue;
-                    }
-
-                    var resourceTypeAndFilters = customMetric.Query.Split("?");
-
-                    if (resourceTypeAndFilters.Length < 2)
-                    {
-                        log.LogWarning(
-                            "Parsing custom metric query string failed. "
-                                + "Should look like: <resourceType>?<name>=<value>&..."
-                        );
-                        continue;
-                    }
-
-                    var resourceType = resourceTypeAndFilters[0];
-                    var kv = HttpUtility.ParseQueryString(resourceTypeAndFilters[1]);
-                    var paramList = kv.AllKeys.Select(key => Tuple.Create(key, kv[key]));
-                    var sp = SearchParams.FromUriParamList(paramList);
-                    sp.Summary = SummaryType.Count;
-
-                    var result = await fhirClient.SearchAsync(sp, resourceType);
-
-                    if (result is null)
-                    {
-                        log.LogError(
-                            "Response for search request using custom query {query} is null",
-                            customMetric.Query
-                        );
-                        continue;
-                    }
-
-                    if (result.Total.HasValue)
-                    {
-                        customGauges[customMetric.Name]
-                            .WithLabels(resourceType, fhirServerName)
-                            .Set(result.Total.Value);
-                    }
-                    else
-                    {
-                        log.LogWarning("No 'total' returned for {query}", customMetric.Query);
-                    }
+                    await UpdateCustomMetricCountAsync(customMetric);
                 }
 
                 foreach (var resourceType in resourceTypes)
@@ -234,6 +195,56 @@ public class FhirExporter : BackgroundService
         }
 
         await server.StopAsync();
+    }
+
+    private async System.Threading.Tasks.Task UpdateCustomMetricCountAsync(
+        CustomMetric customMetric
+    )
+    {
+        if (customMetric.Query is null || customMetric.Name is null)
+        {
+            log.LogWarning("Query or name for custom metric is unset");
+            return;
+        }
+
+        var resourceTypeAndFilters = customMetric.Query.Split("?");
+
+        if (resourceTypeAndFilters.Length < 2)
+        {
+            log.LogWarning(
+                "Parsing custom metric query string failed. "
+                    + "Should look like: <resourceType>?<name>=<value>&..."
+            );
+            return;
+        }
+
+        var resourceType = resourceTypeAndFilters[0];
+        var kv = HttpUtility.ParseQueryString(resourceTypeAndFilters[1]);
+        var paramList = kv.AllKeys.Select(key => Tuple.Create(key, kv[key]));
+        var sp = SearchParams.FromUriParamList(paramList);
+        sp.Summary = SummaryType.Count;
+
+        var result = await fhirClient.SearchAsync(sp, resourceType);
+
+        if (result is null)
+        {
+            log.LogError(
+                "Response for search request using custom query {query} is null",
+                customMetric.Query
+            );
+            return;
+        }
+
+        if (result.Total.HasValue)
+        {
+            customGauges[customMetric.Name]
+                .WithLabels(resourceType, fhirServerName)
+                .Set(result.Total.Value);
+        }
+        else
+        {
+            log.LogWarning("No 'total' returned for {query}", customMetric.Query);
+        }
     }
 
     private async System.Threading.Tasks.Task UpdateResourceCountAsync(string resourceType)

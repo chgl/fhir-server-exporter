@@ -26,6 +26,12 @@
           "Hl7.Fhir.Conformance": "5.4.0"
         }
       },
+      "Meziantou.Analyzer": {
+        "type": "Direct",
+        "requested": "[2.0.132, )",
+        "resolved": "2.0.132",
+        "contentHash": "FAojYpAczxXWXxchaxqyGP6KRILwgeP9Fn+c2bOEaFxr0vZzLV3a2msPWQar801L1VhsZWBpYydRXe5mqXCl4Q=="
+      },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
         "requested": "[8.0.0, )",
