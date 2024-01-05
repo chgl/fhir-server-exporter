@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Hl7.Fhir.R4" Version="5.4.0" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.132">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.134">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
