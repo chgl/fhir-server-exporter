@@ -4,9 +4,9 @@
     "net8.0": {
       "Duende.AccessTokenManagement": {
         "type": "Direct",
-        "requested": "[2.1.0-preview.1, )",
-        "resolved": "2.1.0-preview.1",
-        "contentHash": "FwPD9X3lJ/EE7uC1aFUYLIMbjHmmn9dXvlJmj3xz0Pa/Dd2+BO1HdKrHnOVXszt7XKRGojZkIVzJE5w+Sf90Pw==",
+        "requested": "[2.1.0, )",
+        "resolved": "2.1.0",
+        "contentHash": "SZXYF/pS/Tkc3fY7az/S3Y/uODVtKU7KbDyaZBOqNl9y9MSmga+FEAmgDfdjCq+f9wRy9QTkicGKHSSKcwT4HQ==",
         "dependencies": {
           "IdentityModel": "6.2.0",
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
@@ -28,9 +28,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.132, )",
-        "resolved": "2.0.132",
-        "contentHash": "FAojYpAczxXWXxchaxqyGP6KRILwgeP9Fn+c2bOEaFxr0vZzLV3a2msPWQar801L1VhsZWBpYydRXe5mqXCl4Q=="
+        "requested": "[2.0.134, )",
+        "resolved": "2.0.134",
+        "contentHash": "N+63EP3eJLRRZKoD3IpiGWgbdkNOnjxr0VovOBAc69LxUocrlxQ9uZODg2v1QEYQWEF7A3h6YTY0KcHPpe+EcQ=="
       },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
@@ -88,9 +88,9 @@
       },
       "prometheus-net": {
         "type": "Direct",
-        "requested": "[8.2.0, )",
-        "resolved": "8.2.0",
-        "contentHash": "pLsOu9HbJKJWeyg6IAb57K/JeJa+Ti1uD47c2+SANjga6UuDyeZN/if+9Q2H+s96x8/8DDT8AJ/9UU4+GsK/NA==",
+        "requested": "[8.2.1, )",
+        "resolved": "8.2.1",
+        "contentHash": "3wVgdEPOCBF752s2xps5T+VH+c9mJK8S8GKEDg49084P6JZMumTZI5Te6aJ9MQpX0sx7om6JOnBpIi7ZBmmiDQ==",
         "dependencies": {
           "Microsoft.Extensions.Http": "3.1.0",
           "Microsoft.Extensions.ObjectPool": "7.0.0"
