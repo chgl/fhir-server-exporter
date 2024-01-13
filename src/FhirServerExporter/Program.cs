@@ -8,10 +8,7 @@ using Prometheus;
 static IHostBuilder CreateHostBuilder(string[] args) =>
     Host.CreateDefaultBuilder(args)
         .ConfigureAppConfiguration(
-            (config) =>
-            {
-                config.AddYamlFile("queries.yaml", optional: true, reloadOnChange: true);
-            }
+            (config) => config.AddYamlFile("queries.yaml", optional: true, reloadOnChange: true)
         )
         .ConfigureServices(
             (ctx, services) =>
