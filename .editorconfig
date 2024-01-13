@@ -246,8 +246,8 @@ dotnet_analyzer_diagnostic.category-roslynator.severity = warning
 # NOTE: This option can be used only in .roslynatorconfig file
 roslynator_analyzers.enabled_by_default = true
 
-# Set severity for a specific analyzer
-# dotnet_diagnostic.<ANALYZER_ID>.severity = warning
+# Declare 'FhirExporter' inside namespace
+dotnet_diagnostic.RCS1110.severity = none
 
 # Enable/disable all refactorings
 roslynator_refactorings.enabled = true

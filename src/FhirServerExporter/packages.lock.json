@@ -19,18 +19,18 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.4.0, )",
-        "resolved": "5.4.0",
-        "contentHash": "ABkKzv6IBTJF9evQUHilwhulXi2T0+OHYAnd4jrnQsenDF8HSYCF5shUL6XR1uCOCfdmC0li0E73dsiNCwgQbw==",
+        "requested": "[5.5.0, )",
+        "resolved": "5.5.0",
+        "contentHash": "GfaY43O548+r6qtYQXCojFwUUgfhf0AR6v0vS22tJ4cpxajbFeAKseX+YnaEFviRdqhK7A37iG8Ee9EmRMU2bg==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.4.0"
+          "Hl7.Fhir.Conformance": "5.5.0"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.134, )",
-        "resolved": "2.0.134",
-        "contentHash": "N+63EP3eJLRRZKoD3IpiGWgbdkNOnjxr0VovOBAc69LxUocrlxQ9uZODg2v1QEYQWEF7A3h6YTY0KcHPpe+EcQ=="
+        "requested": "[2.0.136, )",
+        "resolved": "2.0.136",
+        "contentHash": "fyVLCWKPuMR7X5kUl5keEYTroCB+OlhiaW5hwonXMsv2mFOKL7bH/7k1vWZdZ2LNZ1+55iqDRELse6RGjWMzPw=="
       },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
@@ -96,6 +96,12 @@
           "Microsoft.Extensions.ObjectPool": "7.0.0"
         }
       },
+      "Roslynator.Analyzers": {
+        "type": "Direct",
+        "requested": "[4.9.0, )",
+        "resolved": "4.9.0",
+        "contentHash": "lFd4MmkllYR0dKlPWDokRwAvQnjNoPJztlncyzvnCG/wvGr5FzHAencngcJna/wkyDE0xIv7AnUccgCLsoIXTw=="
+      },
       "StyleCop.Analyzers": {
         "type": "Direct",
         "requested": "[1.2.0-beta.556, )",
@@ -112,8 +118,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.4.0",
-        "contentHash": "eDqSjlNsuuwhmmSo2skT97Y5VYmR5SKTLD+jbfSaRFWXzN8v6nntfN8wi3WdjBeuaY0ycyw1XMExqlmRYmWdkQ==",
+        "resolved": "5.5.0",
+        "contentHash": "agirW3E95c4VZIqvH5hpE4GhGiXCy54Xp53OtGrOd3IOjDZaq43yBlSCWsmKwmm8802PHNvkJ1uBaH2eGz58WQ==",
         "dependencies": {
           "Fhir.Metrics": "1.2.2",
           "Newtonsoft.Json": "13.0.3",
@@ -123,10 +129,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.4.0",
-        "contentHash": "F6AvLULi5GO1x+8MNheyoLvMSzgSqUs4CXj0Pxv1orLGRAi99Dxst7PlF3juZUjii4MxiwDv1rEVhWmZ3+eejQ==",
+        "resolved": "5.5.0",
+        "contentHash": "hCmpckftpSZ2oK0tNauo41O4PUXCETn+pkeM+viDKnevkbod7Z0ibhu+kwbuER+B0WzOwT1uneBOa2liuwkMOQ==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.4.0"
+          "Hl7.Fhir.Base": "5.5.0"
         }
       },
       "IdentityModel": {
