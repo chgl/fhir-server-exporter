@@ -10,7 +10,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0.101-jammy@sha256:4f63cff30878af7c8a378e7c28e7bbe3d40838f0ff81e7aa4426d2af3f4d1696 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0.101-jammy@sha256:5342a845e916a8fdadc40b05f39da9ea4278b1cb987b58cc8905f13740799024 AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
