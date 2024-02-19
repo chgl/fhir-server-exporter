@@ -46,14 +46,13 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                     );
             }
         )
-        .ConfigureLogging(
-            builder =>
-                builder.AddSimpleConsole(options =>
-                {
-                    options.UseUtcTimestamp = true;
-                    options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
-                    options.SingleLine = false;
-                })
+        .ConfigureLogging(builder =>
+            builder.AddSimpleConsole(options =>
+            {
+                options.UseUtcTimestamp = true;
+                options.TimestampFormat = "yyyy-MM-ddTHH:mm:ssZ ";
+                options.SingleLine = false;
+            })
         );
 
 await CreateHostBuilder(args).Build().RunAsync();
@@ -134,13 +133,12 @@ public class FhirExporter : BackgroundService
 
         customGauges = customMetrics
             .Where(metric => metric.Name is not null && metric.Query is not null)
-            .Select(
-                metric =>
-                    Metrics.CreateGauge(
-                        metric.Name ?? string.Empty,
-                        metric.Description ?? string.Empty,
-                        new GaugeConfiguration { LabelNames = ["type", "server_name"], }
-                    )
+            .Select(metric =>
+                Metrics.CreateGauge(
+                    metric.Name ?? string.Empty,
+                    metric.Description ?? string.Empty,
+                    new GaugeConfiguration { LabelNames = ["type", "server_name"], }
+                )
             )
             .ToDictionary(gauge => gauge.Name, StringComparer.InvariantCulture);
     }
@@ -217,7 +215,7 @@ public class FhirExporter : BackgroundService
 
         var resourceType = resourceTypeAndFilters[0];
         var kv = HttpUtility.ParseQueryString(resourceTypeAndFilters[1]);
-        var paramList = kv.AllKeys.Select(key => Tuple.Create(key, kv[key]));
+        var paramList = kv.AllKeys.Select(key => Tuple.Create(key!, kv[key]!));
         var sp = SearchParams.FromUriParamList(paramList);
         sp.Summary = SummaryType.Count;
 
