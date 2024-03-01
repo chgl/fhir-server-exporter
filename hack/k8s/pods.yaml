@@ -11,7 +11,7 @@ spec:
       type: RuntimeDefault
   containers:
     - name: fhir-server
-      image: docker.io/hapiproject/hapi:v6.10.1@sha256:4eac1b3481180b028616d1fab7e657e368538063d75f7ed3be2032e34c657dd4
+      image: docker.io/hapiproject/hapi:v7.0.0@sha256:fa294b05509bd3044387140b7fb4d1d3ac43713274fec912446f24a01bca654f
       securityContext:
         allowPrivilegeEscalation: false
         runAsNonRoot: true
