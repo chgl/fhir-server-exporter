@@ -1,13 +1,13 @@
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v2.50.1@sha256:bc1794e85c9e00293351b967efa267ce6af1c824ac875a9d0c7ac84700a8b53e
+    image: quay.io/prometheus/prometheus:v2.51.1@sha256:dec2018ae55885fed717f25c289b8c9cff0bf5fbb9e619fb49b6161ac493c016
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: docker.io/hapiproject/hapi:v7.0.0@sha256:fa294b05509bd3044387140b7fb4d1d3ac43713274fec912446f24a01bca654f
+    image: docker.io/hapiproject/hapi:v7.0.3@sha256:73ff82fec42e5cbb7e66338d47af09ba91c140e98beeaee41a5459572d5ae1ce
     environment:
       HAPI_FHIR_MDM_ENABLED: "false"
     ports:
