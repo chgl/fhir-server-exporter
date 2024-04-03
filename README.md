@@ -38,21 +38,22 @@ The container image is pushed to these registries:
 
 ### Configuration
 
-| Environment Variable          | Description                                                                                                          | Default value |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------- |
-| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`                  | `""`          |
-| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.               | `""`          |
-| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.             | `30`          |
-| MetricsPort                   | The local port on which the metrics should be exposed at.                                                            | `9797`        |
-| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription`      | `""`          |
-| IncludedResources             | A comma-separated list of FHIR resource types that should be included for counting. if unset, defaults to all types. | `""`          |
-| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                            | `""`          |
-| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                                 | `""`          |
-| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                         | `""`          |
-| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                            | `""`          |
-| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                     | `""`          |
-| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                                  | `""`          |
-| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                          | `""`          |
+| Environment Variable          | Description                                                                                                                                                               | Default value  |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
+| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`                                                                       | `""`           |
+| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.                                                                    | `""`           |
+| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.                                                                  | `30`           |
+| MetricsPort                   | The local port on which the metrics should be exposed at.                                                                                                                 | `9797`         |
+| FhirServerTimeout             | The HTTP client timeout for querying the FHIR server in [TimeSpan](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) format. | `"0.00:02:00"` |
+| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription`                                                           | `""`           |
+| IncludedResources             | A comma-separated list of FHIR resource types that should be included for counting. if unset, defaults to all types.                                                      | `""`           |
+| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                                                                                 | `""`           |
+| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                                                                                      | `""`           |
+| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                                                                              | `""`           |
+| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                                                                                 | `""`           |
+| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                                                                          | `""`           |
+| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                                                                                       | `""`           |
+| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                                                                               | `""`           |
 
 ### Custom Queries
 

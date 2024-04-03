@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1.7@sha256:dbbd5e059e8a07ff7ea6233b213b36aa516b4c53c645f1817a4dd18b83cbea56
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.3-jammy-chiseled@sha256:39f85ed7906df32eef6798d7d50ff54564248cfa9ef8581219f4351fcfa09a4c AS runtime
