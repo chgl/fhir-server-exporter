@@ -18,3 +18,5 @@ megalinter-reports/
 
 coveragereport/
 coverage/
+
+.mono/

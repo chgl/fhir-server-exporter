@@ -17,6 +17,8 @@ public record AppConfig
     public ICollection<CustomMetric> Queries { get; set; } = [];
 
     public AuthConfig Auth { get; set; } = new AuthConfig();
+
+    public TimeSpan FhirServerTimeout { get; set; } = TimeSpan.FromMinutes(2);
 }
 
 public record AuthConfig

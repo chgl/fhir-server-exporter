@@ -102,7 +102,10 @@ public class FhirExporter : BackgroundService
             );
         this.authHeaderProvider = authHeaderProvider;
 
-        fhirClient = new FhirClient(serverUrl);
+        fhirClient = new FhirClient(
+            serverUrl,
+            settings: new() { Timeout = (int)this.config.FhirServerTimeout.TotalMilliseconds }
+        );
 
         var includedResources = ModelInfo.SupportedResources;
 
