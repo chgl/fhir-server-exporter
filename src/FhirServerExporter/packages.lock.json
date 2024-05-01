@@ -4,9 +4,9 @@
     "net8.0": {
       "Duende.AccessTokenManagement": {
         "type": "Direct",
-        "requested": "[2.1.1, )",
-        "resolved": "2.1.1",
-        "contentHash": "ML0bYkzGr6ZM1uVcc48q+ndDF0v86wjaOGiSgZA9chnqjp+GYjGuYlHLA41keTh+dilbkjhhA9/8nEfIy5Ug1w==",
+        "requested": "[2.1.2, )",
+        "resolved": "2.1.2",
+        "contentHash": "CGcDOaqzA+4IjoU5d5Yhx1JTz+o2I73aBtpOOq2zMJiKNrMunTkNT73yEQen1n34mqA1PU6SrzrIA+txw+rJZw==",
         "dependencies": {
           "IdentityModel": "6.2.0",
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
@@ -19,18 +19,18 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.7.0, )",
-        "resolved": "5.7.0",
-        "contentHash": "SdKwjECjT5yR3kb1uu+YERpptoYObTOMMlcTVUF7DNq316nrlH8Uxtj2lB0xJVqo//eRjKE3ALkf9LYoMgveGA==",
+        "requested": "[5.8.0, )",
+        "resolved": "5.8.0",
+        "contentHash": "qKvnDuMHfE2zVY5j1HAjGjoDQCm4mTsiZbvd4R3fEAefuZdkZ7y1BK0RRURwVc/vZKDwSOyzf0C+Rzj4RSDDzw==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.7.0"
+          "Hl7.Fhir.Conformance": "5.8.0"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.146, )",
-        "resolved": "2.0.146",
-        "contentHash": "pJ3k+3UjD2WwPsZR7fkgVYviXP3PCQM0hjwN1TuM4C0u1TuGKC9WdZCo0RAPZ+azhRPmYGSUjkjsN2fkQByghQ=="
+        "requested": "[2.0.150, )",
+        "resolved": "2.0.150",
+        "contentHash": "rXKN4/Cf58Pv7uUWk4wcZtY+J9mve6wA1BHGYAf9SlpmiayA5fJ4wK2lflIwAkVo8n8HyNCeY3Ej4jwCdLk5nA=="
       },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
@@ -98,9 +98,9 @@
       },
       "Roslynator.Analyzers": {
         "type": "Direct",
-        "requested": "[4.12.0, )",
-        "resolved": "4.12.0",
-        "contentHash": "0n7hlgpD57vKCC39iz6lLg6RIgPF6B2S0z7HzcRSkeu35svFKSGqKJhh2MfCsoHrrPMugnlMZI9NZwrkFPTqYA=="
+        "requested": "[4.12.2, )",
+        "resolved": "4.12.2",
+        "contentHash": "6gLnu303OyuBwOjd3QFKG3wEmbRPXKfVHRKLkZB6lDs5Ik8mfBGVoCIVN86HAQcbZI5KQD5dY3HEie0ScoeEag=="
       },
       "StyleCop.Analyzers": {
         "type": "Direct",
@@ -118,8 +118,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.7.0",
-        "contentHash": "AVjBaCptrDvLDoB6EU0N9Hu1K0WgogDr9/Qyy/4q+MLZkWImNIXERr5UQSEeJaOX/qVdwl3k2HUTROmThLc0ng==",
+        "resolved": "5.8.0",
+        "contentHash": "5TK7iLXyl8IVk4mDkRJaDU+d+vGrHWUANEw5n6Pl26jRgtkRxSK3hGU6CG9IfSRO6uZN+27yrcVNagk+BYboSg==",
         "dependencies": {
           "Fhir.Metrics": "1.2.2",
           "Newtonsoft.Json": "13.0.3",
@@ -129,10 +129,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.7.0",
-        "contentHash": "Ikfi8adY1NF8N++Q+ufZw/WUGy4Aqau7Ol4t1rF1J9eTcsRYJNEGlUhdeaEoM2Q0j097mZntHaG0jnV/GY7ELQ==",
+        "resolved": "5.8.0",
+        "contentHash": "Rg7uGzyt2Ji1BO0rwo57Rq48fvb8nqnsx2v37x9KAngM8Hv+yzMAZTmYio7jxpxzf349ohR9PObzHbfmuIUqSg==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.7.0"
+          "Hl7.Fhir.Base": "5.8.0"
         }
       },
       "IdentityModel": {
