@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@8b0989a6a805c8db022d8bbb3bfeef57c2f17720 # v1.5.26
+    uses: chgl/.github/.github/workflows/standard-build.yaml@b77927eaf4376377aa37954a29debd3a6bb64bf7 # v1.5.33
     permissions:
       contents: read
       id-token: write
@@ -27,7 +27,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@8b0989a6a805c8db022d8bbb3bfeef57c2f17720 # v1.5.26
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@b77927eaf4376377aa37954a29debd3a6bb64bf7 # v1.5.33
     permissions:
       contents: read
       pull-requests: write
@@ -49,7 +49,7 @@ jobs:
       contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@a5ac7e51b41094c92402da3b24376905380afc29 # v4.1.6
 
       - name: Download image
         uses: actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e # v4.1.7
@@ -76,7 +76,7 @@ jobs:
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    uses: chgl/.github/.github/workflows/standard-release.yaml@8b0989a6a805c8db022d8bbb3bfeef57c2f17720 # v1.5.26
+    uses: chgl/.github/.github/workflows/standard-release.yaml@b77927eaf4376377aa37954a29debd3a6bb64bf7 # v1.5.33
     needs:
       - build
       - test
