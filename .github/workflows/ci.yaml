@@ -37,6 +37,8 @@ jobs:
     with:
       codeql-languages: '["csharp"]'
       enable-codeql: true
+      enable-verify-base-image-signature: false
+      enable-validate-gradle-wrapper: false
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
