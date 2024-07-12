@@ -19,18 +19,18 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.8.1, )",
-        "resolved": "5.8.1",
-        "contentHash": "bmhRnly4ByH1LdxDeIDHlXarZXzX9Did+88zyrHpIM+KpGpG9ucJsryPfWdquWFwTUA7qHUT4pS6EH+eGg4LUw==",
+        "requested": "[5.8.2, )",
+        "resolved": "5.8.2",
+        "contentHash": "nAIg98tt79MBNAcHEb72w/56AHoM/vwfHgilHhRFt65Y3fSUs46s7UcvPtawYaYQG235oQI6mriRNKpW9YixDA==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.8.1"
+          "Hl7.Fhir.Conformance": "5.8.2"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.159, )",
-        "resolved": "2.0.159",
-        "contentHash": "+Lu4NktCK98/PkPCluTA+uRHS7uvMXa/Z2WLPE8TDsS/ybYtaOhfq8Wi745fO26wI8rNGaJlKsfFskcKWC5eDQ=="
+        "requested": "[2.0.160, )",
+        "resolved": "2.0.160",
+        "contentHash": "KTvB5q8Sx6aieSyBcX/jgzMRj8a66NN5JbdMXXKdQeuIvzVNtzCOJHFpU0nI//FvlBn5VYZAy1xCZCFu94pafQ=="
       },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
@@ -118,8 +118,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.8.1",
-        "contentHash": "+K1+sOJw9pJjjIhJJKIUH8AmjnB18dzd7RRiaOXZmMeKx618xKSbODT6cLiR8ili/DSUCEjIz4JeS2bsk4W/xg==",
+        "resolved": "5.8.2",
+        "contentHash": "YIHnC/wFiQgc/aHTbz6FJ0tVuzsmowE2UvjVbWVs0rRdkC+/ODmHEn+wz1bVDxVTYvQFr/kKefz8hBs/kX/3Ow==",
         "dependencies": {
           "Fhir.Metrics": "1.2.2",
           "Newtonsoft.Json": "13.0.3",
@@ -129,10 +129,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.8.1",
-        "contentHash": "7bTn+jV8J3fyQ5HDpaOHrmfoIhUcPsukijhLlHo3YgozTX9NW3UROBtOZ5DrQErLW/E/jzWeiii8/gpCnjHoQw==",
+        "resolved": "5.8.2",
+        "contentHash": "iH3MJLe9B+RWzVoJVd0hBLrHEk5dtcSKRiX7xTFyRglYjftZSvSG58s8tMq0GmWpdHn1nk4nikL6cOBR+AlY8Q==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.8.1"
+          "Hl7.Fhir.Base": "5.8.2"
         }
       },
       "IdentityModel": {
