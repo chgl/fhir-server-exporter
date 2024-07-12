@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@bf8a522c605a2c530f45c2c55ca1484f08904203 # v1.6.0
+    uses: chgl/.github/.github/workflows/standard-build.yaml@db558a1cd7736b1b9f7252275a9b245dfb3b093d # v1.7.0
     permissions:
       contents: read
       id-token: write
@@ -23,11 +23,14 @@ jobs:
     with:
       enable-build-test-layer: true
       enable-upload-test-image: false
+      platforms: |
+        linux/amd64
+        linux/arm64
     secrets:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@bf8a522c605a2c530f45c2c55ca1484f08904203 # v1.6.0
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@db558a1cd7736b1b9f7252275a9b245dfb3b093d # v1.7.0
     permissions:
       contents: read
       pull-requests: write
@@ -50,6 +53,18 @@ jobs:
     permissions:
       contents: read
     steps:
+      # <https://docs.docker.com/storage/containerd/>
+      # via <https://github.com/docker/setup-buildx-action/issues/257>
+      - name: Set up containerd image store
+        shell: bash
+        run: |
+          jq '. | .+{"features": {"containerd-snapshotter": true}}' /etc/docker/daemon.json > /tmp/docker-daemon-with-containerd.json
+          sudo mv /tmp/docker-daemon-with-containerd.json /etc/docker/daemon.json
+          cat /etc/docker/daemon.json
+          sudo systemctl restart docker
+
+          docker info -f '{{ .DriverStatus }}'
+
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
@@ -66,7 +81,7 @@ jobs:
           docker load --input /tmp/image.tar
 
       - name: Install .NET
-        uses: actions/setup-dotnet@4d6c8fcf3c8f7a60068d26b594648e99df24cee3 # v4.0.0
+        uses: actions/setup-dotnet@6bd8b7f7774af54e05809fcc5431931b3eb1ddee # v4.0.1
         with:
           dotnet-version: "8.x"
 
@@ -78,7 +93,7 @@ jobs:
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    uses: chgl/.github/.github/workflows/standard-release.yaml@bf8a522c605a2c530f45c2c55ca1484f08904203 # v1.6.0
+    uses: chgl/.github/.github/workflows/standard-release.yaml@db558a1cd7736b1b9f7252275a9b245dfb3b093d # v1.7.0
     needs:
       - build
       - test
