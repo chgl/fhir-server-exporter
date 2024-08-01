@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="Hl7.Fhir.R4" Version="5.8.2" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="5.9.0" />
     <PackageReference Include="FakeItEasy" Version="8.3.0" />
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
@@ -17,7 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.160">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.163">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
