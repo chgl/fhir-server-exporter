@@ -89,7 +89,7 @@ jobs:
         env:
           FHIR_SERVER_EXPORTER_E2E_TEST_IMAGE: ${{ fromJson(needs.build.outputs.image-meta-json).tags[0] }}
         run: |
-          dotnet restore src/FhirServerExporter.Tests.E2E/
+          dotnet restore --locked-mode src/FhirServerExporter.Tests.E2E/
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
