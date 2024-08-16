@@ -4,7 +4,7 @@
 ![License](https://img.shields.io/github/license/chgl/fhir-server-exporter)
 ![Docker Pull](https://img.shields.io/docker/pulls/chgl/fhir-server-exporter)
 [![CI](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml/badge.svg)](https://github.com/chgl/fhir-server-exporter/actions/workflows/ci.yaml)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/chgl/fhir-server-exporter/badge)](https://api.securityscorecards.dev/projects/github.com/chgl/fhir-server-exporter)
+[![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/chgl/fhir-server-exporter/badge)](https://scorecard.dev/viewer/?uri=github.com/chgl/fhir-server-exporter)
 [![SLSA 3](https://slsa.dev/images/gh-badge-level3.svg)](https://slsa.dev)
 
 FHIR server resource count exporter for Prometheus.
