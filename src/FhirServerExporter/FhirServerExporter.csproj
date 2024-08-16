@@ -3,8 +3,6 @@
   <PropertyGroup>
     <UserSecretsId>dotnet-FhirServerExporter-51CE8CEB-7E96-4CF2-8F16-71D416CB7867</UserSecretsId>
     <ServerGarbageCollection>false</ServerGarbageCollection>
-    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
-    <RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'">true</RestoreLockedMode>
   </PropertyGroup>
 
   <ItemGroup>
