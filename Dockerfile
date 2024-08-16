@@ -18,7 +18,7 @@ COPY src/Directory.Build.props ./src/
 COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
 COPY src/FhirServerExporter/packages.lock.json ./src/FhirServerExporter/
 
-RUN dotnet restore /p:ContinuousIntegrationBuild=true src/FhirServerExporter/FhirServerExporter.csproj
+RUN dotnet restore --locked-mode /p:ContinuousIntegrationBuild=true src/FhirServerExporter/FhirServerExporter.csproj
 
 COPY . .
 
@@ -39,7 +39,7 @@ COPY src/Directory.Build.props ./src/
 
 COPY src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj ./src/FhirServerExporter.Tests/
 
-RUN dotnet restore src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
+RUN dotnet restore --locked-mode src/FhirServerExporter.Tests/FhirServerExporter.Tests.csproj
 
 WORKDIR /build/src/FhirServerExporter.Tests
 RUN dotnet test \
