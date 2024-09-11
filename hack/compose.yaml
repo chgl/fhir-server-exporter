@@ -1,20 +1,20 @@
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v2.54.0@sha256:497fe921f22fea8535fa2bcb1c193dacc6ce98c08274257b3d18a4eaae0f9647
+    image: quay.io/prometheus/prometheus:v2.54.1@sha256:f6639335d34a77d9d9db382b92eeb7fc00934be8eae81dbc03b31cfe90411a94
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
 
   fhir-server:
-    image: docker.io/hapiproject/hapi:v7.2.0@sha256:9bcafa8342b572eee248cb7c48c496863d352bbd0347e1d98ea238d09620e89b
+    image: docker.io/hapiproject/hapi:v7.4.0@sha256:f34b41f5002665f384cf344da2d8e653025bd095aa37aa6f5a9d6dc0dac75684
     environment:
       HAPI_FHIR_MDM_ENABLED: "false"
     ports:
       - "127.0.0.1:8082:8080"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:25.0.2@sha256:b55f55ff60e905db4809ac133c6b963b87963ec1b49aae6d218fdd53646cb09e
+    image: quay.io/keycloak/keycloak:25.0.5@sha256:410fce4b9b40e1f4e7f90b44acedbaa6d935bacea432a6884769067b253d46fb
     environment:
       KEYCLOAK_ADMIN: admin
       # kics-scan ignore-line
