@@ -64,7 +64,7 @@ public class ContainerE2ETests : IAsyncLifetime
     [Fact]
     public async Task GetExporterMetricsEndpoint_ShouldSucceed()
     {
-        var client = new HttpClient();
+        using var client = new HttpClient();
         var response = await client.GetAsync("http://localhost:9797/metrics");
 
         response.EnsureSuccessStatusCode();
