@@ -98,9 +98,9 @@
       },
       "Roslynator.Analyzers": {
         "type": "Direct",
-        "requested": "[4.12.6, )",
-        "resolved": "4.12.6",
-        "contentHash": "J/+a1uIk4xRVmmIK+7DHJVWjVSgdRepYNNwioT6kvVC0yca4Fy5A/HsqSCyCcJb8hXNJIRIrUPumhOPIqdnJhQ=="
+        "requested": "[4.12.7, )",
+        "resolved": "4.12.7",
+        "contentHash": "pYDikoTXugueMq/ZBUMIjALdL4D2chgXSMQJCp2uLk2fUMtDZJw8F0CQvIWc/64gKCqkwOkTr/e2HhQaVyNAXw=="
       },
       "StyleCop.Analyzers": {
         "type": "Direct",
