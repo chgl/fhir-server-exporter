@@ -1,6 +1,6 @@
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0.8-noble-chiseled@sha256:91a51820f2ffb71a2970f0d7080970ad53070f3e10aa43b9a9ccec84cbeebc53 AS runtime
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:8.0.10-noble-chiseled@sha256:6cec36412a215aad2a033cfe259890482be0a1dcb680e81fccc393b2d4069455 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 USER 65532:65532
