@@ -17,7 +17,7 @@ docker run --rm -it \
     -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
     -e FetchIntervalSeconds=60 \
     -e FhirServerName="HAPI FHIR Demo Server" \
-    ghcr.io/chgl/fhir-server-exporter:v2.3.20
+    ghcr.io/chgl/fhir-server-exporter:v2.3.21
 ```
 
 Open <http://localhost:9797/metrics> to view the resource counts in Prometheus format:
@@ -33,8 +33,8 @@ fhir_resource_count{type="DiagnosticReport", server_name="HAPI FHIR Demo Server"
 
 The container image is pushed to these registries:
 
-- docker.io/chgl/fhir-server-exporter:v2.3.20
-- ghcr.io/chgl/fhir-server-exporter:v2.3.20
+- docker.io/chgl/fhir-server-exporter:v2.3.21
+- ghcr.io/chgl/fhir-server-exporter:v2.3.21
 
 ### Configuration
 
@@ -66,7 +66,7 @@ docker run --rm -it \
    -e FhirServerName="HAPI FHIR Demo Server" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
-   ghcr.io/chgl/fhir-server-exporter:v2.3.20
+   ghcr.io/chgl/fhir-server-exporter:v2.3.21
 ```
 
 Here's an example `queries.yaml` file. It exports three gauge metrics as `fhir_male_patient_count`,
@@ -151,7 +151,7 @@ Prerequisites:
 All released container images are signed using [cosign](https://github.com/sigstore/cosign) and SLSA Level 3 provenance is available for verification.
 
 ```sh
-IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.3.20
+IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.3.21
 DIGEST=$(crane digest "${IMAGE}")
 IMAGE_DIGEST_PINNED="ghcr.io/chgl/fhir-server-exporter@${DIGEST}"
 IMAGE_TAG="${IMAGE#*:}"
