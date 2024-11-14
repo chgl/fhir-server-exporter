@@ -84,7 +84,7 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@3e891b0cb619bf60e2c25674b222b8940e2c1c25 # v4.1.0
         with:
-          dotnet-version: "8.x"
+          dotnet-version: "9.x"
 
       - name: Run E2E tests with newly built container image
         env:
