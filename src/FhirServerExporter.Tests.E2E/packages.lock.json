@@ -4,9 +4,9 @@
     "net9.0": {
       "coverlet.collector": {
         "type": "Direct",
-        "requested": "[6.0.3, )",
-        "resolved": "6.0.3",
-        "contentHash": "SvLbRq7gjzE34BI90vP6ge812+PAjinNoKhdFZHwVEu/ozJgZY+0KyDh1K0teDeMeuzQJuF8OvleRBYXsZDz0A=="
+        "requested": "[6.0.4, )",
+        "resolved": "6.0.4",
+        "contentHash": "lkhqpF8Pu2Y7IiN7OntbsTtdbpR1syMsm2F3IgX6ootA4ffRqWL5jF7XipHuZQTdVuWG/gVAAcf8mjk8Tz0xPg=="
       },
       "FakeItEasy": {
         "type": "Direct",
@@ -25,18 +25,18 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.11.1, )",
-        "resolved": "5.11.1",
-        "contentHash": "69zJSBnJvatxEl0w9XrFzwzWjqpGFunK1jmIUQgsnIV8WSPRwj0F0tOwYE4XY890dPCWLhKYQjL+Jx4AsudVbA==",
+        "requested": "[5.11.2, )",
+        "resolved": "5.11.2",
+        "contentHash": "jxEY15/liJUe0WZLzsGUWZZZAU77zLpuz3pN6HA/f6gsbLnBqeznOxq1pYzSYZ1I7JEg2IkHe/M5DYDDH2h0UQ==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.11.1"
+          "Hl7.Fhir.Conformance": "5.11.2"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.185, )",
-        "resolved": "2.0.185",
-        "contentHash": "/CGwnUxJl/kHjBzu8BQsjiwRe3Fef7+FPJr9FxMov7g3tQUffdJphcmmeDj5uHWa4QJBcWj7Ha1D4lzyyPwS8A=="
+        "requested": "[2.0.186, )",
+        "resolved": "2.0.186",
+        "contentHash": "PE8c9opHuUWLNqnZTN/KQC9oIfD/ZtsQ25sHF7/og4KfIRVnN4mgiyYw5NwCp8YPGapLoduIxuyQAcic6Eqcjg=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -121,8 +121,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.11.1",
-        "contentHash": "7YVZic2XeBllSmhccmF6tc2dggzBQmq/i1lIpTXYSZgA5qiw/C+SLBOytzB22GS4Xk1BKaNUksK0iDZTQH6dqQ==",
+        "resolved": "5.11.2",
+        "contentHash": "BdnP9A59umxlmgzqEBhc0qJp2SBFW8Ie83+f5PL45mzM5NhtnrPtTg/eECnMpwMGfpn0IYe+7tFidOtZ1kbAsQ==",
         "dependencies": {
           "Fhir.Metrics": "1.3.0",
           "Newtonsoft.Json": "13.0.3",
@@ -132,10 +132,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.11.1",
-        "contentHash": "fOIfkaC5304LdhRh4TvdmV/L2dKnMyggGAjvZDN6dfnuckd4lKu7dZQe1W6dsmFj1IBhsCdJWET8f/uAH4deHQ==",
+        "resolved": "5.11.2",
+        "contentHash": "w1uA56f/ei6Q7VA4BlfONqDo+cYexSn7FunwbF4MqKPk0GZ9KBCKylZewyZZsehBzGma0/fsUkipoKbSTIba2A==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.11.1"
+          "Hl7.Fhir.Base": "5.11.2"
         }
       },
       "Microsoft.CodeCoverage": {
