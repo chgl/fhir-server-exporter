@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.AccessTokenManagement" Version="3.1.1" />
+    <PackageReference Include="Duende.AccessTokenManagement" Version="3.2.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.2" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
