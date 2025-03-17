@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@8d675dfca7b0df2efff680fc7dca61f6e2c5740b # v1.10.15
+    uses: chgl/.github/.github/workflows/standard-build.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
     permissions:
       contents: write
       id-token: write
@@ -31,7 +31,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@8d675dfca7b0df2efff680fc7dca61f6e2c5740b # v1.10.15
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
     permissions:
       contents: read
       pull-requests: write
@@ -86,7 +86,7 @@ jobs:
           docker load --input /tmp/image.tar
 
       - name: Install .NET
-        uses: actions/setup-dotnet@3951f0dfe7a07e2313ec93c75700083e2005cbab # v4.3.0
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           dotnet-version: "9.x"
 
@@ -98,7 +98,7 @@ jobs:
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    uses: chgl/.github/.github/workflows/standard-release.yaml@8d675dfca7b0df2efff680fc7dca61f6e2c5740b # v1.10.15
+    uses: chgl/.github/.github/workflows/standard-release.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
     needs:
       - build
       - test
