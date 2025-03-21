@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
+    uses: chgl/.github/.github/workflows/standard-build.yaml@83f97f31f2aed2c3ad832748a359a2f89b0e7b32 # v1.10.19
     permissions:
       contents: write
       id-token: write
@@ -31,7 +31,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@83f97f31f2aed2c3ad832748a359a2f89b0e7b32 # v1.10.19
     permissions:
       contents: read
       pull-requests: write
@@ -74,7 +74,7 @@ jobs:
           persist-credentials: false
 
       - name: Download image
-        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
+        uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e # v4.2.1
         if: ${{ github.event_name == 'pull_request' }}
         with:
           name: ${{ needs.build.outputs.image-slug }}
@@ -98,7 +98,7 @@ jobs:
           dotnet test src/FhirServerExporter.Tests.E2E/
 
   release:
-    uses: chgl/.github/.github/workflows/standard-release.yaml@e7c717d24a54a2d3bdfa20db0abe573af10f9f1a # v1.10.18
+    uses: chgl/.github/.github/workflows/standard-release.yaml@83f97f31f2aed2c3ad832748a359a2f89b0e7b32 # v1.10.19
     needs:
       - build
       - test
