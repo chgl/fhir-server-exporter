@@ -12,7 +12,7 @@
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
     <PackageReference Include="prometheus-net" Version="8.2.1" />
     <PackageReference Include="Hl7.Fhir.R4" Version="5.11.4" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.189">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.193">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
