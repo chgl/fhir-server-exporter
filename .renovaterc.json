@@ -1,13 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>chgl/.github//renovate/default"],
+  "extends": [
+    "github>chgl/.github//renovate/default"
+  ],
   "kubernetes": {
-    "fileMatch": ["hack/k8s/.+\\.yaml$"]
+    "managerFilePatterns": [
+      "/hack/k8s/.+\\.yaml$/"
+    ]
   },
   "packageRules": [
     {
-      "matchManagers": ["kubernetes"],
-      "matchPackageNames": ["ghcr.io/chgl/fhir-server-exporter"],
+      "matchManagers": [
+        "kubernetes"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/chgl/fhir-server-exporter"
+      ],
       "pinDigests": false
     }
   ]
