@@ -25,11 +25,11 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.11.4, )",
-        "resolved": "5.11.4",
-        "contentHash": "eVE9GBTxcl3Ia+xTLjbsixy48NbxWneTKCF/QjHZhwLhvZtHmeBSa/B6OUUOxZEtI/alRGOtzT3vHF2sj0idAg==",
+        "requested": "[5.11.6, )",
+        "resolved": "5.11.6",
+        "contentHash": "2S2PN6MJmrIgyc9M6YUpCnOzjTVebG6kMS6ZJiC9myNncBl99I6aRWzxbV5WrwTd/rLSULdUDt9cXMWe+AujOQ==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.11.4"
+          "Hl7.Fhir.Conformance": "5.11.6"
         }
       },
       "Meziantou.Analyzer": {
@@ -126,8 +126,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.11.4",
-        "contentHash": "olX8fKRABT/nn3UOW6da6fzH/mHxwX6hIyI3PNGw6r9hFHlv5uYkbipfiRVeZy9UQUpvAOde60xhlUROSzZwSA==",
+        "resolved": "5.11.6",
+        "contentHash": "D7z7tbraGIQPitZ4f5ashRJrAVFLz+xvn/DCSa6HQmUfouR7rah00zArhdIpKI9pRG//RUNrMhOm2y6eNWXI9w==",
         "dependencies": {
           "Fhir.Metrics": "1.3.0",
           "Newtonsoft.Json": "13.0.3",
@@ -137,10 +137,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.11.4",
-        "contentHash": "v2J8tAX34ljUsB4txXDtXfpLhr1Mb9obRUEK9hTRTVvtxuCneGs6xdIFW1dr54/N7xjv+vk7i6n9BAIBuVY4ZA==",
+        "resolved": "5.11.6",
+        "contentHash": "Kpo8T8g0KTn/byFr51MMq7LMwcbmZzHqvQ6fTRnum2nyOrxi0oIyqXqRUycdiZQj4E1Lp3lC2+L30YBBWi+FYg==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.11.4"
+          "Hl7.Fhir.Base": "5.11.6"
         }
       },
       "Microsoft.CodeCoverage": {
