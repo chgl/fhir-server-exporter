@@ -11,6 +11,8 @@ FHIR server resource count exporter for Prometheus.
 
 ## Usage
 
+<!-- x-release-please-start-version -->
+
 ```sh
 docker run --rm -it \
     -p 9797:9797 \
@@ -19,6 +21,8 @@ docker run --rm -it \
     -e FhirServerName="HAPI FHIR Demo Server" \
     ghcr.io/chgl/fhir-server-exporter:v2.3.35
 ```
+
+<!-- x-release-please-end-version -->
 
 Open <http://localhost:9797/metrics> to view the resource counts in Prometheus format:
 
@@ -33,8 +37,12 @@ fhir_resource_count{type="DiagnosticReport", server_name="HAPI FHIR Demo Server"
 
 The container image is pushed to these registries:
 
+<!-- x-release-please-start-version -->
+
 - docker.io/chgl/fhir-server-exporter:v2.3.35
 - ghcr.io/chgl/fhir-server-exporter:v2.3.35
+
+<!-- x-release-please-end-version -->
 
 ### Configuration
 
@@ -60,6 +68,8 @@ The container image is pushed to these registries:
 You can also specify a list of custom queries to run against the FHIR server.
 Create a file called `queries.yaml` and place it in the application's main directory:
 
+<!-- x-release-please-start-version -->
+
 ```sh
 docker run --rm -it \
    -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
@@ -68,6 +78,8 @@ docker run --rm -it \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
    ghcr.io/chgl/fhir-server-exporter:v2.3.35
 ```
+
+<!-- x-release-please-end-version -->
 
 Here's an example `queries.yaml` file. It exports three gauge metrics as `fhir_male_patient_count`,
 `fhir_female_patient_count`, and `fhir_older_female_patient_count`.
@@ -150,6 +162,8 @@ Prerequisites:
 
 All released container images are signed using [cosign](https://github.com/sigstore/cosign) and SLSA Level 3 provenance is available for verification.
 
+<!-- x-release-please-start-version -->
+
 ```sh
 IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.3.35
 DIGEST=$(crane digest "${IMAGE}")
@@ -168,3 +182,5 @@ slsa-verifier verify-image \
     --source-branch master \
     "${IMAGE_DIGEST_PINNED}"
 ```
+
+<!-- x-release-please-end-version -->
