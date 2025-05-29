@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.38](https://github.com/chgl/fhir-server-exporter/compare/v2.3.37...v2.3.38) (2025-05-29)
+
+
+### Miscellaneous Chores
+
+* **deps:** update chgl/.github action to v1.10.39 ([#335](https://github.com/chgl/fhir-server-exporter/issues/335)) ([bc9e2d9](https://github.com/chgl/fhir-server-exporter/commit/bc9e2d9783d55bf1bd9bbc0f830ef376b30f0814))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.300-noble docker digest to 9f7bd4d ([#334](https://github.com/chgl/fhir-server-exporter/issues/334)) ([4fcd888](https://github.com/chgl/fhir-server-exporter/commit/4fcd88825b96cdd5582e0a7a3174e76096fb3a73))
+
 ## [2.3.37](https://github.com/chgl/fhir-server-exporter/compare/v2.3.36...v2.3.37) (2025-05-29)
 
 

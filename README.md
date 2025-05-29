@@ -19,7 +19,7 @@ docker run --rm -it \
     -e FhirServerUrl="https://hapi.fhir.org/baseR4" \
     -e FetchIntervalSeconds=60 \
     -e FhirServerName="HAPI FHIR Demo Server" \
-    ghcr.io/chgl/fhir-server-exporter:v2.3.37
+    ghcr.io/chgl/fhir-server-exporter:v2.3.38
 ```
 
 <!-- x-release-please-end-version -->
@@ -39,8 +39,8 @@ The container image is pushed to these registries:
 
 <!-- x-release-please-start-version -->
 
-- docker.io/chgl/fhir-server-exporter:v2.3.37
-- ghcr.io/chgl/fhir-server-exporter:v2.3.37
+- docker.io/chgl/fhir-server-exporter:v2.3.38
+- ghcr.io/chgl/fhir-server-exporter:v2.3.38
 
 <!-- x-release-please-end-version -->
 
@@ -76,7 +76,7 @@ docker run --rm -it \
    -e FhirServerName="HAPI FHIR Demo Server" \
    -p 9797:9797 \
    -v $PWD/src/FhirServerExporter/queries.yaml:/opt/fhir-server-exporter/queries.yaml:ro \
-   ghcr.io/chgl/fhir-server-exporter:v2.3.37
+   ghcr.io/chgl/fhir-server-exporter:v2.3.38
 ```
 
 <!-- x-release-please-end-version -->
@@ -165,7 +165,7 @@ All released container images are signed using [cosign](https://github.com/sigst
 <!-- x-release-please-start-version -->
 
 ```sh
-IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.3.37
+IMAGE=ghcr.io/chgl/fhir-server-exporter:v2.3.38
 DIGEST=$(crane digest "${IMAGE}")
 IMAGE_DIGEST_PINNED="ghcr.io/chgl/fhir-server-exporter@${DIGEST}"
 IMAGE_TAG="${IMAGE#*:}"
