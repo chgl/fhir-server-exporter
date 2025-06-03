@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.39](https://github.com/chgl/fhir-server-exporter/compare/v2.3.38...v2.3.39) (2025-06-03)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#338](https://github.com/chgl/fhir-server-exporter/issues/338)) ([7a865da](https://github.com/chgl/fhir-server-exporter/commit/7a865da5277262ee670639619892aa189ed1e1e1))
+* **deps:** update github-actions ([#340](https://github.com/chgl/fhir-server-exporter/issues/340)) ([a8d5701](https://github.com/chgl/fhir-server-exporter/commit/a8d570150b0c86bd65133c244ee7a1e3dbfa3d2a))
+* **deps:** update ossf/scorecard-action action to v2.4.2 ([#337](https://github.com/chgl/fhir-server-exporter/issues/337)) ([3fcf26e](https://github.com/chgl/fhir-server-exporter/commit/3fcf26e337e965a517b40690cbddaa4cf051a03f))
+
 ## [2.3.38](https://github.com/chgl/fhir-server-exporter/compare/v2.3.37...v2.3.38) (2025-05-29)
 
 
