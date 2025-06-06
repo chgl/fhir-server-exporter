@@ -65,12 +65,12 @@
       },
       "Testcontainers": {
         "type": "Direct",
-        "requested": "[4.4.0, )",
-        "resolved": "4.4.0",
-        "contentHash": "P4+fXNjMtLW1CRjBQ3SUQWxz98mio+79OL6B+4DmzMaafW1rEVZ/eFHFG9TrxMWeg+cgftkzV7oPcGNZQ12Q9w==",
+        "requested": "[4.5.0, )",
+        "resolved": "4.5.0",
+        "contentHash": "2xv1dwf3wjbUpEPIpFIrSaHJNDT0helyOTci2u++jvpTurRYtiNacxYWk7rGnEb1sct2EjBtoI6t5wXsOH8yhw==",
         "dependencies": {
-          "Docker.DotNet.Enhanced": "3.126.1",
-          "Docker.DotNet.Enhanced.X509": "3.126.1",
+          "Docker.DotNet.Enhanced": "3.128.1",
+          "Docker.DotNet.Enhanced.X509": "3.128.1",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "SSH.NET": "2024.2.0",
           "SharpZipLib": "1.4.2"
@@ -108,15 +108,18 @@
       },
       "Docker.DotNet.Enhanced": {
         "type": "Transitive",
-        "resolved": "3.126.1",
-        "contentHash": "UPyLBLBaVE3s7OCWM0h5g9w6mUOag5sOIP5CldFQekIWo/gHixgZR+o5fG7eCFH4ZdKlvBGM4ALFuOyPoKoJ3A=="
+        "resolved": "3.128.1",
+        "contentHash": "uzme+90PSNBjgWph3jxboxoL4K3j5ZPHj14WHL7TNkcGxtpP8EFxibNTrXGpEvsmiom0aaIW60ju/JPdNvUSng==",
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.3"
+        }
       },
       "Docker.DotNet.Enhanced.X509": {
         "type": "Transitive",
-        "resolved": "3.126.1",
-        "contentHash": "XFHMC/iWHbloQgg9apZrxu010DmSamaAggu8nomCqTeotGyUGkv2Tt/aqk1ljC/4tjtTrb9LtFQwYpwZbMbiKg==",
+        "resolved": "3.128.1",
+        "contentHash": "v2H5XK7HAyDkACpdgodzTcMXIYwjJ9fmwl7mYQ3nVZ/d/XsI1Eh3DrBvCuSNAyNFUL4kz55wFqdzApyRfU01gw==",
         "dependencies": {
-          "Docker.DotNet.Enhanced": "3.126.1"
+          "Docker.DotNet.Enhanced": "3.128.1"
         }
       },
       "Fhir.Metrics": {
