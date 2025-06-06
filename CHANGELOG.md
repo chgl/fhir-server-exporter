@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.40](https://github.com/chgl/fhir-server-exporter/compare/v2.3.39...v2.3.40) (2025-06-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency testcontainers to 4.5.0 ([#341](https://github.com/chgl/fhir-server-exporter/issues/341)) ([da19bd1](https://github.com/chgl/fhir-server-exporter/commit/da19bd12bf357c8990439ff2e74351dab76ea206))
+
 ## [2.3.39](https://github.com/chgl/fhir-server-exporter/compare/v2.3.38...v2.3.39) (2025-06-03)
 
 
