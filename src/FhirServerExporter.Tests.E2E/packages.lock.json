@@ -65,12 +65,12 @@
       },
       "Testcontainers": {
         "type": "Direct",
-        "requested": "[4.5.0, )",
-        "resolved": "4.5.0",
-        "contentHash": "2xv1dwf3wjbUpEPIpFIrSaHJNDT0helyOTci2u++jvpTurRYtiNacxYWk7rGnEb1sct2EjBtoI6t5wXsOH8yhw==",
+        "requested": "[4.6.0, )",
+        "resolved": "4.6.0",
+        "contentHash": "JFGPwuEqVuY3qJiGuxR+2J+E+dGc+1TgbBooB1346zUFKJqH6zWeSCXju5Siwek3ExOVRES4AbECXoaYt9jkXA==",
         "dependencies": {
-          "Docker.DotNet.Enhanced": "3.128.1",
-          "Docker.DotNet.Enhanced.X509": "3.128.1",
+          "Docker.DotNet.Enhanced": "3.128.3",
+          "Docker.DotNet.Enhanced.X509": "3.128.3",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.3",
           "SSH.NET": "2024.2.0",
           "SharpZipLib": "1.4.2"
@@ -89,9 +89,9 @@
       },
       "xunit.runner.visualstudio": {
         "type": "Direct",
-        "requested": "[3.1.0, )",
-        "resolved": "3.1.0",
-        "contentHash": "K9O9TOzugqOo4LJ87uuq1VG8RAqGp20Ng85Wx932oT5LNBkIgeeGYubVW5UMnOOTanFNbGavmbuYrJr4INzSwg=="
+        "requested": "[3.1.1, )",
+        "resolved": "3.1.1",
+        "contentHash": "gNu2zhnuwjq5vQlU4S7yK/lfaKZDLmtcu+vTjnhfTlMAUYn+Hmgu8IIX0UCwWepYkk+Szx03DHx1bDnc9Fd+9w=="
       },
       "BouncyCastle.Cryptography": {
         "type": "Transitive",
@@ -108,18 +108,18 @@
       },
       "Docker.DotNet.Enhanced": {
         "type": "Transitive",
-        "resolved": "3.128.1",
-        "contentHash": "uzme+90PSNBjgWph3jxboxoL4K3j5ZPHj14WHL7TNkcGxtpP8EFxibNTrXGpEvsmiom0aaIW60ju/JPdNvUSng==",
+        "resolved": "3.128.3",
+        "contentHash": "yOiBJfGltxjMTPBRVPt2Yeiqy2rLNQSf5x0U57FgipbsGnCXSm1a04UHi3h2QtABJSpTSHoBw+LPqA6yN9CGFg==",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "8.0.3"
         }
       },
       "Docker.DotNet.Enhanced.X509": {
         "type": "Transitive",
-        "resolved": "3.128.1",
-        "contentHash": "v2H5XK7HAyDkACpdgodzTcMXIYwjJ9fmwl7mYQ3nVZ/d/XsI1Eh3DrBvCuSNAyNFUL4kz55wFqdzApyRfU01gw==",
+        "resolved": "3.128.3",
+        "contentHash": "U6G7H+vX0Htk86Fd1xS5i7iRGd0C33vx61sLH8gI9uzxqQJRfeYCbuzQOOp3J7m4zVZ2mP6x9gB9onspgP0QCg==",
         "dependencies": {
-          "Docker.DotNet.Enhanced": "3.128.1"
+          "Docker.DotNet.Enhanced": "3.128.3"
         }
       },
       "Fhir.Metrics": {
