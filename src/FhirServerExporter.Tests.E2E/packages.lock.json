@@ -19,24 +19,24 @@
       },
       "FluentAssertions": {
         "type": "Direct",
-        "requested": "[8.3.0, )",
-        "resolved": "8.3.0",
-        "contentHash": "iri1druxHPUAvaFqTUKJG7NOHwnOLmWwfDorgezZWpeBWBJmk2o8niI7jL7zW9TEFGnUpMJi/JLG6FXgr3cM3A=="
+        "requested": "[8.5.0, )",
+        "resolved": "8.5.0",
+        "contentHash": "VN3eH+jnwSBbEDK1/Z7Sg8Mw6O/zHLKK58OueRpG4rIzLxtlJYTUkUieGee5C4Ymhjkiim0ag2H/0Nc8PfNmaA=="
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[5.11.7, )",
-        "resolved": "5.11.7",
-        "contentHash": "v+3OyuyWJYTCXVFdGemAkC4lp+L2ppZecHKkdtx2ED+qcUEVeZxLMvJc/dVYUODnU6JBR/vFAXzkvfjPoCWdNA==",
+        "requested": "[5.12.1, )",
+        "resolved": "5.12.1",
+        "contentHash": "L4gvI1OesYpGpr7Z/Js2fxpU4XGaG9ijCdu05sRWIxzLcT9da2eE6jPEFXeBNnon3wz/J9pILu+Xark44VyVFg==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "5.11.7"
+          "Hl7.Fhir.Conformance": "5.12.1"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.202, )",
-        "resolved": "2.0.202",
-        "contentHash": "VDsrL0SRYoR6t975NExCRgZzGIYudgIETUAPnyMG17sr9I9OzNGzpwX1dHOPSd8Ue28ltnNiOL3czLmNdQngYA=="
+        "requested": "[2.0.205, )",
+        "resolved": "2.0.205",
+        "contentHash": "adw/4fuYeVyu92yHtoKpjtaBe4VVEjc1nMO/Wy2rZ3ZtOGcNvN6SXwJYAxPDUgDPWwAvfoPYE/jO++1sCs3V8w=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -89,9 +89,9 @@
       },
       "xunit.runner.visualstudio": {
         "type": "Direct",
-        "requested": "[3.1.1, )",
-        "resolved": "3.1.1",
-        "contentHash": "gNu2zhnuwjq5vQlU4S7yK/lfaKZDLmtcu+vTjnhfTlMAUYn+Hmgu8IIX0UCwWepYkk+Szx03DHx1bDnc9Fd+9w=="
+        "requested": "[3.1.3, )",
+        "resolved": "3.1.3",
+        "contentHash": "go7e81n/UI3LeNqoJIJ3thkS4JfJtiQnDbAxLh09JkJqoHthnfbLS5p68s4/Bm12B9umkoYSB5SaDr68hZNleg=="
       },
       "BouncyCastle.Cryptography": {
         "type": "Transitive",
@@ -129,8 +129,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "5.11.7",
-        "contentHash": "rhSnm+Sg6e91RjCBYLe8hHVtOjJEffCvwdLJhI6CDRTzxa/DYqwrt9heDbHlMimQaPuY/T4iL1Lup3pKk5vywg==",
+        "resolved": "5.12.1",
+        "contentHash": "KN33Oe0OGlvmZoc80W15ql4XeWZZ1Y/PqS+wl2iQqHdlij4QKKxwckLZvQfe9fi7ipnIyIGEqGO000QoZpKcsQ==",
         "dependencies": {
           "Fhir.Metrics": "1.3.0",
           "Newtonsoft.Json": "13.0.3",
@@ -140,10 +140,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "5.11.7",
-        "contentHash": "VC7BYM+DmBG1GsQLirtRY3gdI/ROt26TDS01rR7MRX/Pc1mj6Frr+Hi/fBwgmqDgMUicujkvZGIMI8uC2s+bsw==",
+        "resolved": "5.12.1",
+        "contentHash": "BcNNzoU0C2XAVTATDu1bGojvC+Vhvjn+OEYWQlKN+N2TPDRRloUKLx71qeJZqtwUF6ew1NCAVxChSjQq3Lshbw==",
         "dependencies": {
-          "Hl7.Fhir.Base": "5.11.7"
+          "Hl7.Fhir.Base": "5.12.1"
         }
       },
       "Microsoft.CodeCoverage": {
