@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.43](https://github.com/chgl/fhir-server-exporter/compare/v2.3.42...v2.3.43) (2025-07-26)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency meziantou.analyzer to 2.0.206 ([#353](https://github.com/chgl/fhir-server-exporter/issues/353)) ([5a8f5fc](https://github.com/chgl/fhir-server-exporter/commit/5a8f5fcf2204c20fe5d91797eb9df9d9e83f3877))
+* **deps:** update github-actions ([#350](https://github.com/chgl/fhir-server-exporter/issues/350)) ([e29e36b](https://github.com/chgl/fhir-server-exporter/commit/e29e36bea1fa7d6b622349451a923b1c9e2f10a1))
+
 ## [2.3.42](https://github.com/chgl/fhir-server-exporter/compare/v2.3.41...v2.3.42) (2025-07-24)
 
 
