@@ -28,9 +28,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.207, )",
-        "resolved": "2.0.207",
-        "contentHash": "iJFV54Pwv2opPxr1hVUsH4Bnxu+4WmvXvdVo8eN27aIRSf/nw/3rzTw+OEqz93hQz0Z29oT+YRRMkdk3DH0low=="
+        "requested": "[2.0.210, )",
+        "resolved": "2.0.210",
+        "contentHash": "c5x1jlgL+E6HRJcQQ6zwytR71iijs3cyYSUDT/HlH7k+wr8MxkfarjbodP6RxxfC7YNgqv/J7awnnd/nq0PqjQ=="
       },
       "Microsoft.Extensions.Caching.Memory": {
         "type": "Direct",
@@ -98,9 +98,9 @@
       },
       "Roslynator.Analyzers": {
         "type": "Direct",
-        "requested": "[4.13.1, )",
-        "resolved": "4.13.1",
-        "contentHash": "KZpLy6ZlCebMk+d/3I5KU2R7AOb4LNJ6tPJqPtvFXmO8bEBHQvCIAvJOnY2tu4C9/aVOROTDYUFADxFqw1gh/g=="
+        "requested": "[4.14.0, )",
+        "resolved": "4.14.0",
+        "contentHash": "AEWQMrb1rcmjv9FGzrwYSBb4INhDhsauS+wwTumG0wq8N1Il+CIQHqUZJ7bt0zYJEA1qXSqgpg8Fgwc88WrR/Q=="
       },
       "StyleCop.Analyzers": {
         "type": "Direct",
