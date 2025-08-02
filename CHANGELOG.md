@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.3.44](https://github.com/chgl/fhir-server-exporter/compare/v2.3.43...v2.3.44) (2025-08-02)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#357](https://github.com/chgl/fhir-server-exporter/issues/357)) ([c6a47dc](https://github.com/chgl/fhir-server-exporter/commit/c6a47dc33ab397768311d99fcee19235495b3bfd))
+* **deps:** update dependency meziantou.analyzer to 2.0.207 ([#355](https://github.com/chgl/fhir-server-exporter/issues/355)) ([aee65d6](https://github.com/chgl/fhir-server-exporter/commit/aee65d678415d00a4365ce31b569b0c87a008830))
+* **deps:** update github-actions ([#358](https://github.com/chgl/fhir-server-exporter/issues/358)) ([ec37d5b](https://github.com/chgl/fhir-server-exporter/commit/ec37d5b72b22367a50735c7b562d5fa820c43a41))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.303-noble docker digest to 14fad15 ([#349](https://github.com/chgl/fhir-server-exporter/issues/349)) ([aa792d0](https://github.com/chgl/fhir-server-exporter/commit/aa792d0140d85d62f37d4aa36646d9b0efed60e2))
+
 ## [2.3.43](https://github.com/chgl/fhir-server-exporter/compare/v2.3.42...v2.3.43) (2025-07-26)
 
 
