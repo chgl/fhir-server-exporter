@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.3.44](https://github.com/chgl/fhir-server-exporter/compare/v2.3.43...v2.3.44) (2025-08-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/download-artifact action to v5 ([#362](https://github.com/chgl/fhir-server-exporter/issues/362)) ([28374e8](https://github.com/chgl/fhir-server-exporter/commit/28374e868255722dd269d7a29f22c4ac9bdf0b67))
+* **deps:** update all non-major dependencies ([#357](https://github.com/chgl/fhir-server-exporter/issues/357)) ([c6a47dc](https://github.com/chgl/fhir-server-exporter/commit/c6a47dc33ab397768311d99fcee19235495b3bfd))
+* **deps:** update all non-major dependencies ([#360](https://github.com/chgl/fhir-server-exporter/issues/360)) ([d30b249](https://github.com/chgl/fhir-server-exporter/commit/d30b24905eb74bbae3cae9a3a45b20fd9e25f4b1))
+* **deps:** update dependency csharpier to 1.1.1 ([#359](https://github.com/chgl/fhir-server-exporter/issues/359)) ([9a245f5](https://github.com/chgl/fhir-server-exporter/commit/9a245f50589a21d5557af11adfb8a9c6cdd16425))
+* **deps:** update dependency meziantou.analyzer to 2.0.207 ([#355](https://github.com/chgl/fhir-server-exporter/issues/355)) ([aee65d6](https://github.com/chgl/fhir-server-exporter/commit/aee65d678415d00a4365ce31b569b0c87a008830))
+* **deps:** update dotnet monorepo ([#361](https://github.com/chgl/fhir-server-exporter/issues/361)) ([a78e3a3](https://github.com/chgl/fhir-server-exporter/commit/a78e3a3d19a183bef1992240bc86976ff3ca398d))
+* **deps:** update github-actions ([#358](https://github.com/chgl/fhir-server-exporter/issues/358)) ([ec37d5b](https://github.com/chgl/fhir-server-exporter/commit/ec37d5b72b22367a50735c7b562d5fa820c43a41))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.303-noble docker digest to 14fad15 ([#349](https://github.com/chgl/fhir-server-exporter/issues/349)) ([aa792d0](https://github.com/chgl/fhir-server-exporter/commit/aa792d0140d85d62f37d4aa36646d9b0efed60e2))
+
 ## [2.3.43](https://github.com/chgl/fhir-server-exporter/compare/v2.3.42...v2.3.43) (2025-07-26)
 
 
