@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.3.45](https://github.com/chgl/fhir-server-exporter/compare/v2.3.44...v2.3.45) (2025-08-16)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/checkout action to v5 ([#365](https://github.com/chgl/fhir-server-exporter/issues/365)) ([b7c120a](https://github.com/chgl/fhir-server-exporter/commit/b7c120ade653cbb67b9076fa0cd23646052b137b))
+* **deps:** update all non-major dependencies ([#363](https://github.com/chgl/fhir-server-exporter/issues/363)) ([ea1c76e](https://github.com/chgl/fhir-server-exporter/commit/ea1c76eeb69ce6675591f0ebbd3389a136da3c4a))
+* **deps:** update github-actions ([#364](https://github.com/chgl/fhir-server-exporter/issues/364)) ([5fb7708](https://github.com/chgl/fhir-server-exporter/commit/5fb7708111417889b356bb5e468cd1ca9674bc99))
+* **deps:** update quay.io/keycloak/keycloak:26.3.2 docker digest to 98fab02 ([#366](https://github.com/chgl/fhir-server-exporter/issues/366)) ([1db1312](https://github.com/chgl/fhir-server-exporter/commit/1db1312960a86dbc0059cec16a64cfee6014ea71))
+
 ## [2.3.44](https://github.com/chgl/fhir-server-exporter/compare/v2.3.43...v2.3.44) (2025-08-06)
 
 
