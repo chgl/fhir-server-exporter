@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.46](https://github.com/chgl/fhir-server-exporter/compare/v2.3.45...v2.3.46) (2025-08-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** update github-actions ([#368](https://github.com/chgl/fhir-server-exporter/issues/368)) ([0fb5c1a](https://github.com/chgl/fhir-server-exporter/commit/0fb5c1a1390a99fe6070403b95729973e242d12a))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.304-noble docker digest to 0b7186a ([#369](https://github.com/chgl/fhir-server-exporter/issues/369)) ([fd2017e](https://github.com/chgl/fhir-server-exporter/commit/fd2017eb238fde24a4d630cd72486d51f25add9f))
+* **deps:** update quay.io/keycloak/keycloak docker tag to v26.3.3 ([#370](https://github.com/chgl/fhir-server-exporter/issues/370)) ([2290d9a](https://github.com/chgl/fhir-server-exporter/commit/2290d9a0093cb811578cc461c025554e20e28c15))
+
 ## [2.3.45](https://github.com/chgl/fhir-server-exporter/compare/v2.3.44...v2.3.45) (2025-08-16)
 
 
