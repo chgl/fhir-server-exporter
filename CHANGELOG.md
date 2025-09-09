@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.3.46](https://github.com/chgl/fhir-server-exporter/compare/v2.3.45...v2.3.46) (2025-09-09)
+
+
+### Miscellaneous Chores
+
+* add .whitesource configuration file ([#372](https://github.com/chgl/fhir-server-exporter/issues/372)) ([0a0ce03](https://github.com/chgl/fhir-server-exporter/commit/0a0ce03d67d53304c4cf8d617ba4fef57392ae1a))
+* **deps:** update actions/setup-dotnet action to v5 ([#378](https://github.com/chgl/fhir-server-exporter/issues/378)) ([666df3c](https://github.com/chgl/fhir-server-exporter/commit/666df3c47c856121f910538e25e206f69f2fbb4a))
+* **deps:** update all non-major dependencies ([#373](https://github.com/chgl/fhir-server-exporter/issues/373)) ([9972200](https://github.com/chgl/fhir-server-exporter/commit/99722001433bfc20d55e454bf1229eaa90b5605e))
+* **deps:** update aquasecurity/trivy-action action to v0.33.0 ([#374](https://github.com/chgl/fhir-server-exporter/issues/374)) ([9c34698](https://github.com/chgl/fhir-server-exporter/commit/9c346980f8b3c42d5483265048fc104d090f84ae))
+* **deps:** update dependency meziantou.analyzer to 2.0.215 ([#376](https://github.com/chgl/fhir-server-exporter/issues/376)) ([2512c11](https://github.com/chgl/fhir-server-exporter/commit/2512c11918a0c1557b678d3cdb03fb77315003db))
+* **deps:** update dependency testcontainers to 4.7.0 ([#375](https://github.com/chgl/fhir-server-exporter/issues/375)) ([194d348](https://github.com/chgl/fhir-server-exporter/commit/194d34891d4ed669583182009f1f4044f8d4e08a))
+* **deps:** update github-actions ([#368](https://github.com/chgl/fhir-server-exporter/issues/368)) ([0fb5c1a](https://github.com/chgl/fhir-server-exporter/commit/0fb5c1a1390a99fe6070403b95729973e242d12a))
+* **deps:** update github-actions ([#377](https://github.com/chgl/fhir-server-exporter/issues/377)) ([5603e4f](https://github.com/chgl/fhir-server-exporter/commit/5603e4fb2d556ee899e4c0500b06e22fef1293af))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.304-noble docker digest to 0b7186a ([#369](https://github.com/chgl/fhir-server-exporter/issues/369)) ([fd2017e](https://github.com/chgl/fhir-server-exporter/commit/fd2017eb238fde24a4d630cd72486d51f25add9f))
+* **deps:** update quay.io/keycloak/keycloak docker tag to v26.3.3 ([#370](https://github.com/chgl/fhir-server-exporter/issues/370)) ([2290d9a](https://github.com/chgl/fhir-server-exporter/commit/2290d9a0093cb811578cc461c025554e20e28c15))
+
 ## [2.3.45](https://github.com/chgl/fhir-server-exporter/compare/v2.3.44...v2.3.45) (2025-08-16)
 
 
