@@ -1,5 +1,37 @@
 # Changelog
 
+## [2.3.47](https://github.com/chgl/fhir-server-exporter/compare/v2.3.46...v2.3.47) (2025-10-17)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#382](https://github.com/chgl/fhir-server-exporter/issues/382)) ([d64a03d](https://github.com/chgl/fhir-server-exporter/commit/d64a03ddd0f0283994715ea5c3d7fbce0704a38c))
+* **deps:** update all non-major dependencies ([#388](https://github.com/chgl/fhir-server-exporter/issues/388)) ([2c69dde](https://github.com/chgl/fhir-server-exporter/commit/2c69ddeabb394a30c8c06f7db157321f39813184))
+* **deps:** update all non-major dependencies ([#392](https://github.com/chgl/fhir-server-exporter/issues/392)) ([15b39fd](https://github.com/chgl/fhir-server-exporter/commit/15b39fdc4c24fc2919e4ca39fa26725b19729d16))
+* **deps:** update all non-major dependencies ([#394](https://github.com/chgl/fhir-server-exporter/issues/394)) ([4c86ef7](https://github.com/chgl/fhir-server-exporter/commit/4c86ef77a28709b11809d9e0a621eaeb7949f3e5))
+* **deps:** update all non-major dependencies ([#401](https://github.com/chgl/fhir-server-exporter/issues/401)) ([95a6239](https://github.com/chgl/fhir-server-exporter/commit/95a6239b74998ddb7ebab39bdc04794605096379))
+* **deps:** update all non-major dependencies ([#403](https://github.com/chgl/fhir-server-exporter/issues/403)) ([72a55f4](https://github.com/chgl/fhir-server-exporter/commit/72a55f44926c81fca99c332f5086e167e65a6089))
+* **deps:** update all non-major dependencies ([#404](https://github.com/chgl/fhir-server-exporter/issues/404)) ([c7c995e](https://github.com/chgl/fhir-server-exporter/commit/c7c995ec95dda4a3437e1b965363d87f0156259b))
+* **deps:** update all non-major dependencies to 9.0.9 ([#379](https://github.com/chgl/fhir-server-exporter/issues/379)) ([fa46cce](https://github.com/chgl/fhir-server-exporter/commit/fa46cce38dde6b966480c3dbd49a68cf9fff19d6))
+* **deps:** update dependency hl7.fhir.r4 to v6 ([#402](https://github.com/chgl/fhir-server-exporter/issues/402)) ([b8e8014](https://github.com/chgl/fhir-server-exporter/commit/b8e801490aecc9dc9f6f033ec624a34760099c8a))
+* **deps:** update dependency meziantou.analyzer to 2.0.218 ([#384](https://github.com/chgl/fhir-server-exporter/issues/384)) ([f875fbc](https://github.com/chgl/fhir-server-exporter/commit/f875fbc5b467bf9fd04f4b8d23642c73c02c8470))
+* **deps:** update dependency meziantou.analyzer to 2.0.221 ([#391](https://github.com/chgl/fhir-server-exporter/issues/391)) ([7a7ee42](https://github.com/chgl/fhir-server-exporter/commit/7a7ee420b94e5485603c3e7d677db10feea0fd97))
+* **deps:** update dependency microsoft.net.test.sdk to v18 ([#397](https://github.com/chgl/fhir-server-exporter/issues/397)) ([4ecc297](https://github.com/chgl/fhir-server-exporter/commit/4ecc29713c53c5524baf8381fd4c46020c5b1aa0))
+* **deps:** update github-actions ([#389](https://github.com/chgl/fhir-server-exporter/issues/389)) ([d9b7bf3](https://github.com/chgl/fhir-server-exporter/commit/d9b7bf36c55bbff9a4c6f7c7fb8714d2ece172e0))
+* **deps:** update github-actions ([#393](https://github.com/chgl/fhir-server-exporter/issues/393)) ([07582d3](https://github.com/chgl/fhir-server-exporter/commit/07582d37d5197376c20ee0f47762533f98939843))
+* **deps:** update github-actions ([#395](https://github.com/chgl/fhir-server-exporter/issues/395)) ([a608b2f](https://github.com/chgl/fhir-server-exporter/commit/a608b2f51c64831a313b6911ca96d6798b97ba3e))
+* **deps:** update github-actions ([#398](https://github.com/chgl/fhir-server-exporter/issues/398)) ([68acf7d](https://github.com/chgl/fhir-server-exporter/commit/68acf7dc49942a28dc901133a6a6a6e4a8c5ada3))
+* **deps:** update github-actions ([#399](https://github.com/chgl/fhir-server-exporter/issues/399)) ([2f2222c](https://github.com/chgl/fhir-server-exporter/commit/2f2222c65ff6e3aa09a474cd9c6529178e0d8cc2))
+* **deps:** update github/codeql-action action to v3.30.2 ([#380](https://github.com/chgl/fhir-server-exporter/issues/380)) ([c97f408](https://github.com/chgl/fhir-server-exporter/commit/c97f408850c6d933a0842a839d89301922b3eb4b))
+* **deps:** update github/codeql-action action to v3.30.3 ([#387](https://github.com/chgl/fhir-server-exporter/issues/387)) ([7768e9b](https://github.com/chgl/fhir-server-exporter/commit/7768e9b38f895754243880027c5c28f29db9d214))
+* **deps:** update github/codeql-action action to v4 ([#400](https://github.com/chgl/fhir-server-exporter/issues/400)) ([e8db652](https://github.com/chgl/fhir-server-exporter/commit/e8db65260e442d19be6bf6b1f45f06eb8f0f3a7e))
+* **deps:** update github/codeql-action action to v4.30.9 ([#406](https://github.com/chgl/fhir-server-exporter/issues/406)) ([9e8d619](https://github.com/chgl/fhir-server-exporter/commit/9e8d61961cbe3d29ee72449cb5313465519234ba))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.305-noble docker digest to 604ef06 ([#390](https://github.com/chgl/fhir-server-exporter/issues/390)) ([58124d5](https://github.com/chgl/fhir-server-exporter/commit/58124d5df2d9205d0a3c23bdf02c3704ac6c77a9))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.305-noble docker digest to 802e64a ([#385](https://github.com/chgl/fhir-server-exporter/issues/385)) ([8fc9d32](https://github.com/chgl/fhir-server-exporter/commit/8fc9d32984341782dabd75167a3a3a2423ab45ea))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.305-noble docker digest to 9ae2f68 ([#396](https://github.com/chgl/fhir-server-exporter/issues/396)) ([b7a0ab8](https://github.com/chgl/fhir-server-exporter/commit/b7a0ab8d08bc59316963441c72bdc462fb41971d))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:9.0.306-noble docker digest to d88e637 ([#405](https://github.com/chgl/fhir-server-exporter/issues/405)) ([c6d89f3](https://github.com/chgl/fhir-server-exporter/commit/c6d89f3b907b429fe191bc5dda26ad5a45d97a1d))
+* **deps:** update step-security/harden-runner action to v2.13.1 ([#383](https://github.com/chgl/fhir-server-exporter/issues/383)) ([450e79f](https://github.com/chgl/fhir-server-exporter/commit/450e79fea76cacbf1dd303d885c60bd6b662bae7))
+
 ## [2.3.46](https://github.com/chgl/fhir-server-exporter/compare/v2.3.45...v2.3.46) (2025-09-09)
 
 
