@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.3.48](https://github.com/chgl/fhir-server-exporter/compare/v2.3.47...v2.3.48) (2025-10-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#410](https://github.com/chgl/fhir-server-exporter/issues/410)) ([445955b](https://github.com/chgl/fhir-server-exporter/commit/445955baa72514d6db2b8ce9c99f8f12049da40b))
+* **deps:** update dependency meziantou.analyzer to 2.0.237 ([#412](https://github.com/chgl/fhir-server-exporter/issues/412)) ([bf5894e](https://github.com/chgl/fhir-server-exporter/commit/bf5894e0f520acbb33e3bafbc571fd6b3e83ec28))
+* **deps:** update dependency meziantou.analyzer to 2.0.238 ([#413](https://github.com/chgl/fhir-server-exporter/issues/413)) ([7564d64](https://github.com/chgl/fhir-server-exporter/commit/7564d6419b992c0f5c0414b90bc33ef0a32a2490))
+* **deps:** update dependency testcontainers to 4.8.0 ([#408](https://github.com/chgl/fhir-server-exporter/issues/408)) ([a0cb3d5](https://github.com/chgl/fhir-server-exporter/commit/a0cb3d5abacda363e7eed91d4361b0c362aabd07))
+* **deps:** update github-actions ([#407](https://github.com/chgl/fhir-server-exporter/issues/407)) ([87509df](https://github.com/chgl/fhir-server-exporter/commit/87509dfdef0344808e9a5918eee0c3dd11b96e2a))
+* **deps:** update github-actions ([#411](https://github.com/chgl/fhir-server-exporter/issues/411)) ([7ab067a](https://github.com/chgl/fhir-server-exporter/commit/7ab067a2e8ea1af5ee501fcc9b59036305361fea))
+
 ## [2.3.47](https://github.com/chgl/fhir-server-exporter/compare/v2.3.46...v2.3.47) (2025-10-17)
 
 
