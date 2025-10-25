@@ -19,9 +19,9 @@
       },
       "FluentAssertions": {
         "type": "Direct",
-        "requested": "[8.7.1, )",
-        "resolved": "8.7.1",
-        "contentHash": "6DZCiDwyRfsaEvgpNQgahedldMfllILm6rOqyaxW8mHlsdkCIXENb3EnXQcmWu0l0TnAnZ+B4XZqyXQF4YE9jA=="
+        "requested": "[8.8.0, )",
+        "resolved": "8.8.0",
+        "contentHash": "m0kwcqBwvVel03FuMa7Ozo/oTaxYbjeNlcOhQFkyQpwX/8wks6RNl/Jnn58DCZVs6c2oG1RsCZw7HfKSaxLm3w=="
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
@@ -34,9 +34,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.227, )",
-        "resolved": "2.0.227",
-        "contentHash": "OEs+0cDVTcXZLL7OfiyBuJHD+tCQBNoCl5hD+yVr3nFao8C5gN6fx2abLMjQiVShZgcy+UIyt9m/TwyeL0UvEw=="
+        "requested": "[2.0.236, )",
+        "resolved": "2.0.236",
+        "contentHash": "148CxT1juePGx7j494VzX6EFM5kItEPYLvIE7tmQug8P3LoFEuZ/Bl6rmA+/z4fEY0u5/6AbloxeqkfHZuKgIQ=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -65,9 +65,9 @@
       },
       "Testcontainers": {
         "type": "Direct",
-        "requested": "[4.8.0, )",
-        "resolved": "4.8.0",
-        "contentHash": "P84aPfFCIxyc+yxwj8J1AjDyv+tnhDYosD3kouXdgxHTV2UPeRvck09l1WLqeVa170wyp6t319x9shzAx5wwvQ==",
+        "requested": "[4.8.1, )",
+        "resolved": "4.8.1",
+        "contentHash": "6KB430LIVqn2H25idznjqWFu8I9ltQua8FFCoyB8AywUAqEjbkGVm1SfJ8wfXprV7tZlgSxrcWFgilZbA1RDYA==",
         "dependencies": {
           "Docker.DotNet.Enhanced": "3.129.0",
           "Docker.DotNet.Enhanced.X509": "3.129.0",
