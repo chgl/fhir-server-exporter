@@ -1,6 +1,6 @@
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:9.0.10-noble-chiseled@sha256:4df4493cf27cedbfdbed5333bab1651792f7fc105d4c6c4469b3adc039ed5d64 AS runtime
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:9.0.11-noble-chiseled@sha256:2b1b632112286928b15bddd27dd8e90bc0a73ada19c812562b5112dbe5daafb6 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 USER 65532:65532
@@ -9,7 +9,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0.306-noble@sha256:d88e637d15248531967111fba05c6725ad45ea1dace3d35d8cfe2c4d4094e25d AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0.307-noble@sha256:5643129f0c9f09bab23387c57bfeea1e3e42f47c7370fd9e389a5739e5ef383c AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 
