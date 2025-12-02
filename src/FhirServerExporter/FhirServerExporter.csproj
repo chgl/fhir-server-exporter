@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.AccessTokenManagement" Version="3.2.0" />
+    <PackageReference Include="Duende.AccessTokenManagement" Version="3.3.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.11" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.11" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
     <PackageReference Include="prometheus-net" Version="8.2.1" />
     <PackageReference Include="Hl7.Fhir.R4" Version="6.0.1" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.256">
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.257">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

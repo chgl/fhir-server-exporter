@@ -40,9 +40,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[2.0.256, )",
-        "resolved": "2.0.256",
-        "contentHash": "G1X+rRfimtT/icOaFM/AeJk6Z2pc4N5dpPHXFAK/cmpFVi7I1a7QFe05mlN9nofER007pu+QYgN6o+heGIF+Vg=="
+        "requested": "[2.0.257, )",
+        "resolved": "2.0.257",
+        "contentHash": "HADbzZ4rto3boQpWyXIFFc9bxDPviscCXiSQWOTICKD1OJ4gwa9aMfANoQngOk/2en3I9YAHwQ0WXxVMzCTJ+A=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -96,10 +96,10 @@
       },
       "Duende.AccessTokenManagement": {
         "type": "Transitive",
-        "resolved": "3.2.0",
-        "contentHash": "Ksk81vhnlrFu9EhbSWhkxTgfRx2n+5bm1CCmT+rRZBM+M2vgDJWNvMvO38GrTq3qqgJRB1RJQ73Q/yfpDQ8DIA==",
+        "resolved": "3.3.0",
+        "contentHash": "lspQ2FB7cnnbjt5CAtake6kTyxWgL6zxeihOJwV6rAlwRlIygo/MId9vmopL1vtK9StpWfQFi35O7b1weghiyg==",
         "dependencies": {
-          "Duende.IdentityModel": "7.0.0",
+          "Duende.IdentityModel": "8.0.0",
           "Microsoft.Extensions.Caching.Abstractions": "9.0.0",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.0",
           "Microsoft.Extensions.Http": "9.0.0",
@@ -110,8 +110,11 @@
       },
       "Duende.IdentityModel": {
         "type": "Transitive",
-        "resolved": "7.0.0",
-        "contentHash": "h6xvWQi9bASgroNh+6Z/BpSUpKTy/sSuc2l4twi0igSY0X0z7Y8eYMGMHB7trwdT56EGlWeXLA6qAb8VOg8ATA=="
+        "resolved": "8.0.0",
+        "contentHash": "8i+Tv4c38LgwoTRKbD0+MqtnNNDSVA83G6JkjGHgC4/7jH0nxZBP0RBhH8xTsvNQ5Pv9zrg+TR8rmtWK9HDOPg==",
+        "dependencies": {
+          "Microsoft.BCL.Memory": "10.0.0"
+        }
       },
       "Fhir.Metrics": {
         "type": "Transitive",
@@ -136,6 +139,11 @@
         "dependencies": {
           "Hl7.Fhir.Base": "6.0.1"
         }
+      },
+      "Microsoft.Bcl.Memory": {
+        "type": "Transitive",
+        "resolved": "10.0.0",
+        "contentHash": "a5PdIQh+01OrOViDfJA0zfo2ty5ruSxpR+4ZOkY1nGr0ybvm3XKxckxKp0BVR9ZtVIauQscgHABFysUJYOqnsg=="
       },
       "Microsoft.CodeCoverage": {
         "type": "Transitive",
@@ -618,7 +626,7 @@
       "fhirserverexporter": {
         "type": "Project",
         "dependencies": {
-          "Duende.AccessTokenManagement": "[3.2.0, )",
+          "Duende.AccessTokenManagement": "[3.3.0, )",
           "Hl7.Fhir.R4": "[6.0.1, )",
           "Microsoft.Extensions.Caching.Memory": "[9.0.11, )",
           "Microsoft.Extensions.Hosting": "[9.0.11, )",
