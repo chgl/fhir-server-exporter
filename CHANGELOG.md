@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.3.49](https://github.com/chgl/fhir-server-exporter/compare/v2.3.48...v2.3.49) (2025-12-02)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/checkout action to v6 ([#426](https://github.com/chgl/fhir-server-exporter/issues/426)) ([a4704de](https://github.com/chgl/fhir-server-exporter/commit/a4704dedf8ecb8fbaae8c3a71d515e501cf9f535))
+* **deps:** update all non-major dependencies ([#427](https://github.com/chgl/fhir-server-exporter/issues/427)) ([bd7e0ab](https://github.com/chgl/fhir-server-exporter/commit/bd7e0ab314e17e229383cf28c5a72931b31bdbd1))
+* **deps:** update all non-major dependencies ([#430](https://github.com/chgl/fhir-server-exporter/issues/430)) ([17767b1](https://github.com/chgl/fhir-server-exporter/commit/17767b113269d173de890d5aa0cebfa7b4036db1))
+* **deps:** update github-actions ([#428](https://github.com/chgl/fhir-server-exporter/issues/428)) ([f150fc1](https://github.com/chgl/fhir-server-exporter/commit/f150fc1d1ad92758ccda4ae34385f097a3e59d61))
+
 ## [2.3.48](https://github.com/chgl/fhir-server-exporter/compare/v2.3.47...v2.3.48) (2025-11-19)
 
 
