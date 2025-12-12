@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.3.49](https://github.com/chgl/fhir-server-exporter/compare/v2.3.48...v2.3.49) (2025-12-12)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/checkout action to v6 ([#426](https://github.com/chgl/fhir-server-exporter/issues/426)) ([a4704de](https://github.com/chgl/fhir-server-exporter/commit/a4704dedf8ecb8fbaae8c3a71d515e501cf9f535))
+* **deps:** update all non-major dependencies ([#427](https://github.com/chgl/fhir-server-exporter/issues/427)) ([bd7e0ab](https://github.com/chgl/fhir-server-exporter/commit/bd7e0ab314e17e229383cf28c5a72931b31bdbd1))
+* **deps:** update all non-major dependencies ([#430](https://github.com/chgl/fhir-server-exporter/issues/430)) ([17767b1](https://github.com/chgl/fhir-server-exporter/commit/17767b113269d173de890d5aa0cebfa7b4036db1))
+* **deps:** update dotnet monorepo ([#432](https://github.com/chgl/fhir-server-exporter/issues/432)) ([92663bd](https://github.com/chgl/fhir-server-exporter/commit/92663bd0c7e24656fc2828064da3da354171d0e7))
+* **deps:** update github-actions ([#428](https://github.com/chgl/fhir-server-exporter/issues/428)) ([f150fc1](https://github.com/chgl/fhir-server-exporter/commit/f150fc1d1ad92758ccda4ae34385f097a3e59d61))
+* **deps:** update github-actions ([#431](https://github.com/chgl/fhir-server-exporter/issues/431)) ([7168cce](https://github.com/chgl/fhir-server-exporter/commit/7168cceeae7f6dc931f6e699cf783620722af827))
+* **deps:** update github-actions ([#433](https://github.com/chgl/fhir-server-exporter/issues/433)) ([5497765](https://github.com/chgl/fhir-server-exporter/commit/5497765746c8236124e31bd0b33f75075c737196))
+
 ## [2.3.48](https://github.com/chgl/fhir-server-exporter/compare/v2.3.47...v2.3.48) (2025-11-19)
 
 
