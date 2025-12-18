@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.3.50](https://github.com/chgl/fhir-server-exporter/compare/v2.3.49...v2.3.50) (2025-12-18)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#435](https://github.com/chgl/fhir-server-exporter/issues/435)) ([c2426d8](https://github.com/chgl/fhir-server-exporter/commit/c2426d8debd708fd9283b5f2e39e80d3e10519eb))
+* **deps:** update chgl/.github action to v1.11.10 ([#436](https://github.com/chgl/fhir-server-exporter/issues/436)) ([eec0af0](https://github.com/chgl/fhir-server-exporter/commit/eec0af06c2061517db1764ba14502a9dba07a6e3))
+* **deps:** update dependency meziantou.analyzer to 2.0.261 ([#439](https://github.com/chgl/fhir-server-exporter/issues/439)) ([54a46d1](https://github.com/chgl/fhir-server-exporter/commit/54a46d1ac0c70468fe5f17a2f8db044712532e24))
+* **deps:** update dependency meziantou.analyzer to 2.0.263 ([#441](https://github.com/chgl/fhir-server-exporter/issues/441)) ([8eee829](https://github.com/chgl/fhir-server-exporter/commit/8eee82979184bae491bbfecd8f1147c0f53a6afc))
+* **deps:** update dotnet monorepo to v10 (major) ([#420](https://github.com/chgl/fhir-server-exporter/issues/420)) ([394ab37](https://github.com/chgl/fhir-server-exporter/commit/394ab37b25ea5c71a16a7358b057e428465781c3))
+* **deps:** update github-actions ([#434](https://github.com/chgl/fhir-server-exporter/issues/434)) ([7278158](https://github.com/chgl/fhir-server-exporter/commit/7278158150d5c68d2f236f7f5726387e4bb1280d))
+* **deps:** update github/codeql-action action to v4.31.9 ([#438](https://github.com/chgl/fhir-server-exporter/issues/438)) ([1615571](https://github.com/chgl/fhir-server-exporter/commit/16155719b0631307f4b835a0329b5072d75029aa))
+* **deps:** updated duende access token manangement to latest ([#440](https://github.com/chgl/fhir-server-exporter/issues/440)) ([b26a449](https://github.com/chgl/fhir-server-exporter/commit/b26a44942b0f3fb894c4aa0050b99bc8f97176ca))
+
 ## [2.3.49](https://github.com/chgl/fhir-server-exporter/compare/v2.3.48...v2.3.49) (2025-12-12)
 
 
