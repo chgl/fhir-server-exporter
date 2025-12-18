@@ -14,13 +14,13 @@ public class AuthHeaderProvider : IAuthHeaderProvider
 {
     public const string HttpClientName = "fhir.client";
 
-    private readonly IClientCredentialsTokenManagementService tokenService;
+    private readonly IClientCredentialsTokenManager tokenService;
     private readonly AuthConfig config;
     private readonly ILogger<AuthHeaderProvider> log;
 
     public AuthHeaderProvider(
         IOptions<AuthConfig> config,
-        IClientCredentialsTokenManagementService tokenService,
+        IClientCredentialsTokenManager tokenService,
         ILogger<AuthHeaderProvider> logger
     )
     {
@@ -64,16 +64,16 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         }
 
         var token = await tokenService.GetAccessTokenAsync(
-            HttpClientName,
-            cancellationToken: cancelToken
+            ClientCredentialsClientName.Parse(HttpClientName),
+            ct: cancelToken
         );
-        if (token is null)
+        if (token.Token?.AccessToken is null)
         {
             log.LogError("Failed to get oauth token.");
             return null;
         }
 
-        return new AuthenticationHeaderValue("Bearer", token.AccessToken);
+        return new AuthenticationHeaderValue("Bearer", token.Token.AccessToken);
     }
 
     private AuthenticationHeaderValue? GetBasicAuthHeader()
@@ -81,7 +81,7 @@ public class AuthHeaderProvider : IAuthHeaderProvider
         var username = config.Basic.Username;
         var password = config.Basic.Password;
 
-        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(username))
+        if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
         {
             var byteArray = Encoding.ASCII.GetBytes($"{username}:{password}");
             log.LogDebug("Using basic auth");

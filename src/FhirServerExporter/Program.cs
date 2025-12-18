@@ -1,4 +1,5 @@
 using System.Web;
+using Duende.AccessTokenManagement;
 using FhirServerExporter;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
@@ -33,15 +34,23 @@ static IHostBuilder CreateHostBuilder(string[] args) =>
                         {
                             var authConfig = appConfig.Auth;
 
-                            if (authConfig.OAuth.TokenUrl is null)
+                            if (
+                                authConfig.OAuth.TokenUrl is null
+                                || authConfig.OAuth.ClientId is null
+                                || authConfig.OAuth.ClientSecret is null
+                            )
                             {
                                 return;
                             }
 
-                            client.TokenEndpoint = authConfig.OAuth.TokenUrl.ToString();
-                            client.ClientId = authConfig.OAuth.ClientId;
-                            client.ClientSecret = authConfig.OAuth.ClientSecret;
-                            client.Scope = authConfig.OAuth.Scope;
+                            client.TokenEndpoint = authConfig.OAuth.TokenUrl;
+                            client.ClientId = ClientId.Parse(authConfig.OAuth.ClientId);
+                            client.ClientSecret = ClientSecret.Parse(authConfig.OAuth.ClientSecret);
+
+                            if (authConfig.OAuth.Scope is not null)
+                            {
+                                client.Scope = Scope.Parse(authConfig.OAuth.Scope);
+                            }
                         }
                     );
             }
@@ -62,19 +71,19 @@ public class FhirExporter : BackgroundService
     private static readonly Gauge ResourceCount = Metrics.CreateGauge(
         "fhir_resource_count",
         "Number of resources stored within the FHIR server by type.",
-        new GaugeConfiguration { LabelNames = ["type", "server_name"], }
+        new GaugeConfiguration { LabelNames = ["type", "server_name"] }
     );
 
     private static readonly Counter FetchResourceCountErrors = Metrics.CreateCounter(
         "fhir_fetch_resource_count_failed_total",
         "Number of resource count fetch operations that failed.",
-        new CounterConfiguration { LabelNames = ["type", "server_name"], }
+        new CounterConfiguration { LabelNames = ["type", "server_name"] }
     );
 
     private static readonly Histogram FetchResourceCountDuration = Metrics.CreateHistogram(
         "fhir_fetch_resource_count_duration_seconds",
         "Histogram of resource count fetching durations.",
-        new HistogramConfiguration { LabelNames = ["server_name"], }
+        new HistogramConfiguration { LabelNames = ["server_name"] }
     );
 
     private readonly ILogger<FhirExporter> log;
@@ -115,7 +124,7 @@ public class FhirExporter : BackgroundService
                 "Including only the following resources for counting: {IncludedResources}",
                 this.config.IncludedResources
             );
-            includedResources = this.config.IncludedResources.Split(',').ToList();
+            includedResources = [.. this.config.IncludedResources.Split(',')];
         }
 
         var excludedResources = this.config.ExcludedResources.Split(',');
@@ -140,7 +149,7 @@ public class FhirExporter : BackgroundService
                 Metrics.CreateGauge(
                     metric.Name ?? string.Empty,
                     metric.Description ?? string.Empty,
-                    new GaugeConfiguration { LabelNames = ["type", "server_name"], }
+                    new GaugeConfiguration { LabelNames = ["type", "server_name"] }
                 )
             )
             .ToDictionary(gauge => gauge.Name, StringComparer.InvariantCulture);
@@ -157,7 +166,7 @@ public class FhirExporter : BackgroundService
         server.Start();
 
         log.LogInformation(
-            "FHIR Server Prometheus Exporter running on port {port} for {fhirServerUrl}",
+            "FHIR Server Prometheus Exporter running on port {Port} for {FhirServerUrl}",
             port,
             fhirClient.Endpoint
         );
@@ -175,7 +184,7 @@ public class FhirExporter : BackgroundService
                 )
                 {
                     log.LogDebug(
-                        "Querying custom metric {name} using {query}",
+                        "Querying custom metric {Name} using {Query}",
                         customMetric.Name,
                         customMetric.Query
                     );
@@ -227,7 +236,7 @@ public class FhirExporter : BackgroundService
         if (result is null)
         {
             log.LogError(
-                "Response for search request using custom query {query} is null",
+                "Response for search request using custom query {Query} is null",
                 customMetric.Query
             );
             return;
@@ -241,18 +250,18 @@ public class FhirExporter : BackgroundService
         }
         else
         {
-            log.LogWarning("No 'total' returned for {query}", customMetric.Query);
+            log.LogWarning("No 'total' returned for {Query}", customMetric.Query);
         }
     }
 
     private async System.Threading.Tasks.Task UpdateResourceCountAsync(string resourceType)
     {
-        log.LogDebug("Fetching resource count for {resourceType}", resourceType);
+        log.LogDebug("Fetching resource count for {ResourceType}", resourceType);
         try
         {
             var total = await FetchResourceCountForTypeAsync(resourceType);
             log.LogDebug(
-                "Updating resource count for {resourceType} to {count}",
+                "Updating resource count for {ResourceType} to {Count}",
                 resourceType,
                 total
             );
@@ -264,7 +273,7 @@ public class FhirExporter : BackgroundService
         }
         catch (Exception exc)
         {
-            log.LogError(exc, "Failed to fetch resource count for {resourceType}", resourceType);
+            log.LogError(exc, "Failed to fetch resource count for {ResourceType}", resourceType);
             FetchResourceCountErrors.WithLabels(resourceType, fhirServerName).Inc();
         }
     }
@@ -274,7 +283,7 @@ public class FhirExporter : BackgroundService
         var response = await fhirClient.SearchAsync(resourceType, summary: SummaryType.Count);
         if (response is null)
         {
-            log.LogError("Response for count request for {resourceType}", resourceType);
+            log.LogError("Response for count request for {ResourceType}", resourceType);
             return null;
         }
 
