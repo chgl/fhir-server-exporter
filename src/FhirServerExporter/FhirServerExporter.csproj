@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Worker">
-
   <PropertyGroup>
     <UserSecretsId>dotnet-FhirServerExporter-51CE8CEB-7E96-4CF2-8F16-71D416CB7867</UserSecretsId>
     <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Duende.AccessTokenManagement" Version="3.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.11" />
+    <PackageReference Include="Duende.AccessTokenManagement" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.11" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
     <PackageReference Include="prometheus-net" Version="8.2.1" />
@@ -29,5 +27,4 @@
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
-
 </Project>

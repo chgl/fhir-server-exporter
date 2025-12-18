@@ -38,5 +38,4 @@
   <ItemGroup>
     <None Include="..\..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
-
 </Project>
