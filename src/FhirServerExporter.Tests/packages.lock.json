@@ -94,6 +94,19 @@
           "System.Diagnostics.EventLog": "6.0.0"
         }
       },
+      "DuckDB.NET.Bindings.Full": {
+        "type": "Transitive",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "x2LZ6t9E04/90h/G9VvtrGmDaVZsDjq5etWtwsjxP50jk/l4ZZ9duG3vPQP5j+aSq1NU9GgXVlcL0o3vmQ/FAw=="
+      },
+      "DuckDB.NET.Data.Full": {
+        "type": "Transitive",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "7gZfOy2szayAODSobxPTFSdeS8A2ttKg0ht0dDTFcChilG8OTq2mflriwcMH0aq/QL/gcWT+QdZFRKOfyvm8VA==",
+        "dependencies": {
+          "DuckDB.NET.Bindings.Full": "1.4.4-alpha.2"
+        }
+      },
       "Duende.AccessTokenManagement": {
         "type": "Transitive",
         "resolved": "4.1.0",
@@ -728,6 +741,7 @@
       "fhirserverexporter": {
         "type": "Project",
         "dependencies": {
+          "DuckDB.NET.Data.Full": "[1.4.4-alpha.2, )",
           "Duende.AccessTokenManagement": "[4.1.0, )",
           "Hl7.Fhir.R4": "[6.0.1, )",
           "Microsoft.Extensions.Hosting": "[10.0.1, )",

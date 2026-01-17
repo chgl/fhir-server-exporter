@@ -254,3 +254,5 @@ roslynator_refactorings.enabled = true
 
 # Enable/disable all compiler diagnostic fixes
 roslynator_compiler_diagnostic_fixes.enabled = true
+
+dotnet_diagnostic.MA0051.severity = none

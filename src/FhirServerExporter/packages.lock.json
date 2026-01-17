@@ -2,6 +2,15 @@
   "version": 1,
   "dependencies": {
     "net10.0": {
+      "DuckDB.NET.Data.Full": {
+        "type": "Direct",
+        "requested": "[1.4.4-alpha.2, )",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "7gZfOy2szayAODSobxPTFSdeS8A2ttKg0ht0dDTFcChilG8OTq2mflriwcMH0aq/QL/gcWT+QdZFRKOfyvm8VA==",
+        "dependencies": {
+          "DuckDB.NET.Bindings.Full": "1.4.4-alpha.2"
+        }
+      },
       "Duende.AccessTokenManagement": {
         "type": "Direct",
         "requested": "[4.1.0, )",
@@ -98,6 +107,11 @@
         "dependencies": {
           "StyleCop.Analyzers.Unstable": "1.2.0.556"
         }
+      },
+      "DuckDB.NET.Bindings.Full": {
+        "type": "Transitive",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "x2LZ6t9E04/90h/G9VvtrGmDaVZsDjq5etWtwsjxP50jk/l4ZZ9duG3vPQP5j+aSq1NU9GgXVlcL0o3vmQ/FAw=="
       },
       "Duende.IdentityModel": {
         "type": "Transitive",

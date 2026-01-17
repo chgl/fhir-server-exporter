@@ -1,0 +1,43 @@
+services:
+  download:
+    image: docker.io/curlimages/curl:8.14.1@sha256:9a1ed35addb45476afa911696297f8e115993df459278ed036182dd2cd22b67b
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    working_dir: /downloads
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    command:
+      - |
+        curl -LO https://github.com/synthetichealth/synthea/releases/download/master-branch-latest/synthea-with-dependencies.jar
+    volumes:
+      - $PWD/bin:/downloads:rw
+
+  synthea:
+    image: docker.io/library/eclipse-temurin:21.0.7_6-jre-ubi9-minimal@sha256:267984775cb7d79c492747b360e782190b00768cf05bc929f1b6c88c03fbeab6
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    restart: "no"
+    entrypoint: ["/bin/sh", "-c"]
+    working_dir: /workspace
+    user: "${USER_ID:-1000}:${GROUP_ID:-1000}"
+    environment:
+      SYNTHEA_SEED: "20250718"
+    command:
+      - |
+        java -jar /workspace/bin/synthea-with-dependencies.jar -s $$SYNTHEA_SEED -cs $$SYNTHEA_SEED -r $$SYNTHEA_SEED -p 10 -c config/synthea.properties
+    volumes:
+      - $PWD/bin:/workspace/bin/:ro
+      - $PWD/synthea:/workspace/synthea/:rw
+      - $PWD/config:/workspace/config/:ro
+    depends_on:
+      download:
+        condition: service_completed_successfully

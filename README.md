@@ -46,24 +46,38 @@ The container image is pushed to these registries:
 
 ### Configuration
 
-| Environment Variable          | Description                                                                                                                                                               | Default value  |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| FhirServerUrl                 | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`                                                                       | `""`           |
-| FhirServerName                | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.                                                                    | `""`           |
-| FetchIntervalSeconds          | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.                                                                  | `30`           |
-| MetricsPort                   | The local port on which the metrics should be exposed at.                                                                                                                 | `9797`         |
-| FhirServerTimeout             | The HTTP client timeout for querying the FHIR server in [TimeSpan](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) format. | `"0.00:02:00"` |
-| ExcludedResources             | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription`                                                           | `""`           |
-| IncludedResources             | A comma-separated list of FHIR resource types that should be included for counting. if unset, defaults to all types.                                                      | `""`           |
-| Auth\_\_Basic\_\_Username     | If the FHIR server requires basic auth, this allows setting the username.                                                                                                 | `""`           |
-| Auth\_\_Basic\_\_Password     | Basic auth password.                                                                                                                                                      | `""`           |
-| Auth\_\_BearerToken           | Static token to set in the `Authorization: Bearer …` header.                                                                                                              | `""`           |
-| Auth\_\_OAuth\_\_TokenUrl     | OAuth token endpoint URL.                                                                                                                                                 | `""`           |
-| Auth\_\_OAuth\_\_ClientId     | OAuth client ID.                                                                                                                                                          | `""`           |
-| Auth\_\_OAuth\_\_ClientSecret | OAuth client secret                                                                                                                                                       | `""`           |
-| Auth\_\_OAuth\_\_Scope        | OAuth scope                                                                                                                                                               | `""`           |
+| Environment Variable            | Description                                                                                                                                                               | Default value    |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| FhirServerUrl                   | The base URL of the FHIR server whose metrics should be exported. E.g. `http://localhost:8082/fhir`                                                                       | `""`             |
+| FhirServerName                  | A friendly name for the server. Included as a `server_name` label in the `fhir_resource_count` metric.                                                                    | `""`             |
+| FetchIntervalSeconds            | The number of seconds between consecutive REST requests to the FHIR server to fetch all resource counts.                                                                  | `30`             |
+| MetricsPort                     | The local port on which the metrics should be exposed at.                                                                                                                 | `9797`           |
+| FhirServerTimeout               | The HTTP client timeout for querying the FHIR server in [TimeSpan](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-timespan-format-strings) format. | `"0.00:02:00"`   |
+| ExcludedResources               | A comma-separated list of FHIR resource types that should be excluded from counting. E.g. `Binary,Subscription`                                                           | `""`             |
+| IncludedResources               | A comma-separated list of FHIR resource types that should be included for counting. if unset, defaults to all types.                                                      | `""`             |
+| Auth\_\_Basic\_\_Username       | If the FHIR server requires basic auth, this allows setting the username.                                                                                                 | `""`             |
+| Auth\_\_Basic\_\_Password       | Basic auth password.                                                                                                                                                      | `""`             |
+| Auth\_\_BearerToken             | Static token to set in the `Authorization: Bearer …` header.                                                                                                              | `""`             |
+| Auth\_\_OAuth\_\_TokenUrl       | OAuth token endpoint URL.                                                                                                                                                 | `""`             |
+| Auth\_\_OAuth\_\_ClientId       | OAuth client ID.                                                                                                                                                          | `""`             |
+| Auth\_\_OAuth\_\_ClientSecret   | OAuth client secret                                                                                                                                                       | `""`             |
+| Auth\_\_OAuth\_\_Scope          | OAuth scope                                                                                                                                                               | `""`             |
+| FhirLakehouse\_\_DatabasePath   | The S3-path to the folder containing the database tables, e.g. `s3://fhir/default`. Must not end with a trailing slash.                                                   | `""`             |
+| FhirLakehouse\_\_S3\_\_Endpoint | The S3 endpoint, e.g. `localhost:9000`. Credentials must be configured using the `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` environment variables.                   | `""`             |
+| FhirLakehouse\_\_S3\_\_Region   | The S3 region                                                                                                                                                             | `"eu-central-1"` |
+| FhirLakehouse\_\_S3\_\_UrlStyle | The S3 endpoint url style. `path` or `vhost`                                                                                                                              | `"path"`         |
+| FhirLakehouse\_\_S3\_\_UseSsl   | Whether to use HTTPS or HTTP                                                                                                                                              | `"false"`        |
+
+### FHIR Lakehouse Counting
+
+Besides querying a FHIR server's REST interface to retrieve resource counts, the exporter also supports retrieving resource counts from FHIR resources encoded as Delta lake tables.
+The tables should follow the conventions specified by Pathling: <https://pathling.csiro.au/docs/libraries/io#delta-lake>, i.e. the tables are named according to their FHIR resource
+type: [resource type].parquet, e.g. Patient.parquet, Condition.parquet.
 
 ### Custom Queries
+
+> [!IMPORTANT]
+> This feature was removed in v3. Please create an issue if you were using it.
 
 You can also specify a list of custom queries to run against the FHIR server.
 Create a file called `queries.yaml` and place it in the application's main directory:
