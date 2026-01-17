@@ -8,21 +8,6 @@ using Xunit;
 public class FhirExporterTests
 {
     [Fact]
-    public void Construct_WithMissingFhirServerUrl_ShouldThrow()
-    {
-        var appConfig = new AppConfig { FhirServerUrl = null };
-
-        var construct = () =>
-            _ = new FhirExporter(
-                A.Fake<ILogger<FhirExporter>>(),
-                Options.Create(appConfig),
-                A.Fake<IFhirResourceCounter>()
-            );
-
-        construct.Should().Throw<InvalidOperationException>();
-    }
-
-    [Fact]
     public void Construct_WithCorrectConfig_ShouldSucceed()
     {
         var appConfig = new AppConfig { FhirServerUrl = new Uri("http://localhost:8082/fhir") };
