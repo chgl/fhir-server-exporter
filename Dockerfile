@@ -63,6 +63,6 @@ RUN dotnet test \
     -l "console;verbosity=detailed"
 
 FROM runtime
-COPY --from=build --chown=1654:1654 /root/.duckdb/extensions/ /home/app/.duckb/extensions
+COPY --from=build --chown=1654:1654 /root/.duckdb/extensions/ /home/app/.duckdb/extensions/
 COPY --from=build /build/publish .
 ENTRYPOINT ["dotnet", "FhirServerExporter.dll"]
