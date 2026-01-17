@@ -1,6 +1,6 @@
+using AwesomeAssertions;
 using FakeItEasy;
 using FhirServerExporter;
-using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit;
