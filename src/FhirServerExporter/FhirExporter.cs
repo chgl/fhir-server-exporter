@@ -113,6 +113,11 @@ public class FhirExporter : BackgroundService
                 ResourceCount.WithLabels(resourceType.ToString(), fhirServerName).Set(total.Value);
             }
         }
+        catch (OperationCanceledException)
+        {
+            // Propagate cancellation so the background service can stop cleanly.
+            throw;
+        }
         catch (Exception exc)
         {
             log.LogError(exc, "Failed to fetch resource count for {ResourceType}", resourceType);
