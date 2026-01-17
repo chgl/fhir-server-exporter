@@ -2,6 +2,12 @@
   "version": 1,
   "dependencies": {
     "net10.0": {
+      "AwesomeAssertions": {
+        "type": "Direct",
+        "requested": "[9.3.0, )",
+        "resolved": "9.3.0",
+        "contentHash": "8lGLYap2ec2gNLgjf2xKZaKLpQ7j36oJvrYzBVVpNAumqnxRdevqqhEF66qxE92f8y2+zsbQ061DeHG61ZhzaQ=="
+      },
       "coverlet.collector": {
         "type": "Direct",
         "requested": "[6.0.4, )",
@@ -22,12 +28,6 @@
         "dependencies": {
           "Castle.Core": "5.1.1"
         }
-      },
-      "FluentAssertions": {
-        "type": "Direct",
-        "requested": "[8.8.0, )",
-        "resolved": "8.8.0",
-        "contentHash": "m0kwcqBwvVel03FuMa7Ozo/oTaxYbjeNlcOhQFkyQpwX/8wks6RNl/Jnn58DCZVs6c2oG1RsCZw7HfKSaxLm3w=="
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
@@ -92,6 +92,19 @@
         "contentHash": "rpYtIczkzGpf+EkZgDr9CClTdemhsrwA/W5hMoPjLkRFnXzH44zDLoovXeKtmxb1ykXK9aJVODSpiJml8CTw2g==",
         "dependencies": {
           "System.Diagnostics.EventLog": "6.0.0"
+        }
+      },
+      "DuckDB.NET.Bindings.Full": {
+        "type": "Transitive",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "x2LZ6t9E04/90h/G9VvtrGmDaVZsDjq5etWtwsjxP50jk/l4ZZ9duG3vPQP5j+aSq1NU9GgXVlcL0o3vmQ/FAw=="
+      },
+      "DuckDB.NET.Data.Full": {
+        "type": "Transitive",
+        "resolved": "1.4.4-alpha.2",
+        "contentHash": "7gZfOy2szayAODSobxPTFSdeS8A2ttKg0ht0dDTFcChilG8OTq2mflriwcMH0aq/QL/gcWT+QdZFRKOfyvm8VA==",
+        "dependencies": {
+          "DuckDB.NET.Bindings.Full": "1.4.4-alpha.2"
         }
       },
       "Duende.AccessTokenManagement": {
@@ -728,6 +741,7 @@
       "fhirserverexporter": {
         "type": "Project",
         "dependencies": {
+          "DuckDB.NET.Data.Full": "[1.4.4-alpha.2, )",
           "Duende.AccessTokenManagement": "[4.1.0, )",
           "Hl7.Fhir.R4": "[6.0.1, )",
           "Microsoft.Extensions.Hosting": "[10.0.1, )",

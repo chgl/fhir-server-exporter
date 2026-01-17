@@ -22,3 +22,152 @@ services:
     command: start-dev
     ports:
       - "127.0.0.1:8083:8080"
+
+  minio:
+    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+    cap_drop:
+      - ALL
+    privileged: false
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_UPDATE: "off"
+      MINIO_CALLHOME_ENABLE: "off"
+      MINIO_ROOT_USER: "admin"
+      MINIO_BROWSER: "on"
+      # kics-scan ignore-line
+      MINIO_ROOT_PASSWORD: "miniopass" # gitleaks:allow
+      MINIO_SCHEME: "http"
+    ports:
+      - "127.0.0.1:9001:9001"
+      - "127.0.0.1:9000:9000"
+
+  wait-for-minio:
+    image: docker.io/curlimages/curl:8.17.0@sha256:935d9100e9ba842cdb060de42472c7ca90cfe9a7c96e4dacb55e79e560b3ff40
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    restart: "no"
+    environment:
+      AWS_ENDPOINT_URL: http://minio:9000
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        until [ "$(curl -s -o /dev/null -L -w "%{http_code}" "$$AWS_ENDPOINT_URL/minio/health/live")" == "200" ]; do
+            echo "$(date): Waiting for minio server @ $$AWS_ENDPOINT_URL to be up";
+            sleep 5;
+        done;
+    depends_on:
+      minio:
+        condition: service_started
+
+  create-bucket:
+    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+    restart: on-failure
+    cap_drop:
+      - ALL
+    privileged: false
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        /usr/bin/mc alias set minio http://minio:9000 admin miniopass;
+        /usr/bin/mc mb --ignore-existing minio/fhir;
+    depends_on:
+      wait-for-minio:
+        condition: service_completed_successfully
+
+  pathling:
+    image: docker.io/aehrc/pathling:7.2.0@sha256:31b5ef50294e55136ae2278c2d0b8435a96a15b5da040ec785effb51875d08d3
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    environment:
+      JAVA_TOOL_OPTIONS: |
+        -Xmx12g
+        -Xss64m
+        -XX:G1HeapRegionSize=32M
+        -XX:+ExplicitGCInvokesConcurrent
+        -XX:+ExitOnOutOfMemoryError
+        -XX:+HeapDumpOnOutOfMemoryError
+        -Duser.timezone=UTC
+        --add-exports=java.base/sun.nio.ch=ALL-UNNAMED
+        --add-opens=java.base/java.net=ALL-UNNAMED
+        --add-opens=java.base/java.nio=ALL-UNNAMED
+        --add-opens=java.base/java.util=ALL-UNNAMED
+        --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+      pathling.storage.warehouseUrl: s3a://fhir
+      pathling.storage.cacheDatasets: "false"
+      pathling.query.cacheResults: "false"
+      pathling.import.allowableSources: file:///tmp/import/
+      pathling.terminology.enabled: "false"
+      pathling.terminology.serverUrl: http://localhost:8080/i-dont-exist
+      fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
+      fs.s3a.path.style.access: "true"
+      fs.s3a.endpoint: "http://minio:9000"
+      fs.s3a.access.key: "admin"
+      fs.s3a.secret.key: "miniopass"
+      spark.sql.parquet.compression.codec: "zstd"
+      spark.io.compression.codec: "zstd"
+      parquet.compression.codec.zstd.level: "9"
+      spark.serializer: "org.apache.spark.serializer.KryoSerializer"
+      spark.master: "local[*]"
+      spark.driver.memory: 10g
+    volumes:
+      - $PWD/synthea-fhir-sample-data/:/tmp/import/:ro
+    depends_on:
+      create-bucket:
+        condition: service_completed_successfully
+
+  wait-for-pathling:
+    image: docker.io/curlimages/curl:8.14.1@sha256:9a1ed35addb45476afa911696297f8e115993df459278ed036182dd2cd22b67b
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    restart: "no"
+    environment:
+      PATHLING_URL: http://pathling:8080
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        until [ "$(curl -s -o /dev/null -L -w "%{http_code}" "$$PATHLING_URL/fhir/metadata")" == "200" ]; do
+            echo "$(date): Waiting for pathling server @ $$PATHLING_URL to be up";
+            sleep 5;
+        done;
+    depends_on:
+      pathling:
+        condition: service_started
+
+  import-resources:
+    image: docker.io/curlimages/curl:8.14.1@sha256:9a1ed35addb45476afa911696297f8e115993df459278ed036182dd2cd22b67b
+    ipc: none
+    security_opt:
+      - "no-new-privileges:true"
+    cap_drop:
+      - ALL
+    privileged: false
+    restart: "no"
+    environment:
+      PATHLING_URL: http://pathling:8080
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        curl --fail -X POST --header 'Content-Type: application/fhir+json' --data @/tmp/pathling-import-request.json --url 'http://pathling:8080/fhir/$$import'
+    volumes:
+      - $PWD/pathling-import-request.json:/tmp/pathling-import-request.json:ro
+    depends_on:
+      wait-for-pathling:
+        condition: service_completed_successfully

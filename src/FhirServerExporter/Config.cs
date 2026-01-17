@@ -19,6 +19,8 @@ public record AppConfig
     public AuthConfig Auth { get; set; } = new AuthConfig();
 
     public TimeSpan FhirServerTimeout { get; set; } = TimeSpan.FromMinutes(2);
+
+    public LakehouseConfig FhirLakehouse { get; set; } = new LakehouseConfig();
 }
 
 public record AuthConfig
@@ -55,4 +57,22 @@ public record CustomMetric
     public string? Query { get; init; }
 
     public string? Description { get; init; }
+}
+
+public record LakehouseConfig
+{
+    public string? DatabasePath { get; init; }
+
+    public S3Config S3 { get; init; } = new();
+}
+
+public record S3Config
+{
+    public string? Endpoint { get; init; }
+
+    public string? Region { get; init; }
+
+    public string? UrlStyle { get; init; }
+
+    public bool? UseSsl { get; init; }
 }
