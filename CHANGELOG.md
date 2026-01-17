@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.1](https://github.com/chgl/fhir-server-exporter/compare/v3.0.0...v3.0.1) (2026-01-17)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency fakeiteasy to v9 ([#446](https://github.com/chgl/fhir-server-exporter/issues/446)) ([70a2a19](https://github.com/chgl/fhir-server-exporter/commit/70a2a19d9dbb00fed88d739b45bdf77e629b3314))
+* **deps:** update docker.io/library/eclipse-temurin:21.0.7_6-jre-ubi9-minimal docker digest to be37f42 ([#450](https://github.com/chgl/fhir-server-exporter/issues/450)) ([0d0458d](https://github.com/chgl/fhir-server-exporter/commit/0d0458dc6afa983f16946321b2043c240f551ba3))
+* **deps:** update github-actions ([#445](https://github.com/chgl/fhir-server-exporter/issues/445)) ([1d5f689](https://github.com/chgl/fhir-server-exporter/commit/1d5f68975388e9608987569e2a94918bac8df6b5))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:10.0.101-noble docker digest to 5504edd ([#447](https://github.com/chgl/fhir-server-exporter/issues/447)) ([537f771](https://github.com/chgl/fhir-server-exporter/commit/537f771dee4de234b69b7c490966b842ba72e1f9))
+* install aws extensions in container ([cf67424](https://github.com/chgl/fhir-server-exporter/commit/cf6742490d486a6c3d1ca649b0a20fbb793a2c00))
+
 ## [3.0.0](https://github.com/chgl/fhir-server-exporter/compare/v2.3.50...v3.0.0) (2026-01-17)
 
 
