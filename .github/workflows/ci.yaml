@@ -19,7 +19,7 @@ permissions:
 
 jobs:
   build:
-    uses: chgl/.github/.github/workflows/standard-build.yaml@9e70ebf9f29b9828bf64e2384650ca512b251a2f # v1.11.11
+    uses: chgl/.github/.github/workflows/standard-build.yaml@203c1d426d02e17a794b59a49e07743ca762b4b0 # v1.11.12
     permissions:
       contents: write
       id-token: write
@@ -37,7 +37,7 @@ jobs:
       github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
-    uses: chgl/.github/.github/workflows/standard-lint.yaml@9e70ebf9f29b9828bf64e2384650ca512b251a2f # v1.11.11
+    uses: chgl/.github/.github/workflows/standard-lint.yaml@203c1d426d02e17a794b59a49e07743ca762b4b0 # v1.11.12
     permissions:
       contents: read
       pull-requests: write
@@ -92,7 +92,7 @@ jobs:
           docker load --input /tmp/image.tar
 
       - name: Install .NET
-        uses: actions/setup-dotnet@2016bd2012dba4e32de620c46fe006a3ac9f0602 # v5.0.1
+        uses: actions/setup-dotnet@baa11fbfe1d6520db94683bd5c7a3818018e4309 # v5.1.0
         with:
           dotnet-version: "10.x"
 
