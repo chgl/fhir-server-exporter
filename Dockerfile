@@ -24,7 +24,7 @@ curl -LSs "$DUCKDB_URL" | gunzip > duckdb
 chmod +x ./duckdb
 mv ./duckdb /usr/local/bin/duckdb
 duckdb --version
-duckdb -c "INSTALL delta; INSTALL httpfs;"
+duckdb -c "INSTALL delta; INSTALL httpfs; INSTALL aws;"
 EOF
 
 COPY src/Directory.Build.props ./src/
