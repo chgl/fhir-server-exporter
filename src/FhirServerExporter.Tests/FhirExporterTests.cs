@@ -12,11 +12,11 @@ public class FhirExporterTests
     {
         var appConfig = new AppConfig { FhirServerUrl = null };
 
-        Action construct = () =>
+        var construct = () =>
             _ = new FhirExporter(
                 A.Fake<ILogger<FhirExporter>>(),
                 Options.Create(appConfig),
-                A.Fake<IAuthHeaderProvider>()
+                A.Fake<IFhirResourceCounter>()
             );
 
         construct.Should().Throw<InvalidOperationException>();
@@ -30,7 +30,7 @@ public class FhirExporterTests
         var sut = new FhirExporter(
             A.Fake<ILogger<FhirExporter>>(),
             Options.Create(appConfig),
-            A.Fake<IAuthHeaderProvider>()
+            A.Fake<IFhirResourceCounter>()
         );
 
         sut.Should().NotBeNull();
