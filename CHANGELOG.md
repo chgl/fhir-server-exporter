@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.2](https://github.com/chgl/fhir-server-exporter/compare/v3.0.1...v3.0.2) (2026-01-17)
+
+
+### Bug Fixes
+
+* duckdb extension path in container image ([#452](https://github.com/chgl/fhir-server-exporter/issues/452)) ([b1afb53](https://github.com/chgl/fhir-server-exporter/commit/b1afb530125bab04812fac88a5f2ddd76b093e8e))
+
 ## [3.0.1](https://github.com/chgl/fhir-server-exporter/compare/v3.0.0...v3.0.1) (2026-01-17)
 
 
