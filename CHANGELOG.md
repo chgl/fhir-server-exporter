@@ -1,5 +1,21 @@
 # Changelog
 
+## [3.0.0](https://github.com/chgl/fhir-server-exporter/compare/v2.3.50...v3.0.0) (2026-01-17)
+
+
+### ⚠ BREAKING CHANGES
+
+* removed support for custom queries for now.
+
+### Features
+
+* added support for querying FHIR lakehouses in Pathling-compatible layout ([#449](https://github.com/chgl/fhir-server-exporter/issues/449)) ([31412a8](https://github.com/chgl/fhir-server-exporter/commit/31412a8b5fa7d0bc5899f3270d7a0c19f00c67e4))
+
+
+### Miscellaneous Chores
+
+* **deps:** update chgl/.github action to v1.11.11 ([#443](https://github.com/chgl/fhir-server-exporter/issues/443)) ([7d22069](https://github.com/chgl/fhir-server-exporter/commit/7d220691a5f8372df92ba1d10c23ac0fd84be0a5))
+
 ## [2.3.50](https://github.com/chgl/fhir-server-exporter/compare/v2.3.49...v2.3.50) (2025-12-18)
 
 
