@@ -13,6 +13,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.101-noble@sha256:d1823fecac3689a2eb959e02ee3bfe1c2142392808240039097ad70644566190 AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
 # duckdb cli used to install the delta lake and s3 extensions
 # renovate: datasource=github-releases depName=duckdb/duckdb
