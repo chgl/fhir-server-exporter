@@ -96,15 +96,15 @@
       },
       "DuckDB.NET.Bindings.Full": {
         "type": "Transitive",
-        "resolved": "1.4.4-alpha.2",
-        "contentHash": "x2LZ6t9E04/90h/G9VvtrGmDaVZsDjq5etWtwsjxP50jk/l4ZZ9duG3vPQP5j+aSq1NU9GgXVlcL0o3vmQ/FAw=="
+        "resolved": "1.4.3",
+        "contentHash": "hZwm0zTKJ5HdUGKcase2JX52Lquyh7dCUFweECvR877QEA2gF8gSl3qrtb71BvRlgZ7pfjh0bRBCiAKOJMLE+A=="
       },
       "DuckDB.NET.Data.Full": {
         "type": "Transitive",
-        "resolved": "1.4.4-alpha.2",
-        "contentHash": "7gZfOy2szayAODSobxPTFSdeS8A2ttKg0ht0dDTFcChilG8OTq2mflriwcMH0aq/QL/gcWT+QdZFRKOfyvm8VA==",
+        "resolved": "1.4.3",
+        "contentHash": "tg1FWmePN+k536O1cx2VhKWa3xT7DXrcGg4kGgiSWQyur9UWwZ2i2YMpD+XVYv1ARozyy1Tt7OW2cMrNPoPj9g==",
         "dependencies": {
-          "DuckDB.NET.Bindings.Full": "1.4.4-alpha.2"
+          "DuckDB.NET.Bindings.Full": "1.4.3"
         }
       },
       "Duende.AccessTokenManagement": {
@@ -741,7 +741,7 @@
       "fhirserverexporter": {
         "type": "Project",
         "dependencies": {
-          "DuckDB.NET.Data.Full": "[1.4.4-alpha.2, )",
+          "DuckDB.NET.Data.Full": "[1.4.3, )",
           "Duende.AccessTokenManagement": "[4.1.0, )",
           "Hl7.Fhir.R4": "[6.0.1, )",
           "Microsoft.Extensions.Hosting": "[10.0.1, )",
