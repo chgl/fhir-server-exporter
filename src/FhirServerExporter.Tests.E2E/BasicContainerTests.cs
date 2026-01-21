@@ -19,7 +19,9 @@ public class ContainerE2ETests : IAsyncLifetime
             .WithName($"fhir-server-exporter-e2e-{Guid.NewGuid()}")
             .Build();
 
-        fhirServerContainer = new ContainerBuilder("docker.io/hapiproject/hapi:v8.6.0-1@sha256:7611e4d6601f35dd8c223ed2ed47a2807be06976f71b2e5990e6541bbc90c16f")
+        fhirServerContainer = new ContainerBuilder(
+            "docker.io/hapiproject/hapi:v8.6.0-1@sha256:7611e4d6601f35dd8c223ed2ed47a2807be06976f71b2e5990e6541bbc90c16f"
+        )
             .WithName("fhir-server")
             .WithNetwork(containerNetwork)
             .WithExposedPort(8080)
