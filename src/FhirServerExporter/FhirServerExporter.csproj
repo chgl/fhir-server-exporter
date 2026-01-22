@@ -7,11 +7,11 @@
   <ItemGroup>
     <PackageReference Include="DuckDB.NET.Data.Full" Version="1.4.3" />
     <PackageReference Include="Duende.AccessTokenManagement" Version="4.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.2" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
     <PackageReference Include="prometheus-net" Version="8.2.1" />
-    <PackageReference Include="Hl7.Fhir.R4" Version="6.0.1" />
-    <PackageReference Include="Meziantou.Analyzer" Version="2.0.263">
+    <PackageReference Include="Hl7.Fhir.R4" Version="6.0.2" />
+    <PackageReference Include="Meziantou.Analyzer" Version="2.0.285">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
