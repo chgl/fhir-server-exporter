@@ -22,9 +22,9 @@
       },
       "FakeItEasy": {
         "type": "Direct",
-        "requested": "[9.0.0, )",
-        "resolved": "9.0.0",
-        "contentHash": "4p5WHWmjKz3WN9PxKMZpnbNoVckLwAEdevYHSdnvU4lnJ6Y/A7dDSB2k+IGYsmucGDv2onNVwbZ7CsGL0DQV2w==",
+        "requested": "[9.0.1, )",
+        "resolved": "9.0.1",
+        "contentHash": "cqM6hKjoAmjuh+GzKLX7gcqCDownqffmQ3KSBMdFowCZgwQMXpu1jlsJE649FsrMF5Ea5kYpuokGTuOaUrz/2w==",
         "dependencies": {
           "Castle.Core": "5.2.1"
         }
@@ -109,8 +109,8 @@
       },
       "Duende.AccessTokenManagement": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "lb0gRqyUVK6B1ToMsnPEIC5Cis38XKg9WvNeW1iKDGw98LHpF+Wxrf1fNI4waY4tBpPnhaibOVikF+amH7iMLA==",
+        "resolved": "4.1.1",
+        "contentHash": "AdCVOK6NUZZvErpOPW2yxK6Ml8qLPk59tmY7/2V82YSMW5fYvwY88IUilsBlPrITifJal6foYgOiRuDJq3WCmA==",
         "dependencies": {
           "Duende.IdentityModel": "8.0.0",
           "Microsoft.Extensions.Caching.Hybrid": "10.0.0",
@@ -743,7 +743,7 @@
         "type": "Project",
         "dependencies": {
           "DuckDB.NET.Data.Full": "[1.4.3, )",
-          "Duende.AccessTokenManagement": "[4.1.0, )",
+          "Duende.AccessTokenManagement": "[4.1.1, )",
           "Hl7.Fhir.R4": "[6.0.2, )",
           "Microsoft.Extensions.Hosting": "[10.0.2, )",
           "NetEscapades.Configuration.Yaml": "[3.1.0, )",
