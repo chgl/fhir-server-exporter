@@ -4,11 +4,11 @@
     "net10.0": {
       "DuckDB.NET.Data.Full": {
         "type": "Direct",
-        "requested": "[1.4.3, )",
-        "resolved": "1.4.3",
-        "contentHash": "tg1FWmePN+k536O1cx2VhKWa3xT7DXrcGg4kGgiSWQyur9UWwZ2i2YMpD+XVYv1ARozyy1Tt7OW2cMrNPoPj9g==",
+        "requested": "[1.4.4, )",
+        "resolved": "1.4.4",
+        "contentHash": "/xOA+GliGGToi9dA6MDnmADIy3h5WM4hLfGdQYl5EOiggaLG56TnKHkQRaedLjYMBPTFKTyP3kb9MEqjyv0u9Q==",
         "dependencies": {
-          "DuckDB.NET.Bindings.Full": "1.4.3"
+          "DuckDB.NET.Bindings.Full": "1.4.4"
         }
       },
       "Duende.AccessTokenManagement": {
@@ -110,8 +110,8 @@
       },
       "DuckDB.NET.Bindings.Full": {
         "type": "Transitive",
-        "resolved": "1.4.3",
-        "contentHash": "hZwm0zTKJ5HdUGKcase2JX52Lquyh7dCUFweECvR877QEA2gF8gSl3qrtb71BvRlgZ7pfjh0bRBCiAKOJMLE+A=="
+        "resolved": "1.4.4",
+        "contentHash": "R4CfP6PhjQvmWxOP5QXfKPWnwB2Dxn6qukdzpKGGVYV8KYvOpVzmsHq8Di54KiVgtxn9AeYyS0VeWF56DTRJ7Q=="
       },
       "Duende.IdentityModel": {
         "type": "Transitive",
