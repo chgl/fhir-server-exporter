@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.4](https://github.com/chgl/fhir-server-exporter/compare/v3.0.3...v3.0.4) (2026-02-10)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#457](https://github.com/chgl/fhir-server-exporter/issues/457)) ([4129d42](https://github.com/chgl/fhir-server-exporter/commit/4129d42101d43282c89e1dcc651b0cb14425f47b))
+* **deps:** update all non-major dependencies ([#464](https://github.com/chgl/fhir-server-exporter/issues/464)) ([19d45a1](https://github.com/chgl/fhir-server-exporter/commit/19d45a15bb1b96a29a349f288333965152a43796))
+* **deps:** update all non-major dependencies ([#466](https://github.com/chgl/fhir-server-exporter/issues/466)) ([0c05f46](https://github.com/chgl/fhir-server-exporter/commit/0c05f4697b6cea87b89cffd3febf871277c2f1f8))
+* **deps:** update dependency duckdb.net.data.full to 1.4.4 ([#460](https://github.com/chgl/fhir-server-exporter/issues/460)) ([791c34c](https://github.com/chgl/fhir-server-exporter/commit/791c34c3448cfb86073da798e0a505a64f809d12))
+* **deps:** update dependency meziantou.analyzer to 2.0.298 ([#463](https://github.com/chgl/fhir-server-exporter/issues/463)) ([d0ee178](https://github.com/chgl/fhir-server-exporter/commit/d0ee1789fb5a4e2215e6011cd00b5bf62f1cd459))
+* **deps:** update dotnet monorepo ([#462](https://github.com/chgl/fhir-server-exporter/issues/462)) ([71ccc6e](https://github.com/chgl/fhir-server-exporter/commit/71ccc6ecb3960a7529523b3bbdbb216342e86bf7))
+* **deps:** update github-actions ([#458](https://github.com/chgl/fhir-server-exporter/issues/458)) ([c188dc3](https://github.com/chgl/fhir-server-exporter/commit/c188dc3852f92c2bf486354beca0f20443c27ee2))
+* **deps:** update github-actions ([#461](https://github.com/chgl/fhir-server-exporter/issues/461)) ([840436f](https://github.com/chgl/fhir-server-exporter/commit/840436f2699bb9935253208868885ca1f49f2de7))
+* **deps:** update github-actions ([#465](https://github.com/chgl/fhir-server-exporter/issues/465)) ([b4d3826](https://github.com/chgl/fhir-server-exporter/commit/b4d38262fdd7c4c51f48a20632004240c57e0f8f))
+
 ## [3.0.3](https://github.com/chgl/fhir-server-exporter/compare/v3.0.2...v3.0.3) (2026-01-24)
 
 
