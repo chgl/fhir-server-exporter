@@ -1,6 +1,6 @@
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.2-noble-chiseled@sha256:a80315337f5ca01b98f7fa8b13048cbf74f55cc8a996745ff16e40a7cea268f5 AS runtime
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.3-noble-chiseled@sha256:3b0bd0fa83c55a73d85007ac6896b9e5ac61255d651be135b7d70622af56af78 AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 # /home/app user. We can't use an id > 10_000 here since we need the home directory to install the duckdb extensions to.
