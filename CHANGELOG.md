@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.6](https://github.com/chgl/fhir-server-exporter/compare/v3.0.5...v3.0.6) (2026-02-16)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency coverlet.collector to v8 ([#472](https://github.com/chgl/fhir-server-exporter/issues/472)) ([16ab378](https://github.com/chgl/fhir-server-exporter/commit/16ab37840befb9fa9b1f1b690353aa28297e18e0))
+* **deps:** update dependency coverlet.msbuild to v8 ([#473](https://github.com/chgl/fhir-server-exporter/issues/473)) ([964f805](https://github.com/chgl/fhir-server-exporter/commit/964f805bc88834f493287aab4f87ce98e2ec1510))
+* **deps:** update dependency meziantou.analyzer to 2.0.302 ([#474](https://github.com/chgl/fhir-server-exporter/issues/474)) ([ed78494](https://github.com/chgl/fhir-server-exporter/commit/ed78494c62ce7f5620326e1f0bd461fa8f6e80a0))
+* **deps:** update dependency meziantou.analyzer to v3 ([#476](https://github.com/chgl/fhir-server-exporter/issues/476)) ([b39a645](https://github.com/chgl/fhir-server-exporter/commit/b39a645a4fb44d5b6088cfb350f80dd1e6e8400e))
+
 ## [3.0.5](https://github.com/chgl/fhir-server-exporter/compare/v3.0.4...v3.0.5) (2026-02-14)
 
 
