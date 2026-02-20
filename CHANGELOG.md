@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.7](https://github.com/chgl/fhir-server-exporter/compare/v3.0.6...v3.0.7) (2026-02-20)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#477](https://github.com/chgl/fhir-server-exporter/issues/477)) ([fc98dfb](https://github.com/chgl/fhir-server-exporter/commit/fc98dfb13fcaad293e5cb9653230c7162d005e2e))
+
 ## [3.0.6](https://github.com/chgl/fhir-server-exporter/compare/v3.0.5...v3.0.6) (2026-02-16)
 
 
