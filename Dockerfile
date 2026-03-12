@@ -1,6 +1,6 @@
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.4-noble-chiseled@sha256:2789618e306b203f23331e922813106c356a349afad045653f35f9c82b061ffe AS runtime
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.5-noble-chiseled@sha256:1191b4891ae8b1a8184b2de52b2c6332dfb27c30b58d282632044357db63761d AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 # /home/app user. We can't use an id > 10_000 here since we need the home directory to install the duckdb extensions to.
@@ -10,7 +10,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.200-noble@sha256:ea13841f10c6c410a6df63c6c97ab549dfd2b5fcfff1c00186531ba30208117d AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:478b9038d187e5b5c29bfa8173ded5d29e864b5ad06102a12106380ee01e2e49 AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
