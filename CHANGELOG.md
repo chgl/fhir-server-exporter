@@ -1,5 +1,14 @@
 # Changelog
 
+## [3.0.10](https://github.com/chgl/fhir-server-exporter/compare/v3.0.9...v3.0.10) (2026-03-12)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/download-artifact action to v8.0.1 ([#490](https://github.com/chgl/fhir-server-exporter/issues/490)) ([b727514](https://github.com/chgl/fhir-server-exporter/commit/b727514b5203e355f5c70dd444a1d281e4d68935))
+* **deps:** update all non-major dependencies ([#488](https://github.com/chgl/fhir-server-exporter/issues/488)) ([af17326](https://github.com/chgl/fhir-server-exporter/commit/af17326933ee7f7c1b65d386bfe9052eb17acdb2))
+* **deps:** update all non-major dependencies ([#491](https://github.com/chgl/fhir-server-exporter/issues/491)) ([2bb76ff](https://github.com/chgl/fhir-server-exporter/commit/2bb76ff3de66c81685d31788ca04f1aca090497a))
+
 ## [3.0.9](https://github.com/chgl/fhir-server-exporter/compare/v3.0.8...v3.0.9) (2026-03-08)
 
 
