@@ -10,15 +10,15 @@
       },
       "coverlet.collector": {
         "type": "Direct",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "EMkj/2F6n6IVPrvGYkqzGJs6phuGGkq6N+E7KW9rNyzNxXbwQ1KfMqWyXNf9nCNEQOA6IjFwmOLvkriwKE7Orw=="
+        "requested": "[8.0.1, )",
+        "resolved": "8.0.1",
+        "contentHash": "heVQl5tKYnnIDYlR1QMVGueYH6iriZTcZB6AjDczQNwZzxkjDIt9C84Pt4cCiZYrbo7jkZOYGWbs6Lo9wAtVLg=="
       },
       "coverlet.msbuild": {
         "type": "Direct",
-        "requested": "[8.0.0, )",
-        "resolved": "8.0.0",
-        "contentHash": "2Kd7SC2da4J8eSAUUHevT2VII53teLGIbbGXmdbdmCL/8g89BFCDAe+Qm3mF2h7nkuFxjK1SXYQxLvHd4gMm2Q=="
+        "requested": "[8.0.1, )",
+        "resolved": "8.0.1",
+        "contentHash": "YkP5ZQBSwDno2uUdND/x0tmyLOacCxvKwSN2iEvndpw7OzBaH7STi2xeA06KKkyYHN0m76qDK8Pdz1CVdAPoeg=="
       },
       "FakeItEasy": {
         "type": "Direct",
@@ -40,9 +40,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.22, )",
-        "resolved": "3.0.22",
-        "contentHash": "90M4v6pWhG9X+4SKf6G+lUsk9D5PysTV2QhSCEyHmjbyOxjs6DxUjYxdLLWdPPO5k5+b67a8T+feWpZkno+h7g=="
+        "requested": "[3.0.25, )",
+        "resolved": "3.0.25",
+        "contentHash": "8mzoeC5EWI7E5gY5he3qLomGmIMT5EBFVdLRSOzwD2XikHTtVihIL+7YrrlJ1iWqshIrdmQnOxH/OIY1Bk98ww=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
