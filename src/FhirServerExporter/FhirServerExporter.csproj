@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="DuckDB.NET.Data.Full" Version="1.5.0" />
-    <PackageReference Include="Duende.AccessTokenManagement" Version="4.1.2" />
+    <PackageReference Include="Duende.AccessTokenManagement" Version="4.2.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.5" />
     <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
     <PackageReference Include="prometheus-net" Version="8.2.1" />
