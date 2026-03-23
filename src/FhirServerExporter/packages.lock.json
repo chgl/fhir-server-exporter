@@ -13,11 +13,11 @@
       },
       "Duende.AccessTokenManagement": {
         "type": "Direct",
-        "requested": "[4.1.2, )",
-        "resolved": "4.1.2",
-        "contentHash": "ckmtOyc+4VCaEjznVG4mHXwIG+U0KLJNl9+yQdOCB6XsOUVckt58c+sTfz0a53iLGS8ipzRMS/WwarjEo9IZHw==",
+        "requested": "[4.2.0, )",
+        "resolved": "4.2.0",
+        "contentHash": "m40Zn23ex+HTIN2eACfej8zLSJUUt7Vh9xKsvOIouBhhoAzQzV+hgXaVn9Pvzq8P2guhet7eRmpqqaCpI0lQFg==",
         "dependencies": {
-          "Duende.IdentityModel": "8.0.1",
+          "Duende.IdentityModel": "8.1.0",
           "Microsoft.Extensions.Caching.Hybrid": "10.0.0",
           "Microsoft.Extensions.Http": "10.0.4",
           "Microsoft.Extensions.Http.Resilience": "10.0.0",
@@ -115,8 +115,8 @@
       },
       "Duende.IdentityModel": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "P3bNPAiyYh15VuDZP/xE7Y8ohhQloiW2KdiBzzJh3m26sPQJ3Wuxj4ur6X+A9m0qhdwx2kLeh4so0a2nEslHmw=="
+        "resolved": "8.1.0",
+        "contentHash": "ncmC2ISg0efTqY74xI6gaLKlv4mErT5ruYK262dkSnAv07g9qYC2++q7AWWs1FyP2c0YZ6LvUtcoJmxZqYyVrA=="
       },
       "Fhir.Metrics": {
         "type": "Transitive",
