@@ -17,7 +17,7 @@ SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
 # duckdb cli used to install the delta lake and s3 extensions
 # renovate: datasource=github-releases depName=duckdb/duckdb
-ARG DUCKDB_VERSION=1.5.0
+ARG DUCKDB_VERSION=1.5.1
 ENV DUCKDB_URL="https://github.com/duckdb/duckdb/releases/download/v${DUCKDB_VERSION}/duckdb_cli-linux-amd64.gz"
 RUN <<EOF
 curl -LSs "$DUCKDB_URL" | gunzip > duckdb
