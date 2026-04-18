@@ -1,5 +1,30 @@
 # Changelog
 
+## [3.0.10](https://github.com/chgl/fhir-server-exporter/compare/v3.0.9...v3.0.10) (2026-04-18)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/create-github-app-token action to v3 ([#494](https://github.com/chgl/fhir-server-exporter/issues/494)) ([1c0add5](https://github.com/chgl/fhir-server-exporter/commit/1c0add50d0000d0501ec5cb1e0f94928f1d63325))
+* **deps:** update actions/download-artifact action to v8.0.1 ([#490](https://github.com/chgl/fhir-server-exporter/issues/490)) ([b727514](https://github.com/chgl/fhir-server-exporter/commit/b727514b5203e355f5c70dd444a1d281e4d68935))
+* **deps:** update all non-major dependencies ([#488](https://github.com/chgl/fhir-server-exporter/issues/488)) ([af17326](https://github.com/chgl/fhir-server-exporter/commit/af17326933ee7f7c1b65d386bfe9052eb17acdb2))
+* **deps:** update all non-major dependencies ([#491](https://github.com/chgl/fhir-server-exporter/issues/491)) ([2bb76ff](https://github.com/chgl/fhir-server-exporter/commit/2bb76ff3de66c81685d31788ca04f1aca090497a))
+* **deps:** update all non-major dependencies ([#492](https://github.com/chgl/fhir-server-exporter/issues/492)) ([7313c5d](https://github.com/chgl/fhir-server-exporter/commit/7313c5d746705fa65e46b52625001a29f0d5a212))
+* **deps:** update all non-major dependencies ([#495](https://github.com/chgl/fhir-server-exporter/issues/495)) ([f85184e](https://github.com/chgl/fhir-server-exporter/commit/f85184e2366d8e8dcfc5dc876788d993291d85f3))
+* **deps:** update all non-major dependencies ([#498](https://github.com/chgl/fhir-server-exporter/issues/498)) ([a8d25f5](https://github.com/chgl/fhir-server-exporter/commit/a8d25f5bc92e2cfdfeff66b87375277092a5f825))
+* **deps:** update all non-major dependencies ([#502](https://github.com/chgl/fhir-server-exporter/issues/502)) ([198025c](https://github.com/chgl/fhir-server-exporter/commit/198025c18e189479ddf09dd8675916f42ad34231))
+* **deps:** update all non-major dependencies ([#505](https://github.com/chgl/fhir-server-exporter/issues/505)) ([481ed3f](https://github.com/chgl/fhir-server-exporter/commit/481ed3f548839fd34cc5cfd0f1e3022c7f85af2e))
+* **deps:** update dependency coverlet.collector to v10 ([#506](https://github.com/chgl/fhir-server-exporter/issues/506)) ([4426cdd](https://github.com/chgl/fhir-server-exporter/commit/4426cdda514a4092a8362bc5966ab2b0d98d46c2))
+* **deps:** update dependency coverlet.msbuild to v10 ([#507](https://github.com/chgl/fhir-server-exporter/issues/507)) ([fe8e112](https://github.com/chgl/fhir-server-exporter/commit/fe8e1121fa978ffd9b75faee7ed086deea08e918))
+* **deps:** update dependency meziantou.analyzer to 3.0.26 ([#496](https://github.com/chgl/fhir-server-exporter/issues/496)) ([461b938](https://github.com/chgl/fhir-server-exporter/commit/461b938964e886360aac0af2dc2d001706499628))
+* **deps:** update dependency meziantou.analyzer to 3.0.34 ([#500](https://github.com/chgl/fhir-server-exporter/issues/500)) ([f058375](https://github.com/chgl/fhir-server-exporter/commit/f0583752a0e9e4ffd8b7e60dc30f35bf2e326059))
+* **deps:** update dependency meziantou.analyzer to 3.0.35 ([#501](https://github.com/chgl/fhir-server-exporter/issues/501)) ([90f8bbd](https://github.com/chgl/fhir-server-exporter/commit/90f8bbd8df770d09f5d08a29f8e51cd0bfe8f921))
+* **deps:** update docker.io/curlimages/curl:8.19.0 docker digest to 9a6f6a1 ([#504](https://github.com/chgl/fhir-server-exporter/issues/504)) ([9bd4dac](https://github.com/chgl/fhir-server-exporter/commit/9bd4dacdf8beb1a9031413a1fc48262b9c36e07a))
+* **deps:** update github-actions ([#493](https://github.com/chgl/fhir-server-exporter/issues/493)) ([c564779](https://github.com/chgl/fhir-server-exporter/commit/c564779d3f7569faa407852aa569ff5c2725aa68))
+* **deps:** update github-actions ([#497](https://github.com/chgl/fhir-server-exporter/issues/497)) ([f3f9bcf](https://github.com/chgl/fhir-server-exporter/commit/f3f9bcf63b48765033a0c9c6ff56dc142593301c))
+* **deps:** update github-actions ([#499](https://github.com/chgl/fhir-server-exporter/issues/499)) ([eb9da49](https://github.com/chgl/fhir-server-exporter/commit/eb9da4911958ad543b75bbeade3c2861df06257b))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:10.0.201-noble docker digest to 127d7d4 ([#503](https://github.com/chgl/fhir-server-exporter/issues/503)) ([2aedc3d](https://github.com/chgl/fhir-server-exporter/commit/2aedc3d274c0b1a533f03c72ef7275e8a124cf34))
+
 ## [3.0.9](https://github.com/chgl/fhir-server-exporter/compare/v3.0.8...v3.0.9) (2026-03-08)
 
 
