@@ -1,6 +1,6 @@
 # kics false positive "Missing User Instruction": <https://docs.kics.io/latest/queries/dockerfile-queries/fd54f200-402c-4333-a5a4-36ef6709af2f/>
 # kics-scan ignore-line
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.5-noble-chiseled@sha256:1191b4891ae8b1a8184b2de52b2c6332dfb27c30b58d282632044357db63761d AS runtime
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/aspnet:10.0.6-noble-chiseled@sha256:5472257bbea16e7749bc6a402caa02880fabf744c088af7e73045324c560296e AS runtime
 WORKDIR /opt/fhir-server-exporter
 EXPOSE 9797/tcp
 # /home/app user. We can't use an id > 10_000 here since we need the home directory to install the duckdb extensions to.
@@ -10,14 +10,14 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.201-noble@sha256:127d7d4d601ae26b8e04c54efb37e9ce8766931bded0ee59fcd799afd21d6850 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.202-noble@sha256:adc02be8b87957d07208a4a3e51775935b33bad3317de8c45b1e67357b4c073b AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
 # duckdb cli used to install the delta lake and s3 extensions
 # renovate: datasource=github-releases depName=duckdb/duckdb
-ARG DUCKDB_VERSION=1.5.1
+ARG DUCKDB_VERSION=1.5.2
 ENV DUCKDB_URL="https://github.com/duckdb/duckdb/releases/download/v${DUCKDB_VERSION}/duckdb_cli-linux-amd64.gz"
 RUN <<EOF
 curl -LSs "$DUCKDB_URL" | gunzip > duckdb
