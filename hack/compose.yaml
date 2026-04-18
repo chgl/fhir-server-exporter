@@ -1,6 +1,6 @@
 services:
   prometheus:
-    image: quay.io/prometheus/prometheus:v3.11.1@sha256:b90bb266161f865086537611c6c3199cedf41dea470d8ba71ce20ba0fad79ea9
+    image: quay.io/prometheus/prometheus:v3.11.2@sha256:cd37346c974517be59bd528c43cfff51727fb75393df0ad8d10ce10013a047b6
     ports:
       - "127.0.0.1:9090:9090"
     volumes:
@@ -14,7 +14,7 @@ services:
       - "127.0.0.1:8082:8080"
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.6.0@sha256:b0e5dbced1775de4d629f103c0a9cfc057decc62ce8d3cb1c54f8849a6c6eb62
+    image: quay.io/keycloak/keycloak:26.6.1@sha256:26ae26445475f7fac5f90ee138b1bdb64324f5815fb16133ffdbdb122d97c4d8
     environment:
       KEYCLOAK_ADMIN: admin
       # kics-scan ignore-line
