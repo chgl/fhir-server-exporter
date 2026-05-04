@@ -118,7 +118,7 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithName($"fhir-server-exporter-lakehouse-{Guid.NewGuid()}")
             .WithNetwork(containerNetwork)
             .WithExposedPort(9797)
-            .WithPortBinding(9797, true)
+            .WithPortBinding(9797, assignRandomHostPort: true)
             .WithEnvironment("FhirLakehouse__DatabasePath", $"s3://{MinioBucketName}/default")
             .WithEnvironment("FhirLakehouse__S3__Endpoint", "minio:9000")
             .WithEnvironment("FhirLakehouse__S3__Region", "us-east-1")
@@ -138,22 +138,25 @@ public class LakehouseContainerTests : IAsyncLifetime
     [Fact]
     public async Task GetExporterMetricsEndpoint_WithLakehouseCounter_ShouldSucceed()
     {
-        using var client = new HttpClient();
-        var response = await client.GetAsync(
-            $"http://localhost:{fhirServerExporterContainer.GetMappedPublicPort(9797)}/metrics"
+        var metricsUrl =
+            $"http://localhost:{fhirServerExporterContainer.GetMappedPublicPort(9797)}/metrics";
+
+        // Wait a bit for the exporter to perform the first fetch and update the metrics
+        await Task.Delay(TimeSpan.FromSeconds(10));
+
+        var body = await WaitForMetricsContainsAsync(
+            metricsUrl,
+            "fhir_resource_count",
+            timeout: TimeSpan.FromSeconds(60)
         );
-
-        response.EnsureSuccessStatusCode();
-
-        response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
-
-        var body = await response.Content.ReadAsStringAsync();
 
         // Matches a Prometheus line like: fhir_resource_count{type="Patient",server_name=""} 10
         var match = ResourceCountPatientRegex.Match(body);
         match
             .Success.Should()
-            .BeTrue("the metrics response should contain a fhir_resource_count line for Patient");
+            .BeTrue(
+                $"the metrics response should contain a fhir_resource_count line for Patient {body}"
+            );
         double.Parse(match.Groups["count"].Value, System.Globalization.CultureInfo.InvariantCulture)
             .Should()
             .Be(
@@ -220,5 +223,47 @@ public class LakehouseContainerTests : IAsyncLifetime
             minioContainer.DisposeAsync().AsTask()
         );
         await containerNetwork.DeleteAsync();
+    }
+
+    private static async Task<string> WaitForMetricsContainsAsync(
+        string metricsUrl,
+        string metricName,
+        TimeSpan? timeout = null,
+        TimeSpan? delay = null
+    )
+    {
+        timeout ??= TimeSpan.FromSeconds(120);
+        delay ??= TimeSpan.FromSeconds(5);
+
+        using var client = new HttpClient();
+        var deadline = DateTime.UtcNow.Add(timeout.Value);
+
+        while (DateTime.UtcNow < deadline)
+        {
+            try
+            {
+                var response = await client.GetAsync(metricsUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = await response.Content.ReadAsStringAsync();
+
+                    if (body.Contains(metricName))
+                    {
+                        return body;
+                    }
+                }
+            }
+            catch (HttpRequestException)
+            {
+                // Endpoint may not be ready yet, will retry
+            }
+
+            await Task.Delay(delay.Value);
+        }
+
+        throw new TimeoutException(
+            $"Metric '{metricName}' not found in metrics response after {timeout.Value.TotalSeconds} seconds"
+        );
     }
 }
