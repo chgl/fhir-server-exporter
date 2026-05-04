@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.RegularExpressions;
 using AwesomeAssertions;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -16,6 +17,15 @@ public class LakehouseContainerTests : IAsyncLifetime
 #pragma warning restore RCS1181
 
     private const string MinioBucketName = "fhir";
+
+    /// <summary>Patient.ndjson contains exactly 10 patient resources.</summary>
+    private const int ExpectedPatientCount = 10;
+
+    private static readonly Regex ResourceCountPatientRegex = new(
+        @"fhir_resource_count\{[^}]*type=""Patient""[^}]*\}\s+(?<count>\d+(?:\.\d+)?)",
+        RegexOptions.Multiline | RegexOptions.ExplicitCapture,
+        TimeSpan.FromSeconds(1)
+    );
 
     private readonly INetwork containerNetwork;
     private readonly IContainer minioContainer;
@@ -61,7 +71,7 @@ public class LakehouseContainerTests : IAsyncLifetime
             ?? throw new InvalidOperationException(
                 "Could not determine the repository root from the assembly location."
             );
-        var synthDataPath = Path.Combine(repoRoot.FullName, "hack", "synthea-fhir-sample-data");
+        var synthDataPath = Path.Join(repoRoot.FullName, "hack", "synthea-fhir-sample-data");
 
         pathlingContainer = new ContainerBuilder(
             "docker.io/aehrc/pathling:7.2.0@sha256:31b5ef50294e55136ae2278c2d0b8435a96a15b5da040ec785effb51875d08d3"
@@ -136,6 +146,21 @@ public class LakehouseContainerTests : IAsyncLifetime
         response.EnsureSuccessStatusCode();
 
         response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+
+        var body = await response.Content.ReadAsStringAsync();
+
+        // Matches a Prometheus line like: fhir_resource_count{type="Patient",server_name=""} 10
+        var match = ResourceCountPatientRegex.Match(body);
+        match
+            .Success.Should()
+            .BeTrue("the metrics response should contain a fhir_resource_count line for Patient");
+        double.Parse(match.Groups["count"].Value, System.Globalization.CultureInfo.InvariantCulture)
+            .Should()
+            .Be(
+                ExpectedPatientCount,
+                "Patient.ndjson contains exactly {0} resources",
+                ExpectedPatientCount
+            );
     }
 
     public async Task InitializeAsync()
