@@ -46,25 +46,22 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithCleanUp(cleanUp: true)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilHttpRequestIsSucceeded(r =>
-                        r.ForPort(9000).ForPath("/minio/health/live")
-                    )
+                    .UntilHttpRequestIsSucceeded(r => r.ForPort(9000).ForPath("/minio/health/live"))
             )
             .Build();
 
-        var assemblyDir = Path.GetDirectoryName(typeof(LakehouseContainerTests).Assembly.Location)!;
-        var synthDataPath = Path.GetFullPath(
-            Path.Combine(
-                assemblyDir,
-                "..",
-                "..",
-                "..",
-                "..",
-                "..",
-                "hack",
-                "synthea-fhir-sample-data"
-            )
+        // Navigate from bin/Debug/net10.0 up to the repository root and then into hack/synthea-fhir-sample-data.
+        // Using DirectoryInfo.Parent avoids the Path.Combine overload that silently drops earlier
+        // arguments when a later segment is an absolute path.
+        var assemblyDir = new DirectoryInfo(
+            Path.GetDirectoryName(typeof(LakehouseContainerTests).Assembly.Location)!
         );
+        var repoRoot =
+            assemblyDir.Parent?.Parent?.Parent?.Parent?.Parent
+            ?? throw new InvalidOperationException(
+                "Could not determine the repository root from the assembly location."
+            );
+        var synthDataPath = Path.Combine(repoRoot.FullName, "hack", "synthea-fhir-sample-data");
 
         pathlingContainer = new ContainerBuilder(
             "docker.io/aehrc/pathling:7.2.0@sha256:31b5ef50294e55136ae2278c2d0b8435a96a15b5da040ec785effb51875d08d3"
@@ -99,9 +96,7 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithCleanUp(cleanUp: true)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilHttpRequestIsSucceeded(r =>
-                        r.ForPort(8080).ForPath("/fhir/metadata")
-                    )
+                    .UntilHttpRequestIsSucceeded(r => r.ForPort(8080).ForPath("/fhir/metadata"))
             )
             .Build();
 
@@ -150,13 +145,11 @@ public class LakehouseContainerTests : IAsyncLifetime
         await minioContainer.StartAsync();
 
         // Create the S3 bucket using the MinIO Client (mc) bundled in the MinIO image
-        var createBucketResult = await minioContainer.ExecAsync(
-            [
-                "/bin/bash",
-                "-c",
-                $"/usr/bin/mc alias set minio http://localhost:9000 {MinioRootUser} {MinioRootPassword} && /usr/bin/mc mb --ignore-existing minio/{MinioBucketName}",
-            ]
-        );
+        var createBucketResult = await minioContainer.ExecAsync([
+            "/bin/bash",
+            "-c",
+            $"/usr/bin/mc alias set minio http://localhost:9000 {MinioRootUser} {MinioRootPassword} && /usr/bin/mc mb --ignore-existing minio/{MinioBucketName}",
+        ]);
         createBucketResult.ExitCode.Should().Be(0);
 
         await pathlingContainer.StartAsync();
@@ -179,7 +172,11 @@ public class LakehouseContainerTests : IAsyncLifetime
             """;
 
         using var httpClient = new HttpClient { Timeout = TimeSpan.FromMinutes(10) };
-        using var content = new StringContent(ImportRequest, Encoding.UTF8, "application/fhir+json");
+        using var content = new StringContent(
+            ImportRequest,
+            Encoding.UTF8,
+            "application/fhir+json"
+        );
         var pathlingPort = pathlingContainer.GetMappedPublicPort(8080);
         var importResponse = await httpClient.PostAsync(
             $"http://localhost:{pathlingPort}/fhir/$import",
