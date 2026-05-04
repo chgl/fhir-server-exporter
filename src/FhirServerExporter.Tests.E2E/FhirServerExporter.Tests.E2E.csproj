@@ -2,7 +2,7 @@
   <ItemGroup>
     <PackageReference Include="Hl7.Fhir.R4" Version="6.1.1" />
     <PackageReference Include="FakeItEasy" Version="9.0.1" />
-    <PackageReference Include="FluentAssertions" Version="8.9.0" />
+    <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.5.1" />
     <PackageReference Include="Testcontainers" Version="4.11.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
