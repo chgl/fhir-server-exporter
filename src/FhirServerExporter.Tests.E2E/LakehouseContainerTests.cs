@@ -157,17 +157,17 @@ public class LakehouseContainerTests : IAsyncLifetime
         // Import FHIR resources into Pathling to create Delta Lake tables in the MinIO bucket
         const string ImportRequest = """
             {
-              "resourceType": "Parameters",
-              "parameter": [
-                {
-                  "name": "source",
-                  "part": [
-                    { "name": "resourceType", "valueCode": "Patient" },
-                    { "name": "url", "valueUrl": "file:///tmp/import/Patient.ndjson" },
-                    { "name": "mode", "valueCode": "overwrite" }
-                  ]
-                }
-              ]
+                "resourceType": "Parameters",
+                "parameter": [
+                    {
+                        "name": "source",
+                        "part": [
+                            { "name": "resourceType", "valueCode": "Patient" },
+                            { "name": "url", "valueUrl": "file:///tmp/import/Patient.ndjson" },
+                            { "name": "mode", "valueCode": "overwrite" }
+                        ]
+                    }
+                ]
             }
             """;
 
