@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.11](https://github.com/chgl/fhir-server-exporter/compare/v3.0.10...v3.0.11) (2026-05-03)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#509](https://github.com/chgl/fhir-server-exporter/issues/509)) ([347ce4c](https://github.com/chgl/fhir-server-exporter/commit/347ce4c63ace53f33efd907e6e6ef37680a286ac))
+* **deps:** update dependency meziantou.analyzer to 3.0.61 ([#513](https://github.com/chgl/fhir-server-exporter/issues/513)) ([12fcc24](https://github.com/chgl/fhir-server-exporter/commit/12fcc240a193b40be28868baea2684884dd84a66))
+* **deps:** update docker.io/curlimages/curl:8.19.0 docker digest to c03110c ([#510](https://github.com/chgl/fhir-server-exporter/issues/510)) ([703c236](https://github.com/chgl/fhir-server-exporter/commit/703c2367359ce347eb75545f9e3826df439d0ce3))
+* **deps:** update github-actions ([#508](https://github.com/chgl/fhir-server-exporter/issues/508)) ([642da14](https://github.com/chgl/fhir-server-exporter/commit/642da14c9902e3cf12ca1ee98a0af837aae4da03))
+* **deps:** update googleapis/release-please-action action to v5 ([#511](https://github.com/chgl/fhir-server-exporter/issues/511)) ([d7faa7e](https://github.com/chgl/fhir-server-exporter/commit/d7faa7e5d60367206280df22c2068523663fa2d8))
+
 ## [3.0.10](https://github.com/chgl/fhir-server-exporter/compare/v3.0.9...v3.0.10) (2026-04-18)
 
 
