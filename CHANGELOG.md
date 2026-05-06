@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.0.12](https://github.com/chgl/fhir-server-exporter/compare/v3.0.11...v3.0.12) (2026-05-06)
+
+
+### Miscellaneous Chores
+
+* **deps:** resolute base images ([#519](https://github.com/chgl/fhir-server-exporter/issues/519)) ([1c011a5](https://github.com/chgl/fhir-server-exporter/commit/1c011a591d3aa8a63e22b9127417162e81c74402))
+* **deps:** update dependency meziantou.analyzer to 3.0.70 ([#518](https://github.com/chgl/fhir-server-exporter/issues/518)) ([338451e](https://github.com/chgl/fhir-server-exporter/commit/338451e04b2441a5e9b488c020431e6a4c8dd60d))
+
 ## [3.0.11](https://github.com/chgl/fhir-server-exporter/compare/v3.0.10...v3.0.11) (2026-05-03)
 
 
