@@ -4,6 +4,7 @@
   "kubernetes": {
     "managerFilePatterns": ["/hack/k8s/.+\\.yaml$/"]
   },
+  "automerge": true,
   "customManagers": [
     {
       "customType": "regex",
