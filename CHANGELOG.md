@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.13](https://github.com/chgl/fhir-server-exporter/compare/v3.0.12...v3.0.13) (2026-05-18)
+
+
+### Miscellaneous Chores
+
+* **deps:** update all non-major dependencies ([#524](https://github.com/chgl/fhir-server-exporter/issues/524)) ([58b1663](https://github.com/chgl/fhir-server-exporter/commit/58b16634423750d7efe0c5476b7ee78380b9ce7f))
+* **deps:** update all non-major dependencies to 10.0.1 ([#529](https://github.com/chgl/fhir-server-exporter/issues/529)) ([042d833](https://github.com/chgl/fhir-server-exporter/commit/042d833271f1ae032b702800a32d4d3364fdfc5f))
+* **deps:** update dependency meziantou.analyzer to 3.0.77 ([#522](https://github.com/chgl/fhir-server-exporter/issues/522)) ([a595aa3](https://github.com/chgl/fhir-server-exporter/commit/a595aa34d9b38775d25fd667222b07ac7ae5a13c))
+* **deps:** update dependency meziantou.analyzer to 3.0.85 ([#526](https://github.com/chgl/fhir-server-exporter/issues/526)) ([9ab8c2e](https://github.com/chgl/fhir-server-exporter/commit/9ab8c2e00aa6efc8c258e8822fb17b7fbdb18456))
+* **deps:** update dependency meziantou.analyzer to 3.0.86 ([#530](https://github.com/chgl/fhir-server-exporter/issues/530)) ([78dc430](https://github.com/chgl/fhir-server-exporter/commit/78dc4307566012da0f723774989f1bb2ea89c761))
+* **deps:** update dependency meziantou.analyzer to 3.0.87 ([#531](https://github.com/chgl/fhir-server-exporter/issues/531)) ([949e362](https://github.com/chgl/fhir-server-exporter/commit/949e3629443da9f517869f313470192a219de20e))
+* **deps:** update github-actions ([#514](https://github.com/chgl/fhir-server-exporter/issues/514)) ([41600e0](https://github.com/chgl/fhir-server-exporter/commit/41600e048f363a658d97bacb1761abdae7336487))
+* **deps:** update github-actions ([#525](https://github.com/chgl/fhir-server-exporter/issues/525)) ([27404b4](https://github.com/chgl/fhir-server-exporter/commit/27404b443c89d65d7ca42afd6c933c087710dd4c))
+* **deps:** update github/codeql-action action to v4.35.5 ([#528](https://github.com/chgl/fhir-server-exporter/issues/528)) ([970df08](https://github.com/chgl/fhir-server-exporter/commit/970df08afe379a59bf76ac0b7330a3aab61686e3))
+* **deps:** update step-security/harden-runner action to v2.19.3 ([#527](https://github.com/chgl/fhir-server-exporter/issues/527)) ([0c3ca31](https://github.com/chgl/fhir-server-exporter/commit/0c3ca3126b759181aaf0c82bae5e2c5afcf07045))
+* **renovate:** automerge ([b18ae25](https://github.com/chgl/fhir-server-exporter/commit/b18ae259abfc4cfa1b859c2894a1652928128b84))
+
 ## [3.0.12](https://github.com/chgl/fhir-server-exporter/compare/v3.0.11...v3.0.12) (2026-05-06)
 
 
