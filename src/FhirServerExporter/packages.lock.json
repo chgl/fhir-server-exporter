@@ -38,9 +38,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.86, )",
-        "resolved": "3.0.86",
-        "contentHash": "VEtSWk6HbnVpHlSOjiHj/T2B0BFs8biYZ04dEHd4Rxq7bG82Q0hmakXybgInazy8joknKom6OIx9UZnmZ/eWFw=="
+        "requested": "[3.0.87, )",
+        "resolved": "3.0.87",
+        "contentHash": "6fKYtFKVZh63Iok2Bdb692UNcGFLraXZfr1PE0uvaQ1WuRSCE1m6LyjW+XnM+CRCzD5Mf2IrvraHR9eZfFt2VQ=="
       },
       "Microsoft.Extensions.Hosting": {
         "type": "Direct",
