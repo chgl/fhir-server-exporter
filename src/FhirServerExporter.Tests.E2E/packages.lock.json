@@ -34,9 +34,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.96, )",
-        "resolved": "3.0.96",
-        "contentHash": "xcQZqPIwwyWEpGXCAIsELAslk2N5XuzHQPaAAkKr64ev5Wtp9rYQ9xD00N1QBtBEhe705viPUbgiEbubYRUgbA=="
+        "requested": "[3.0.98, )",
+        "resolved": "3.0.98",
+        "contentHash": "rs1eAdHccwRCf0o4cYU7hA6d4CX4KTFkrmAuUvpjwO/QLVYptDibDkKWCzGf+BJXrws1xzYXPjrpblQAC+tAdQ=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
