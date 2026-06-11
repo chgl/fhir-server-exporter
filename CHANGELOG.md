@@ -1,5 +1,39 @@
 # Changelog
 
+## [3.0.15](https://github.com/chgl/fhir-server-exporter/compare/v3.0.14...v3.0.15) (2026-06-11)
+
+
+### Miscellaneous Chores
+
+* **deps:** update actions/setup-dotnet action to v5.3.0 ([#554](https://github.com/chgl/fhir-server-exporter/issues/554)) ([0e90acc](https://github.com/chgl/fhir-server-exporter/commit/0e90accafec65da4abca1e1f26c80411cb3311c6))
+* **deps:** update all non-major dependencies ([#566](https://github.com/chgl/fhir-server-exporter/issues/566)) ([98b2bf4](https://github.com/chgl/fhir-server-exporter/commit/98b2bf4aab2c837bf85683622eb936e87bb0a903))
+* **deps:** update all non-major dependencies ([#570](https://github.com/chgl/fhir-server-exporter/issues/570)) ([2d1f325](https://github.com/chgl/fhir-server-exporter/commit/2d1f325abe29aec0c9863626e8792ae829957241))
+* **deps:** update all non-major dependencies to v1.3.0 ([#564](https://github.com/chgl/fhir-server-exporter/issues/564)) ([2203c62](https://github.com/chgl/fhir-server-exporter/commit/2203c62d7835e3d47f6ca5709b5cb9d54898e188))
+* **deps:** update all non-major dependencies to v26.6.3 ([#563](https://github.com/chgl/fhir-server-exporter/issues/563)) ([b96df86](https://github.com/chgl/fhir-server-exporter/commit/b96df8690910819429a93a420061dcbdb186404a))
+* **deps:** update all non-major dependencies to v4.8.1 ([#571](https://github.com/chgl/fhir-server-exporter/issues/571)) ([288459b](https://github.com/chgl/fhir-server-exporter/commit/288459bc7999d0ef6b3d3d358bcd8458bc801b3f))
+* **deps:** update chgl/.github action to v1.11.34 ([#559](https://github.com/chgl/fhir-server-exporter/issues/559)) ([ebc812a](https://github.com/chgl/fhir-server-exporter/commit/ebc812ada62869bf8940076a9bdaf7838ecbe008))
+* **deps:** update dependency dotnet-outdated-tool to v4.7.2 ([#556](https://github.com/chgl/fhir-server-exporter/issues/556)) ([f0fee39](https://github.com/chgl/fhir-server-exporter/commit/f0fee39905ac366c604a6fa44031846ecb735ba1))
+* **deps:** update dependency dotnet-outdated-tool to v4.8.0 ([#557](https://github.com/chgl/fhir-server-exporter/issues/557)) ([e19ca4b](https://github.com/chgl/fhir-server-exporter/commit/e19ca4b2b542d9850876543e3b9d3617225c7ec7))
+* **deps:** update dependency meziantou.analyzer to 3.0.94 ([#547](https://github.com/chgl/fhir-server-exporter/issues/547)) ([bb368cb](https://github.com/chgl/fhir-server-exporter/commit/bb368cbbb89f706a6cd3a27e9122fc24270145f0))
+* **deps:** update dependency meziantou.analyzer to 3.0.95 ([#550](https://github.com/chgl/fhir-server-exporter/issues/550)) ([5e8776a](https://github.com/chgl/fhir-server-exporter/commit/5e8776a6de2b722c37bc7faea81283844b06cbe9))
+* **deps:** update dependency meziantou.analyzer to 3.0.96 ([#551](https://github.com/chgl/fhir-server-exporter/issues/551)) ([e459d17](https://github.com/chgl/fhir-server-exporter/commit/e459d17fbfe7a9b8e5a51ba3acbe6585b1737609))
+* **deps:** update dependency meziantou.analyzer to 3.0.98 ([#553](https://github.com/chgl/fhir-server-exporter/issues/553)) ([e1fad1b](https://github.com/chgl/fhir-server-exporter/commit/e1fad1b29ef3c001b3c0d6261972c8872427958f))
+* **deps:** update dependency microsoft.net.test.sdk to 18.6.0 ([#549](https://github.com/chgl/fhir-server-exporter/issues/549)) ([ae7b4ef](https://github.com/chgl/fhir-server-exporter/commit/ae7b4ef353dea1b8a95409aedf90d9c192f881c7))
+* **deps:** update dotnet monorepo ([#567](https://github.com/chgl/fhir-server-exporter/issues/567)) ([4f3af26](https://github.com/chgl/fhir-server-exporter/commit/4f3af26e5c8b08a0f80e933ba752e7f59dd8431a))
+* **deps:** update dotnet monorepo ([#568](https://github.com/chgl/fhir-server-exporter/issues/568)) ([147b850](https://github.com/chgl/fhir-server-exporter/commit/147b850f35a270d3d79e440fb11b81e512eb5bba))
+* **deps:** update github-actions to v1.11.35 ([#565](https://github.com/chgl/fhir-server-exporter/issues/565)) ([e3b5e24](https://github.com/chgl/fhir-server-exporter/commit/e3b5e24b3340e03bc5a1697c6c4ff34250f95a83))
+* **deps:** update github-actions to v4.36.2 ([#562](https://github.com/chgl/fhir-server-exporter/issues/562)) ([11dbeac](https://github.com/chgl/fhir-server-exporter/commit/11dbeace2ff2ce290a3e6f677f5325b6b7957c8e))
+* **deps:** update github-actions to v6.0.3 ([#561](https://github.com/chgl/fhir-server-exporter/issues/561)) ([768eeb5](https://github.com/chgl/fhir-server-exporter/commit/768eeb5ccf12b31e9b1886196548d593a8a22cc1))
+* **deps:** update github/codeql-action action to v4.36.1 ([#560](https://github.com/chgl/fhir-server-exporter/issues/560)) ([adbb60d](https://github.com/chgl/fhir-server-exporter/commit/adbb60dc2ba8f4a579a4b82f9e9193ced40f7924))
+* **deps:** update imjasonh/setup-crane action to v0.6 ([#558](https://github.com/chgl/fhir-server-exporter/issues/558)) ([ff181b5](https://github.com/chgl/fhir-server-exporter/commit/ff181b598581a38e7ff71e18d19440e7f86edfec))
+* **deps:** update quay.io/keycloak/keycloak:26.6.2 docker digest to f9ba7b2 ([#552](https://github.com/chgl/fhir-server-exporter/issues/552)) ([80b3b78](https://github.com/chgl/fhir-server-exporter/commit/80b3b78bf0a8574ad8ebc6f891934ad7b060eb25))
+* **deps:** update quay.io/prometheus/prometheus docker tag to v3.12.0 ([#555](https://github.com/chgl/fhir-server-exporter/issues/555)) ([0972b6c](https://github.com/chgl/fhir-server-exporter/commit/0972b6ce94ee6a5f96ef3b874aa7497eea1c273f))
+
+
+### CI/CD
+
+* fix zizmor complaints ([#569](https://github.com/chgl/fhir-server-exporter/issues/569)) ([5ac1b8e](https://github.com/chgl/fhir-server-exporter/commit/5ac1b8ece17c7c2ed17b423f80fb2757399c047c))
+
 ## [3.0.14](https://github.com/chgl/fhir-server-exporter/compare/v3.0.13...v3.0.14) (2026-05-24)
 
 
