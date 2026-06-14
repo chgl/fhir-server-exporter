@@ -248,7 +248,7 @@ public class LakehouseContainerTests : IAsyncLifetime
                 {
                     var body = await response.Content.ReadAsStringAsync();
 
-                    if (body.Contains(metricName))
+                    if (body.Contains(metricName, StringComparison.InvariantCultureIgnoreCase))
                     {
                         return body;
                     }
