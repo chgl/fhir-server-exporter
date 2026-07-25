@@ -15,22 +15,27 @@ WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
 
-# duckdb cli used to install the delta lake and s3 extensions
-# renovate: datasource=github-releases depName=duckdb/duckdb
-ARG DUCKDB_VERSION=1.5.5
-ENV DUCKDB_URL="https://github.com/duckdb/duckdb/releases/download/v${DUCKDB_VERSION}/duckdb_cli-linux-amd64.gz"
+COPY src/Directory.Build.props ./src/
+
+COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
+COPY src/FhirServerExporter/packages.lock.json ./src/FhirServerExporter/
+
+# duckdb cli used to install the delta lake and s3 extensions.
+# DuckDB.NET.Bindings.Full always mirrors the exact DuckDB core release it embeds natively (e.g.
+# "1.4.4-alpha.2" / "1.1.0.1" still wrap duckdb v1.4.4 / v1.1.0), so the version to fetch here is
+# derived from the pinned DuckDB.NET.Data.Full package reference below rather than tracked as a
+# second, independently-drifting value. Otherwise the CLI-installed extensions land in a
+# ~/.duckdb/extensions/<version>/ folder the app's embedded native lib never looks in.
 RUN <<EOF
-curl -LSs "$DUCKDB_URL" | gunzip > duckdb
+NUGET_VERSION=$(grep -oP 'DuckDB\.NET\.Data\.Full"\s+Version="\K[^"]+' src/FhirServerExporter/FhirServerExporter.csproj)
+DUCKDB_VERSION=$(echo "$NUGET_VERSION" | cut -d'-' -f1 | cut -d'.' -f1-3)
+echo "Resolved DuckDB core version $DUCKDB_VERSION from DuckDB.NET.Data.Full $NUGET_VERSION"
+curl -LSs "https://github.com/duckdb/duckdb/releases/download/v${DUCKDB_VERSION}/duckdb_cli-linux-amd64.gz" | gunzip > duckdb
 chmod +x ./duckdb
 mv ./duckdb /usr/local/bin/duckdb
 duckdb --version
 duckdb -c "INSTALL delta; INSTALL httpfs; INSTALL aws;"
 EOF
-
-COPY src/Directory.Build.props ./src/
-
-COPY src/FhirServerExporter/FhirServerExporter.csproj ./src/FhirServerExporter/
-COPY src/FhirServerExporter/packages.lock.json ./src/FhirServerExporter/
 
 RUN dotnet restore --locked-mode /p:ContinuousIntegrationBuild=true src/FhirServerExporter/FhirServerExporter.csproj
 
