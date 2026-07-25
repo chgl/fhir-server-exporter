@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.17](https://github.com/chgl/fhir-server-exporter/compare/v3.0.16...v3.0.17) (2026-07-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** resolve DuckDB version from DuckDB.NET.Data.Full package ([#627](https://github.com/chgl/fhir-server-exporter/issues/627)) ([f0d8d2c](https://github.com/chgl/fhir-server-exporter/commit/f0d8d2c44e9cd8c30a5befa9a9527aecac03de9e))
+
 ## [3.0.16](https://github.com/chgl/fhir-server-exporter/compare/v3.0.15...v3.0.16) (2026-07-23)
 
 
