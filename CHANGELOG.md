@@ -1,5 +1,20 @@
 # Changelog
 
+## [3.0.19](https://github.com/chgl/fhir-server-exporter/compare/v3.0.18...v3.0.19) (2026-08-21)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency awesomeassertions to 9.6.0 ([#681](https://github.com/chgl/fhir-server-exporter/issues/681)) ([c3e72da](https://github.com/chgl/fhir-server-exporter/commit/c3e72da45ee58b66afe311c621ab1d879732dd2c))
+* **deps:** update dependency meziantou.analyzer to 3.0.170 ([#677](https://github.com/chgl/fhir-server-exporter/issues/677)) ([7870002](https://github.com/chgl/fhir-server-exporter/commit/7870002c7db726922476889eaf7e6444b77c0168))
+* **deps:** update dependency meziantou.analyzer to 3.0.172 ([#679](https://github.com/chgl/fhir-server-exporter/issues/679)) ([361f886](https://github.com/chgl/fhir-server-exporter/commit/361f8868318951a2c4122b240d6c5869ddf672e1))
+* **deps:** update dependency meziantou.analyzer to 3.0.173 ([#680](https://github.com/chgl/fhir-server-exporter/issues/680)) ([61d585f](https://github.com/chgl/fhir-server-exporter/commit/61d585f19baa0630cb19959286326d3f59e17c42))
+* **deps:** update dependency meziantou.analyzer to 3.0.176 ([#682](https://github.com/chgl/fhir-server-exporter/issues/682)) ([cf50648](https://github.com/chgl/fhir-server-exporter/commit/cf5064899fe21481a8676512c4f8d48cdf4c24b4))
+* **deps:** update dependency meziantou.analyzer to 3.0.177 ([#684](https://github.com/chgl/fhir-server-exporter/issues/684)) ([7e8d7ce](https://github.com/chgl/fhir-server-exporter/commit/7e8d7ce677566568b9ef827ff8c28107d72b5486))
+* **deps:** update dependency roslynator.analyzers to v5 ([#686](https://github.com/chgl/fhir-server-exporter/issues/686)) ([9a2ca1f](https://github.com/chgl/fhir-server-exporter/commit/9a2ca1f7033b8498a88bc2776683030a6f466951))
+* **deps:** update github/codeql-action action to v4.37.8 ([#685](https://github.com/chgl/fhir-server-exporter/issues/685)) ([0a4209d](https://github.com/chgl/fhir-server-exporter/commit/0a4209d862257e80c429b49dd6d6e60331b681d0))
+* **deps:** update quay.io/keycloak/keycloak:26.7.2 docker digest to 8313305 ([#683](https://github.com/chgl/fhir-server-exporter/issues/683)) ([28f3613](https://github.com/chgl/fhir-server-exporter/commit/28f3613bdd03b12ce4117b6acac62baea3b0f650))
+
 ## [3.0.18](https://github.com/chgl/fhir-server-exporter/compare/v3.0.17...v3.0.18) (2026-08-19)
 
 
