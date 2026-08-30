@@ -40,9 +40,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.194, )",
-        "resolved": "3.0.194",
-        "contentHash": "mhGE9ibZXpdL76b7xyf6IqoK5CLcfSRy8YK/38sgmmy2yuOGYXsBg22LePF9hdsBZs8m8+4QSKhvAfnt7rAM9w=="
+        "requested": "[3.0.195, )",
+        "resolved": "3.0.195",
+        "contentHash": "+OzBSeXP1nXzQiLOIvZp6G9ldu8QkCTZjyVBAbn7dEBnEeWvDLUW1Py61cQ12OsYf45YpZ6Pel1rQ+cedWQR2Q=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
