@@ -34,9 +34,9 @@
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.217, )",
-        "resolved": "3.0.217",
-        "contentHash": "Kcg5Hc95bc7gEWlQDxjc19RTS7QofrwET1Kqvk3kwkbh9pPoXzoG3Vlz/kbGxQfPAXDssVfJdpvgyYUUKAsSnQ=="
+        "requested": "[3.0.218, )",
+        "resolved": "3.0.218",
+        "contentHash": "AMMB+NvGeitFGBJOqF+te1oJHUjdmY7mlqMPbkB0X3gkjSged5ckKtXFS2swExvOq16Bh+TN5ySmlzxZLOmyHQ=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -65,9 +65,9 @@
       },
       "Testcontainers": {
         "type": "Direct",
-        "requested": "[4.14.0, )",
-        "resolved": "4.14.0",
-        "contentHash": "ojuBi91xcMsR6vnFuNsQDWU9tlZlrtmqy95VPNWVVnh24GiwFL/WMnVmb6bRv8LqovtnKPJN9cpmH1k02Z4ZoA==",
+        "requested": "[4.15.0, )",
+        "resolved": "4.15.0",
+        "contentHash": "8tCZKMm++C/9dHIr8lsE1iDBIBmthbo2XlGFDr4gorT1vgZrJwU36fNkCGuX7h7V39rpQoTK/aG+FhJz3jhY3A==",
         "dependencies": {
           "Docker.DotNet.Enhanced": "4.3.3",
           "Docker.DotNet.Enhanced.X509": "4.3.3",
