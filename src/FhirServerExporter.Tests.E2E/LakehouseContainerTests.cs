@@ -10,16 +10,19 @@ namespace FhirServerExporter.Tests.E2E;
 
 public class LakehouseContainerTests : IAsyncLifetime
 {
-    private const string MinioRootUser = "admin";
+    private const string S3AccessKey = "admin";
 
 #pragma warning disable RCS1181 // trailing comment on member declaration needed for gitleaks suppression
-    private const string MinioRootPassword = "miniopass"; // gitleaks:allow
+    private const string S3SecretKey = "seaweedpass"; // gitleaks:allow
 #pragma warning restore RCS1181
 
-    private const string MinioBucketName = "fhir";
+    private const string S3BucketName = "fhir";
 
     /// <summary>Patient.ndjson contains exactly 10 patient resources.</summary>
     private const int ExpectedPatientCount = 10;
+
+    private const int SeaweedFsS3Port = 8333;
+    private const int SeaweedFsFilerPort = 8888;
 
     private static readonly Regex ResourceCountPatientRegex = new(
         @"fhir_resource_count\{[^}]*type=""Patient""[^}]*\}\s+(?<count>\d+(?:\.\d+)?)",
@@ -28,7 +31,7 @@ public class LakehouseContainerTests : IAsyncLifetime
     );
 
     private readonly INetwork containerNetwork;
-    private readonly IContainer minioContainer;
+    private readonly IContainer seaweedFsContainer;
     private readonly IContainer pathlingContainer;
     private readonly IContainer fhirServerExporterContainer;
 
@@ -38,25 +41,33 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithName($"fhir-lakehouse-e2e-{Guid.NewGuid()}")
             .Build();
 
-        minioContainer = new ContainerBuilder(
-            "docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e"
+        // "mini" runs the master, volume, filer, and S3 servers in a single process and
+        // "-bucket" creates the bucket on startup, so no separate bucket setup step is needed.
+        // Without an S3 config file, SeaweedFS uses the AWS_* environment variables as the
+        // admin credentials. The filer serves the buckets as directories, so requesting the
+        // bucket path there waits for the bucket to actually exist.
+        seaweedFsContainer = new ContainerBuilder(
+            "docker.io/chrislusf/seaweedfs:4.47@sha256:ce9e796f1fe6f06968f4c04bdaf8f678dad9c8acdfef3d244133d71bfa6bf882"
         )
-            .WithName($"minio-{Guid.NewGuid()}")
+            .WithName($"seaweedfs-{Guid.NewGuid()}")
             .WithNetwork(containerNetwork)
-            .WithNetworkAliases("minio")
-            .WithExposedPort(9000)
-            .WithPortBinding(9000, true)
-            .WithCommand("server", "/data", "--console-address", ":9001")
-            .WithEnvironment("MINIO_UPDATE", "off")
-            .WithEnvironment("MINIO_CALLHOME_ENABLE", "off")
-            .WithEnvironment("MINIO_ROOT_USER", MinioRootUser)
-            .WithEnvironment("MINIO_ROOT_PASSWORD", MinioRootPassword)
-            .WithEnvironment("MINIO_BROWSER", "on")
-            .WithEnvironment("MINIO_SCHEME", "http")
+            .WithNetworkAliases("seaweedfs")
+            .WithExposedPort(SeaweedFsS3Port)
+            .WithPortBinding(SeaweedFsS3Port, assignRandomHostPort: true)
+            .WithExposedPort(SeaweedFsFilerPort)
+            .WithPortBinding(SeaweedFsFilerPort, assignRandomHostPort: true)
+            .WithCommand("mini", "-dir=/data", $"-bucket={S3BucketName}")
+            .WithEnvironment("AWS_ACCESS_KEY_ID", S3AccessKey)
+            .WithEnvironment("AWS_SECRET_ACCESS_KEY", S3SecretKey)
             .WithCleanUp(cleanUp: true)
             .WithWaitStrategy(
                 Wait.ForUnixContainer()
-                    .UntilHttpRequestIsSucceeded(r => r.ForPort(9000).ForPath("/minio/health/live"))
+                    .UntilHttpRequestIsSucceeded(r =>
+                        r.ForPort(SeaweedFsS3Port).ForPath("/healthz")
+                    )
+                    .UntilHttpRequestIsSucceeded(r =>
+                        r.ForPort(SeaweedFsFilerPort).ForPath($"/buckets/{S3BucketName}/")
+                    )
             )
             .Build();
 
@@ -81,7 +92,7 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithNetworkAliases("pathling")
             .WithExposedPort(8080)
             .WithPortBinding(8080, true)
-            .WithEnvironment("pathling.storage.warehouseUrl", $"s3a://{MinioBucketName}")
+            .WithEnvironment("pathling.storage.warehouseUrl", $"s3a://{S3BucketName}")
             .WithEnvironment("pathling.storage.cacheDatasets", "false")
             .WithEnvironment("pathling.query.cacheResults", "false")
             .WithEnvironment("pathling.import.allowableSources", "file:///tmp/import/")
@@ -89,9 +100,9 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithEnvironment("pathling.terminology.serverUrl", "http://localhost:8080/i-dont-exist")
             .WithEnvironment("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
             .WithEnvironment("fs.s3a.path.style.access", "true")
-            .WithEnvironment("fs.s3a.endpoint", "http://minio:9000")
-            .WithEnvironment("fs.s3a.access.key", MinioRootUser)
-            .WithEnvironment("fs.s3a.secret.key", MinioRootPassword)
+            .WithEnvironment("fs.s3a.endpoint", $"http://seaweedfs:{SeaweedFsS3Port}")
+            .WithEnvironment("fs.s3a.access.key", S3AccessKey)
+            .WithEnvironment("fs.s3a.secret.key", S3SecretKey)
             .WithEnvironment("spark.sql.parquet.compression.codec", "zstd")
             .WithEnvironment("spark.io.compression.codec", "zstd")
             .WithEnvironment("parquet.compression.codec.zstd.level", "9")
@@ -119,13 +130,13 @@ public class LakehouseContainerTests : IAsyncLifetime
             .WithNetwork(containerNetwork)
             .WithExposedPort(9797)
             .WithPortBinding(9797, assignRandomHostPort: true)
-            .WithEnvironment("FhirLakehouse__DatabasePath", $"s3://{MinioBucketName}/default")
-            .WithEnvironment("FhirLakehouse__S3__Endpoint", "minio:9000")
+            .WithEnvironment("FhirLakehouse__DatabasePath", $"s3://{S3BucketName}/default")
+            .WithEnvironment("FhirLakehouse__S3__Endpoint", $"seaweedfs:{SeaweedFsS3Port}")
             .WithEnvironment("FhirLakehouse__S3__Region", "us-east-1")
             .WithEnvironment("FhirLakehouse__S3__UrlStyle", "path")
             .WithEnvironment("FhirLakehouse__S3__UseSsl", "false")
-            .WithEnvironment("AWS_ACCESS_KEY_ID", MinioRootUser)
-            .WithEnvironment("AWS_SECRET_ACCESS_KEY", MinioRootPassword)
+            .WithEnvironment("AWS_ACCESS_KEY_ID", S3AccessKey)
+            .WithEnvironment("AWS_SECRET_ACCESS_KEY", S3SecretKey)
             .WithEnvironment("FetchIntervalSeconds", "5")
             .WithCleanUp(cleanUp: true)
             .WithWaitStrategy(
@@ -170,19 +181,11 @@ public class LakehouseContainerTests : IAsyncLifetime
     {
         await containerNetwork.CreateAsync();
 
-        await minioContainer.StartAsync();
-
-        // Create the S3 bucket using the MinIO Client (mc) bundled in the MinIO image
-        var createBucketResult = await minioContainer.ExecAsync([
-            "/bin/bash",
-            "-c",
-            $"/usr/bin/mc alias set minio http://localhost:9000 {MinioRootUser} {MinioRootPassword} && /usr/bin/mc mb --ignore-existing minio/{MinioBucketName}",
-        ]);
-        createBucketResult.ExitCode.Should().Be(0);
+        await seaweedFsContainer.StartAsync();
 
         await pathlingContainer.StartAsync();
 
-        // Import FHIR resources into Pathling to create Delta Lake tables in the MinIO bucket
+        // Import FHIR resources into Pathling to create Delta Lake tables in the SeaweedFS bucket
         const string ImportRequest = """
             {
                 "resourceType": "Parameters",
@@ -220,7 +223,7 @@ public class LakehouseContainerTests : IAsyncLifetime
         await Task.WhenAll(
             fhirServerExporterContainer.DisposeAsync().AsTask(),
             pathlingContainer.DisposeAsync().AsTask(),
-            minioContainer.DisposeAsync().AsTask()
+            seaweedFsContainer.DisposeAsync().AsTask()
         );
         await containerNetwork.DeleteAsync();
     }

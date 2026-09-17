@@ -23,28 +23,32 @@ services:
     ports:
       - "127.0.0.1:8083:8080"
 
-  minio:
-    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
+  seaweedfs:
+    image: docker.io/chrislusf/seaweedfs:4.47@sha256:ce9e796f1fe6f06968f4c04bdaf8f678dad9c8acdfef3d244133d71bfa6bf882
     cap_drop:
       - ALL
     privileged: false
     ipc: none
     security_opt:
       - "no-new-privileges:true"
-    command: server /data --console-address ":9001"
+    # the image's entrypoint chowns /data and drops to the seaweed user via su-exec,
+    # which needs capabilities we dropped above, so start as that user right away
+    user: "1000:1000"
+    command: ["mini", "-dir=/data", "-bucket=fhir"]
     environment:
-      MINIO_UPDATE: "off"
-      MINIO_CALLHOME_ENABLE: "off"
-      MINIO_ROOT_USER: "admin"
-      MINIO_BROWSER: "on"
+      # admin credentials for the S3 API, picked up when no s3 config file is given
+      AWS_ACCESS_KEY_ID: "admin"
       # kics-scan ignore-line
-      MINIO_ROOT_PASSWORD: "miniopass" # gitleaks:allow
-      MINIO_SCHEME: "http"
+      AWS_SECRET_ACCESS_KEY: "seaweedpass" # gitleaks:allow
     ports:
-      - "127.0.0.1:9001:9001"
-      - "127.0.0.1:9000:9000"
+      # S3 API
+      - "127.0.0.1:8333:8333"
+      # filer
+      - "127.0.0.1:8888:8888"
+      # master UI
+      - "127.0.0.1:9333:9333"
 
-  wait-for-minio:
+  wait-for-seaweedfs:
     image: docker.io/curlimages/curl:8.22.0@sha256:58adaa4e8dca9c988bae2aba4ab3434a0bb2da16bbe3f92dec39ec7785166777
     ipc: none
     security_opt:
@@ -54,35 +58,19 @@ services:
     privileged: false
     restart: "no"
     environment:
-      AWS_ENDPOINT_URL: http://minio:9000
+      # the filer exposes the buckets as directories, so this also waits for the
+      # fhir bucket created by the seaweedfs container on startup
+      BUCKET_URL: http://seaweedfs:8888/buckets/fhir/
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
-        until [ "$(curl -s -o /dev/null -L -w "%{http_code}" "$$AWS_ENDPOINT_URL/minio/health/live")" == "200" ]; do
-            echo "$(date): Waiting for minio server @ $$AWS_ENDPOINT_URL to be up";
+        until [ "$(curl -s -o /dev/null -L -w "%{http_code}" "$$BUCKET_URL")" == "200" ]; do
+            echo "$(date): Waiting for the seaweedfs bucket @ $$BUCKET_URL to be created";
             sleep 5;
         done;
     depends_on:
-      minio:
+      seaweedfs:
         condition: service_started
-
-  create-bucket:
-    image: docker.io/minio/minio:RELEASE.2025-09-07T16-13-09Z@sha256:14cea493d9a34af32f524e538b8346cf79f3321eff8e708c1e2960462bd8936e
-    restart: on-failure
-    cap_drop:
-      - ALL
-    privileged: false
-    ipc: none
-    security_opt:
-      - "no-new-privileges:true"
-    entrypoint: ["/bin/bash", "-c"]
-    command:
-      - |
-        /usr/bin/mc alias set minio http://minio:9000 admin miniopass;
-        /usr/bin/mc mb --ignore-existing minio/fhir;
-    depends_on:
-      wait-for-minio:
-        condition: service_completed_successfully
 
   pathling:
     image: docker.io/aehrc/pathling:7.2.0@sha256:31b5ef50294e55136ae2278c2d0b8435a96a15b5da040ec785effb51875d08d3
@@ -114,9 +102,9 @@ services:
       pathling.terminology.serverUrl: http://localhost:8080/i-dont-exist
       fs.s3a.impl: "org.apache.hadoop.fs.s3a.S3AFileSystem"
       fs.s3a.path.style.access: "true"
-      fs.s3a.endpoint: "http://minio:9000"
+      fs.s3a.endpoint: "http://seaweedfs:8333"
       fs.s3a.access.key: "admin"
-      fs.s3a.secret.key: "miniopass"
+      fs.s3a.secret.key: "seaweedpass"
       spark.sql.parquet.compression.codec: "zstd"
       spark.io.compression.codec: "zstd"
       parquet.compression.codec.zstd.level: "9"
@@ -126,7 +114,7 @@ services:
     volumes:
       - $PWD/synthea-fhir-sample-data/:/tmp/import/:ro
     depends_on:
-      create-bucket:
+      wait-for-seaweedfs:
         condition: service_completed_successfully
 
   wait-for-pathling:
