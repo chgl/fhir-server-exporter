@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.0.20](https://github.com/chgl/fhir-server-exporter/compare/v3.0.19...v3.0.20) (2026-09-19)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency meziantou.analyzer to 3.0.260 ([#736](https://github.com/chgl/fhir-server-exporter/issues/736)) ([354d82e](https://github.com/chgl/fhir-server-exporter/commit/354d82e82ecf1468fbc6d762e78166d4f05aa628))
+* **deps:** update dependency meziantou.analyzer to 3.0.263 ([#740](https://github.com/chgl/fhir-server-exporter/issues/740)) ([6973b91](https://github.com/chgl/fhir-server-exporter/commit/6973b91d10a9d8377e375376380d0dc8cbc59192))
+* **deps:** update dependency ubuntu to v26 ([#739](https://github.com/chgl/fhir-server-exporter/issues/739)) ([f6cf045](https://github.com/chgl/fhir-server-exporter/commit/f6cf045be9115a11bc22980e10c81850776e5294))
+* **deps:** update github/codeql-action action to v4.38.1 ([#737](https://github.com/chgl/fhir-server-exporter/issues/737)) ([74fc18d](https://github.com/chgl/fhir-server-exporter/commit/74fc18dd8db5155a185d9621dd42736d5a6ce89c))
+
 ## [3.0.19](https://github.com/chgl/fhir-server-exporter/compare/v3.0.18...v3.0.19) (2026-09-17)
 
 
