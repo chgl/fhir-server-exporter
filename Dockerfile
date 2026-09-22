@@ -10,7 +10,7 @@ ENV ASPNETCORE_ENVIRONMENT="Production" \
     ASPNETCORE_URLS="http://*:9797" \
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.401-resolute@sha256:793caf401a92b9aa50731c5d5739a4251ed3317d3c50694bb7474708f3b1f841 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0.401-resolute@sha256:d818bb3014d94172e93820d985130135870bd1760f02588a61263a85c966860e AS build
 WORKDIR "/build"
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 SHELL ["/bin/bash", "-eo", "pipefail", "-c"]
