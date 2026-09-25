@@ -1,5 +1,28 @@
 # Changelog
 
+## [3.0.20](https://github.com/chgl/fhir-server-exporter/compare/v3.0.19...v3.0.20) (2026-09-25)
+
+
+### Miscellaneous Chores
+
+* **deps:** update chgl/.github action to v1.11.59 ([#743](https://github.com/chgl/fhir-server-exporter/issues/743)) ([4e0eba1](https://github.com/chgl/fhir-server-exporter/commit/4e0eba1388a4e36fd1e1a968e37bb657d62ba224))
+* **deps:** update chgl/.github action to v1.11.60 ([#744](https://github.com/chgl/fhir-server-exporter/issues/744)) ([6f9906f](https://github.com/chgl/fhir-server-exporter/commit/6f9906ffb83ead6902b380300623ba994bdb0e9f))
+* **deps:** update dependency meziantou.analyzer to 3.0.260 ([#736](https://github.com/chgl/fhir-server-exporter/issues/736)) ([354d82e](https://github.com/chgl/fhir-server-exporter/commit/354d82e82ecf1468fbc6d762e78166d4f05aa628))
+* **deps:** update dependency meziantou.analyzer to 3.0.263 ([#740](https://github.com/chgl/fhir-server-exporter/issues/740)) ([6973b91](https://github.com/chgl/fhir-server-exporter/commit/6973b91d10a9d8377e375376380d0dc8cbc59192))
+* **deps:** update dependency meziantou.analyzer to 3.0.264 ([#741](https://github.com/chgl/fhir-server-exporter/issues/741)) ([ba107ed](https://github.com/chgl/fhir-server-exporter/commit/ba107ed05d2a944d314d3e6f183c867d389b4997))
+* **deps:** update dependency meziantou.analyzer to 3.0.266 ([#742](https://github.com/chgl/fhir-server-exporter/issues/742)) ([d011a62](https://github.com/chgl/fhir-server-exporter/commit/d011a62edd1137ef0e30b183c1483741622cf027))
+* **deps:** update dependency meziantou.analyzer to 3.0.267 ([#745](https://github.com/chgl/fhir-server-exporter/issues/745)) ([592a431](https://github.com/chgl/fhir-server-exporter/commit/592a431043653c4397ac8cd8327acf3af435289a))
+* **deps:** update dependency meziantou.analyzer to 3.0.270 ([#747](https://github.com/chgl/fhir-server-exporter/issues/747)) ([fce2e5f](https://github.com/chgl/fhir-server-exporter/commit/fce2e5f5f0430d5673ba31f2e500fddf169eb251))
+* **deps:** update dependency meziantou.analyzer to 3.0.271 ([#749](https://github.com/chgl/fhir-server-exporter/issues/749)) ([71d7f04](https://github.com/chgl/fhir-server-exporter/commit/71d7f04f22982bf5d593abba5e3f5ed6bc028751))
+* **deps:** update dependency meziantou.analyzer to 3.0.283 ([#750](https://github.com/chgl/fhir-server-exporter/issues/750)) ([ab9fb27](https://github.com/chgl/fhir-server-exporter/commit/ab9fb27e7f39cb52215a6169c6a5f223af82914c))
+* **deps:** update dependency meziantou.analyzer to 3.0.290 ([#751](https://github.com/chgl/fhir-server-exporter/issues/751)) ([ed7e799](https://github.com/chgl/fhir-server-exporter/commit/ed7e799bd054feb119c2b936af219991f56ae384))
+* **deps:** update dependency ubuntu to v26 ([#739](https://github.com/chgl/fhir-server-exporter/issues/739)) ([f6cf045](https://github.com/chgl/fhir-server-exporter/commit/f6cf045be9115a11bc22980e10c81850776e5294))
+* **deps:** update github/codeql-action action to v4.38.1 ([#737](https://github.com/chgl/fhir-server-exporter/issues/737)) ([74fc18d](https://github.com/chgl/fhir-server-exporter/commit/74fc18dd8db5155a185d9621dd42736d5a6ce89c))
+* **deps:** update github/codeql-action action to v4.38.2 ([#752](https://github.com/chgl/fhir-server-exporter/issues/752)) ([dce1fb7](https://github.com/chgl/fhir-server-exporter/commit/dce1fb799470acd58c06f494b29757c4d8036bfb))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:10.0.401-resolute docker digest to 793caf4 ([#746](https://github.com/chgl/fhir-server-exporter/issues/746)) ([266987c](https://github.com/chgl/fhir-server-exporter/commit/266987cd104772d0b2f31a0d7f825e49efd34373))
+* **deps:** update mcr.microsoft.com/dotnet/sdk:10.0.401-resolute docker digest to d818bb3 ([#748](https://github.com/chgl/fhir-server-exporter/issues/748)) ([c6ea98f](https://github.com/chgl/fhir-server-exporter/commit/c6ea98f591fa8839cad3005009356a5c395733f0))
+* **deps:** update quay.io/prometheus/prometheus docker tag to v3.15.0 ([#753](https://github.com/chgl/fhir-server-exporter/issues/753)) ([483acd4](https://github.com/chgl/fhir-server-exporter/commit/483acd421ed5a7e4bc9aa0b24386bf9d853d2b4c))
+
 ## [3.0.19](https://github.com/chgl/fhir-server-exporter/compare/v3.0.18...v3.0.19) (2026-09-17)
 
 
