@@ -25,18 +25,18 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[6.7.0, )",
-        "resolved": "6.7.0",
-        "contentHash": "LN9YLVQUaryQaGU019xWbuxgah1hcJ/ky8ZBDbXs5RoNgQZe5BPeCJtQ0jWrCJ/ur0WWpshk4AioakjHelnhiQ==",
+        "requested": "[6.8.0, )",
+        "resolved": "6.8.0",
+        "contentHash": "035L7rdwPDzkKbd6aiDMVko6lGzqys+w+h6Iwmpqna3dsC4HUeDUV49mhtBQxfkUH8KuQzxOd4h+i9hNuIEbgg==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "6.7.0"
+          "Hl7.Fhir.Conformance": "6.8.0"
         }
       },
       "Meziantou.Analyzer": {
         "type": "Direct",
-        "requested": "[3.0.312, )",
-        "resolved": "3.0.312",
-        "contentHash": "lRRGluh3rSFXfxVsIzx4o5DCoxpUpwma6qc8LgI9DjsQx0t6CgS9KZiFKtTUllAHSsrPw/um0FR9gPJMTkeb3Q=="
+        "requested": "[3.0.315, )",
+        "resolved": "3.0.315",
+        "contentHash": "adL/ZRvZdqwVnpIcfTKC+soGLj4H+6mV7lcLSA79FkAjJd5bVUnKF6geq+b1w9uz3Dtj1VGJkGCYS0WKtxNEyQ=="
       },
       "Microsoft.NET.Test.Sdk": {
         "type": "Direct",
@@ -174,8 +174,8 @@
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "6.7.0",
-        "contentHash": "6TYs6hBnrQdfjivQL2dc/TFVbR9P9QklPgOiC85iZCT+aJ+/d416VoU4Yrt3TklO1gMXjjImveypWES34koZqQ==",
+        "resolved": "6.8.0",
+        "contentHash": "0EgvzJLIiT0/Jo9GvWMrqFUjIE+UVTgpu5TczUr39YF/qltC30yNovYwQBQUSCz0lGPWBe8kcEPiCvzA2+fU/g==",
         "dependencies": {
           "Fhir.Metrics": "1.4.0",
           "Microsoft.Extensions.Caching.Memory": "10.0.9",
@@ -185,10 +185,10 @@
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "6.7.0",
-        "contentHash": "HXlrbVcMlwuOmUWxH1j1uNNf0Qs3E4KCbtJrysKoL2ksdvWalnqeN/GC2+VUFXipPUfNCula5fQ8LKMioDlNag==",
+        "resolved": "6.8.0",
+        "contentHash": "5qqcuGF0jm1yW1FaDJdxRzKGOwEkn+b4LT1IYbgtP9zzZMXYhZ0nHFZy8Cz9TwvxOOQmw5VixGfCMCVUsDog5g==",
         "dependencies": {
-          "Hl7.Fhir.Base": "6.7.0"
+          "Hl7.Fhir.Base": "6.8.0"
         }
       },
       "Microsoft.CodeCoverage": {
