@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.21](https://github.com/chgl/fhir-server-exporter/compare/v3.0.20...v3.0.21) (2026-11-14)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency meziantou.analyzer to 3.0.326 ([#824](https://github.com/chgl/fhir-server-exporter/issues/824)) ([450928b](https://github.com/chgl/fhir-server-exporter/commit/450928b3c0a7ff318ae18fa0c6cf56d6162f2592))
+* **deps:** update dependency meziantou.analyzer to 3.0.330 ([#827](https://github.com/chgl/fhir-server-exporter/issues/827)) ([60d2c23](https://github.com/chgl/fhir-server-exporter/commit/60d2c23b56cab9a0fc438f5b744dc33a95e5297e))
+* **deps:** update dependency meziantou.analyzer to 3.0.339 ([60d2c23](https://github.com/chgl/fhir-server-exporter/commit/60d2c23b56cab9a0fc438f5b744dc33a95e5297e))
+* **deps:** update dependency meziantou.analyzer to 3.0.340 ([#828](https://github.com/chgl/fhir-server-exporter/issues/828)) ([40a5820](https://github.com/chgl/fhir-server-exporter/commit/40a58203875df68c05a5b80d44125793f767a812))
+* **deps:** update quay.io/keycloak/keycloak:26.8.2 docker digest to c68e286 ([#826](https://github.com/chgl/fhir-server-exporter/issues/826)) ([9d91779](https://github.com/chgl/fhir-server-exporter/commit/9d9177914088cff5fdf6f285dc0d629c16d70a02))
+
 ## [3.0.20](https://github.com/chgl/fhir-server-exporter/compare/v3.0.19...v3.0.20) (2026-11-11)
 
 
