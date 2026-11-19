@@ -31,11 +31,11 @@
       },
       "Hl7.Fhir.R4": {
         "type": "Direct",
-        "requested": "[6.8.0, )",
-        "resolved": "6.8.0",
-        "contentHash": "035L7rdwPDzkKbd6aiDMVko6lGzqys+w+h6Iwmpqna3dsC4HUeDUV49mhtBQxfkUH8KuQzxOd4h+i9hNuIEbgg==",
+        "requested": "[6.9.0, )",
+        "resolved": "6.9.0",
+        "contentHash": "BaYIzWXP0cZb+5NGQsQDbTXf3c/jYI/S574HmtKzBpNT3QpvdYPpmIo4YgTo/oJ1MpHQuaKUUBEQCYz5XJmiBQ==",
         "dependencies": {
-          "Hl7.Fhir.Conformance": "6.8.0"
+          "Hl7.Fhir.Conformance": "6.9.0"
         }
       },
       "Meziantou.Analyzer": {
@@ -138,25 +138,25 @@
       },
       "Fhir.Metrics": {
         "type": "Transitive",
-        "resolved": "1.4.0",
-        "contentHash": "SxpoHR46khpzQG4rOX+rJduPeuH3h9rEpEoguraOft24E0tMnnDk8CuTMVF3fMudsdyo5addKBf+wGngWHwgOQ=="
+        "resolved": "1.4.1",
+        "contentHash": "WM7OjV9WSY8K/qDRAt6ZyZOMMj/CWpw6LzvbsUA3NK5YDQ1nfh4TSKlzc1es5KWTUUVtylEtpYxnZ8/lkDRDJA=="
       },
       "Hl7.Fhir.Base": {
         "type": "Transitive",
-        "resolved": "6.8.0",
-        "contentHash": "0EgvzJLIiT0/Jo9GvWMrqFUjIE+UVTgpu5TczUr39YF/qltC30yNovYwQBQUSCz0lGPWBe8kcEPiCvzA2+fU/g==",
+        "resolved": "6.9.0",
+        "contentHash": "I98lYlkmmIOl/EHgHc5+agmgzJjBW6xfxDwV3if/PVseCIZJQT4ApDUMFFPUDq7HEGdwzHzrHKuRDJQsD2a45A==",
         "dependencies": {
-          "Fhir.Metrics": "1.4.0",
+          "Fhir.Metrics": "1.4.1",
           "Microsoft.Extensions.Caching.Memory": "10.0.9",
           "Newtonsoft.Json": "13.0.4"
         }
       },
       "Hl7.Fhir.Conformance": {
         "type": "Transitive",
-        "resolved": "6.8.0",
-        "contentHash": "5qqcuGF0jm1yW1FaDJdxRzKGOwEkn+b4LT1IYbgtP9zzZMXYhZ0nHFZy8Cz9TwvxOOQmw5VixGfCMCVUsDog5g==",
+        "resolved": "6.9.0",
+        "contentHash": "91DWFkaen3iXifjaLHO1eYc+GK4+2A0+eyw7+13uKl9Kzi6SN02QRaFmWitk4bNBxA5d4Hx1PnsjcJ3HvvgYQg==",
         "dependencies": {
-          "Hl7.Fhir.Base": "6.8.0"
+          "Hl7.Fhir.Base": "6.9.0"
         }
       },
       "Microsoft.Bcl.Cryptography": {
@@ -602,7 +602,7 @@
         "dependencies": {
           "DuckDB.NET.Data.Full": "[1.5.6.1, )",
           "Duende.AccessTokenManagement": "[4.3.0, )",
-          "Hl7.Fhir.R4": "[6.8.0, )",
+          "Hl7.Fhir.R4": "[6.9.0, )",
           "Microsoft.Extensions.Hosting": "[11.0.0, )",
           "NetEscapades.Configuration.Yaml": "[3.1.0, )",
           "prometheus-net": "[8.2.1, )"
